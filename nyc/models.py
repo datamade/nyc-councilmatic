@@ -1,3 +1,21 @@
 from django.db import models
 
-# Create your models here.
+
+class Person(models.Model):
+	ocd_id = models.CharField(max_length=100)
+	name = models.CharField(max_length=100)
+	role = models.CharField(max_length=100)
+	headshot = models.CharField(max_length=255)
+	# add districts
+
+class Committee(models.Model):
+	name = models.CharField(max_length=100)
+
+class Bill(models.Model):
+	ocd_id = models.CharField(max_length=100)
+	name = models.CharField(max_length=255)
+	classification = models.CharField(max_length=100)
+	date_created = models.DateTimeField(default=None)
+	date_updated = models.DateTimeField(default=None)
+	source_url = models.CharField(max_length=255)
+	source_note = models.CharField(max_length=255)
