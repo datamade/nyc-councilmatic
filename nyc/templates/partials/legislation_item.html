@@ -1,0 +1,13 @@
+<h4>{{ legislation.name }}</h4>
+<p>
+	Created {{ legislation.date_created }}
+
+	{% if legislation.date_updated > legislation.date_created %}
+		Updated {{ legislation.date_updated }}
+	{% endif %}
+</p>
+<p>
+	<a href="{{ legislation.source_url }}" target="_blank">
+		Source
+	</a>
+</p>

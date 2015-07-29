@@ -8,8 +8,14 @@ class Person(models.Model):
 	headshot = models.CharField(max_length=255, blank=True)
 	# add districts
 
+	def __str__(self):
+		return self.name
+
 class Committee(models.Model):
 	name = models.CharField(max_length=100)
+
+	def __str__(self):
+		return self.name
 
 class Bill(models.Model):
 	ocd_id = models.CharField(max_length=100)
@@ -19,3 +25,6 @@ class Bill(models.Model):
 	date_updated = models.DateTimeField(default=None, null=True)
 	source_url = models.CharField(max_length=255)
 	source_note = models.CharField(max_length=255, blank=True)
+
+	def __str__(self):
+		return self.name

@@ -1,4 +1,10 @@
 from django.shortcuts import render
+from .models import Person, Committee, Bill
 
 def index(request):
-    return render(request, 'nyc/index.html', {})
+	recent_legislation = Bill.objects.order_by('date_updated')[:10]
+	context = {
+		'recent_legislation': recent_legislation
+	}
+
+	return render(request, 'nyc/index.html', context)

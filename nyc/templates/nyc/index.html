@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div>
-    <h2>Recent Legislation</h2>
-
+  <div class="row-fluid">
+    <div id="recent-legislation">
+      <h2>Recent Legislation</h2>
+      {% include "partials/legislation_list.html" %}
+    </div>
   </div>
 {% endblock %}
