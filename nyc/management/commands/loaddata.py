@@ -1,11 +1,14 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.utils.dateparse import parse_datetime
 from nyc.models import Person, Bill, Organization, Action
 import requests
 import json
+import pytz
 
 ocd_jurisdiction_id = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
 ocd_city_council_id = 'ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731'
 base_url = 'http://api.opencivicdata.org'
+eastern = pytz.timezone('US/Eastern')
 
 
 class Command(BaseCommand):
@@ -92,4 +95,25 @@ class Command(BaseCommand):
 			print '   adding %s' % bill_id
 		else:
 			print '   already exists'
+
+
+		for action_json in page_json['actions']:
+			self.grab_action(action_json, obj)
+
+	def grab_action(self, action_json, bill):
+
+		org = Organization.objects.filter(ocd_id=action_json['organization']['id']).first()
+
+		obj, created = Action.objects.get_or_create(
+				date=action_json['date'],
+				classification=action_json['classification'],
+				description=action_json['description'],
+				organization=org,
+				bill=bill,
+			)
+
+		if created:
+			print '      adding action: %s' %action_json['description']
+		else:
+			print '      action already exists'
 
