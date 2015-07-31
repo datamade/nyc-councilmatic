@@ -36,4 +36,5 @@ class Action(models.Model):
 	date = models.DateTimeField(default=None)
 	classification = models.CharField(max_length=100)
 	description = models.TextField(blank=True)
-	organization = models.ForeignKey('Organization', related_name='actions')
+	organization = models.ForeignKey('Organization', related_name='actions', null=True)
+	bill = models.ForeignKey('Bill', related_name='actions', null=True)
