@@ -13,7 +13,7 @@ class Person(models.Model):
 
 class Bill(models.Model):
 	ocd_id = models.CharField(max_length=100)
-	name = models.CharField(max_length=255)
+	name = models.TextField()
 	classification = models.CharField(max_length=100)
 	date_created = models.DateTimeField(default=None)
 	date_updated = models.DateTimeField(default=None, null=True)
