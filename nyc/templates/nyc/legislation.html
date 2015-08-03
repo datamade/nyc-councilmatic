@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row-fluid">
+    {% if legislation %}
+	    <h2>{{ legislation }}</h2>
+	    <p>Created: {{ legislation.date_created }}</p>
+	    <p>Updated: {{ legislation.date_updated }}</p>
+	    <p><a href="{{ legislation.source_url }}" target="_blank">Source</a></p>
+	    {% for action in legislation.actions.all %}
+	    	<p>{{ action.description }} {{ action.date }}</p>
+	    {% endfor %}
+
+	{% else %}
+		Legislation not found
+	{% endif %}
+
+  </div>
+{% endblock %}
