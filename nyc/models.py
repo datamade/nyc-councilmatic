@@ -24,6 +24,10 @@ class Bill(models.Model):
 	def __str__(self):
 		return self.name
 
+	@property
+	def current_org(self):
+		return self.actions.all().order_by('date').first().organization if self.actions.all() else None
+
 class Organization(models.Model):
 	ocd_id = models.CharField(max_length=100)
 	name = models.CharField(max_length=255)

@@ -7,9 +7,14 @@
 	    <p>Created: {{ legislation.date_created }}</p>
 	    <p>Updated: {{ legislation.date_updated }}</p>
 	    <p><a href="{{ legislation.source_url }}" target="_blank">Source</a></p>
-	    {% for action in legislation.actions.all %}
-	    	<p>{{ action.description }} {{ action.date }}</p>
-	    {% endfor %}
+	    <p>Current Committee: {{ legislation.current_org }}<p>
+	    {% if legislation.actions.all %}
+	    	<p class="h3">Bill History</p>
+		    {% for action in legislation.actions.all %}
+		    	<p><strong>{{ action.organization.name }}</strong></p>
+		    	<p>{{ action.description }} {{ action.date }}</p>
+		    {% endfor %}
+		{% endif %}
 
 	{% else %}
 		Legislation not found
