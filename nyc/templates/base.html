@@ -10,7 +10,7 @@
   <meta name="author" content="">
 
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="https://bootswatch.com/yeti/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'nyc/bootstrap.min.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'nyc/style.css' %}" />
 
 </head>
@@ -29,20 +29,20 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/">
-          Councilmatic
+          NYC Councilmatic
         </a>
       </div>
 
       <div id="nav-items" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a>Search</a>
+            <a href="/search">Search</a>
           </li>
           <li>
             <a href='/committees'>Committees</a>
           </li>
           <li>
-            <a>About</a>
+            <a href="/about">About</a>
           </li>
         </ul>
       </div>

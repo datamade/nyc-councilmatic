@@ -9,6 +9,12 @@ def index(request):
 
 	return render(request, 'nyc/index.html', context)
 
+def about(request):
+	return render(request, 'nyc/about.html')
+
+def search(request):
+	return render(request, 'nyc/search.html')
+
 def bill_detail(request, bill_id):
 
 	legislation = Bill.objects.filter(ocd_id=bill_id).first()
