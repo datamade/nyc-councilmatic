@@ -36,6 +36,11 @@ class Organization(models.Model):
 	def __str__(self):
 		return self.name
 
+	@classmethod
+	def committees(cls):
+		return cls.objects.filter(classification='committee').order_by('name').all()
+
+
 class Action(models.Model):
 	date = models.DateTimeField(default=None)
 	classification = models.CharField(max_length=100)

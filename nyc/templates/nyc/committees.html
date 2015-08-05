@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<div class="row-fluid">
+		<div class="col-sm-12">
+			{% for committee in committees %}
+				<p class="h4">{{committee.name}}</p>
+			{% endfor %}
+		</div>
+	</div>
+
+{% endblock %}

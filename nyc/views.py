@@ -18,3 +18,14 @@ def bill_detail(request, bill_id):
 	}
 
 	return render(request, 'nyc/legislation.html', context)
+
+def committees(request):
+
+	committees = Organization.committees()
+	print committees
+
+	context={
+		'committees': committees
+	}
+
+	return render(request, 'nyc/committees.html', context)
