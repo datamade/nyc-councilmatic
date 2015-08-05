@@ -40,6 +40,10 @@ class Organization(models.Model):
 	def committees(cls):
 		return cls.objects.filter(classification='committee').order_by('name').all()
 
+	@property
+	def recent_activity(self):
+		return self.actions.all() if self.actions.all() else None
+
 
 class Action(models.Model):
 	date = models.DateTimeField(default=None)

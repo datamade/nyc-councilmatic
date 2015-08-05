@@ -22,7 +22,6 @@ def bill_detail(request, bill_id):
 def committees(request):
 
 	committees = Organization.committees()
-	print committees
 
 	context={
 		'committees': committees

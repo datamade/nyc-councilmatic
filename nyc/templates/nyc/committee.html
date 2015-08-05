@@ -5,6 +5,20 @@
 	<div class="row-fluid">
 		<div class="col-sm-12">
 			<h2>{{committee.name}}</h2>
+			{% if committee.recent_activity %}
+				<h4>Recent Activity</h4>
+				<ul>
+				{% for action in committee.recent_activity %}
+					<li>
+						<p class="small">{{action.date}}</p>
+						<p>{{action.description}}</p>
+						<p><a href="/bill-detail/{{action.bill.ocd_id}}">{{action.bill.name}}</a></p>
+					</li>
+				{% endfor %}
+				</ul>
+			{% else %}
+				<h4>No recent activity</h4>
+			{% endif %}
 		</div>
 	</div>
 
