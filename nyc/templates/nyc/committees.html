@@ -4,8 +4,10 @@
 
 	<div class="row-fluid">
 		<div class="col-sm-12">
+			<h2>Committees</h2>
+			<hr>
 			{% for committee in committees %}
-				<p class="h4">{{committee.name}}</p>
+				<p class="h4"><a href="/committee-detail/{{committee.ocd_id}}">{{committee.name}}</a></p>
 			{% endfor %}
 		</div>
 	</div>

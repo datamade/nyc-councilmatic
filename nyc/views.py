@@ -29,3 +29,13 @@ def committees(request):
 	}
 
 	return render(request, 'nyc/committees.html', context)
+
+def committee_detail(request, org_id):
+
+	committee = Organization.objects.filter(ocd_id=org_id).first()
+
+	context = {
+		'committee': committee
+	}
+
+	return render(request, 'nyc/committee.html', context)
