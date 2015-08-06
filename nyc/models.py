@@ -44,10 +44,24 @@ class Organization(models.Model):
 	def recent_activity(self):
 		return self.actions.all() if self.actions.all() else None
 
-
 class Action(models.Model):
 	date = models.DateTimeField(default=None)
 	classification = models.CharField(max_length=100)
 	description = models.TextField(blank=True)
 	organization = models.ForeignKey('Organization', related_name='actions', null=True)
 	bill = models.ForeignKey('Bill', related_name='actions', null=True)
+
+class Post(models.Model):
+	ocd_id = models.CharField(max_length=100)
+	label = models.CharField(max_length=255)
+	role = models.CharField(max_length=255)
+	organization = models.ForeignKey('Organization', related_name='posts')
+
+class Membership(models.Model):
+	organization = models.ForeignKey('Organization', related_name='memberships')
+	person = models.ForeignKey('Person', related_name='memberships')
+	post = models.ForeignKey('Post', related_name='memberships', null=True)
+	label = models.CharField(max_length=255, blank=True)
+	role = models.CharField(max_length=255, blank=True)
+	start_date = models.DateField(default=None, null=True)
+	end_date = models.DateField(default=None, null=True)
