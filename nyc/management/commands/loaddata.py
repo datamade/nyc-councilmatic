@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime
-from nyc.models import Person, Bill, Organization, Action
+from nyc.models import Person, Bill, Organization, Action, Post, Membership
 import requests
 import json
 import pytz
@@ -27,15 +27,20 @@ class Command(BaseCommand):
 			print "\nLOADING BILLS\n"
 			self.grab_bills()
 			print "\ndone!"
+		elif options['endpoint'] == 'people':
+			print "\nLOADING PEOPLE\n"
+			self.grab_people()
+			print "\ndone!"
 		else:
 			print "\nLOADING EVERYTHING\n"
 			self.grab_organizations()
 			self.grab_bills()
+			self.grab_people()
 			print "\ndone!"
 
 
 	def grab_organizations(self):
-
+		# this grabs all organizations within a jurisdiction
 		org_url = base_url+'/organizations/?jurisdiction_id='+ocd_jurisdiction_id
 		r = requests.get(org_url)
 		page_json = json.loads(r.text)
@@ -55,9 +60,33 @@ class Command(BaseCommand):
 				if created:
 					print '   adding %s' % result['id'] 
 
+				self.grab_posts(obj)
+
+	def grab_posts(self, organization):
+
+		url = base_url+'/'+organization.ocd_id
+		r = requests.get(url)
+		page_json = json.loads(r.text)
+
+		for post_json in page_json['posts']:
+
+			obj, created = Post.objects.get_or_create(
+					ocd_id = post_json['id'],
+					label = post_json['label'],
+					role = post_json['role'],
+					organization = organization
+				)
+
+			if created:
+				print '      adding post: %s %s' %(post_json['role'], post_json['label'])
+			else:
+				print '      post already exists'
+
+
 
 	def grab_bills(self):
-
+		# this grabs all bills & associated actions from city council
+		# organizations need to be populated before bills & actions are populated
 		bill_url = base_url+'/bills/?from_organization_id='+ocd_city_council_id
 		r = requests.get(bill_url)
 		page_json = json.loads(r.text)
@@ -98,9 +127,9 @@ class Command(BaseCommand):
 
 
 		for action_json in page_json['actions']:
-			self.grab_action(action_json, obj)
+			self.load_action(action_json, obj)
 
-	def grab_action(self, action_json, bill):
+	def load_action(self, action_json, bill):
 
 		org = Organization.objects.filter(ocd_id=action_json['organization']['id']).first()
 
@@ -116,4 +145,10 @@ class Command(BaseCommand):
 			print '      adding action: %s' %action_json['description']
 		else:
 			print '      action already exists'
+
+
+	def grab_people(self):
+		# this grabs all people associated with existing organizations that have been loaded
+
+		orgs = Organization.objects.all()
 
