@@ -44,3 +44,13 @@ def committee_detail(request, org_id):
 	}
 
 	return render(request, 'nyc/committee.html', context)
+
+def person(request, person_id):
+
+	person = Person.objects.filter(ocd_id=person_id).first()
+
+	context = {
+		'person': person
+	}
+
+	return render(request, 'nyc/person.html', context)

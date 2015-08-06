@@ -25,7 +25,7 @@
 				<ul>
 					{% for membership in committee.memberships.all %}
 						<li>
-							{{membership.person.name}}
+							<a href='/person/{{membership.person.ocd_id}}'>{{membership.person.name}}</a>
 						</li>
 					{% endfor %}
 				</ul>
