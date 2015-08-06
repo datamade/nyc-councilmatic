@@ -19,6 +19,17 @@
 			{% else %}
 				<h4>No recent activity</h4>
 			{% endif %}
+
+			{% if committee.memberships.all %}
+				<h4>Members</h4>
+				<ul>
+					{% for membership in committee.memberships.all %}
+						<li>
+							{{membership.person.name}}
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
 		</div>
 	</div>
 
