@@ -4,9 +4,9 @@ from django.db import models
 class Person(models.Model):
 	ocd_id = models.CharField(max_length=100)
 	name = models.CharField(max_length=100)
-	role = models.CharField(max_length=100)
 	headshot = models.CharField(max_length=255, blank=True)
-	# add districts
+	source_url = models.CharField(max_length=255)
+	source_note = models.CharField(max_length=255, blank=True)
 
 	def __str__(self):
 		return self.name
