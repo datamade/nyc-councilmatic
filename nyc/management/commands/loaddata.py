@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from django.utils.dateparse import parse_datetime
+from django.utils.dateparse import parse_datetime, parse_date
 from nyc.models import Person, Bill, Organization, Action, Post, Membership
 import requests
 import json
@@ -63,6 +63,7 @@ class Command(BaseCommand):
 				self.grab_posts(obj)
 
 	def grab_posts(self, organization):
+		# loads posts for a given organization
 
 		url = base_url+'/'+organization.ocd_id
 		r = requests.get(url)
@@ -79,8 +80,20 @@ class Command(BaseCommand):
 
 			if created:
 				print '      adding post: %s %s' %(post_json['role'], post_json['label'])
-			else:
-				print '      post already exists'
+
+	def grab_people(self):
+		# find people associated with existing organizations
+
+		orgs = Organization.objects.all()
+
+		for organization in orgs:
+			url = base_url+'/'+organization.ocd_id
+			r = requests.get(url)
+			page_json = json.loads(r.text)
+
+			for membership_json in page_json['memberships']:
+
+				self.grab_person_memberships(membership_json['person']['id'])
 
 
 
@@ -98,8 +111,6 @@ class Command(BaseCommand):
 
 			for result in page_json['results']:
 				self.grab_bill(result['id'])
-
-			break # just grab one page for now
 
 	def grab_bill(self, bill_id):
 
@@ -146,9 +157,56 @@ class Command(BaseCommand):
 		else:
 			print '      action already exists'
 
+	def grab_person_memberships(self, person_id):
+		# this grabs a person and all their memberships
 
-	def grab_people(self):
-		# this grabs all people associated with existing organizations that have been loaded
+		url = base_url+'/'+person_id
+		r = requests.get(url)
+		page_json = json.loads(r.text)
 
-		orgs = Organization.objects.all()
+		# TO DO: handle updating people & memberships
+		person = Person.objects.filter(ocd_id=person_id).first()
+		if not person:
+			person = Person.objects.create(
+				ocd_id = page_json['id'],
+				name = page_json['name'],
+				headshot = page_json['image'],
+				source_url = page_json['sources'][0]['url'],
+				source_note = page_json['sources'][0]['note']
+			)
+			print '      adding person: %s' % person.name
+		else:
+			print '      person already exists'
 
+		for membership_json in page_json['memberships']:
+
+			if membership_json['post']:
+				post = Post.objects.filter(ocd_id=membership_json['post']['id']).first()
+			else:
+				post = None
+
+			organization = Organization.objects.filter(ocd_id=membership_json['organization']['id']).first()
+
+			try:
+				end_date = parse_date(membership_json['end_date'])
+			except:
+				end_date = None
+			try:
+				start_date = parse_date(membership_json['start_date'])
+			except:
+				start_date = None
+
+			obj, created = Membership.objects.get_or_create(
+					organization = organization,
+					person = person,
+					post = post,
+					label = membership_json['label'],
+					role = membership_json['role'],
+					start_date = start_date,
+					end_date = end_date
+				)
+
+			if created:
+				print '      adding membership: %s' % obj.role
+			else:
+				print '      membership already exists'
