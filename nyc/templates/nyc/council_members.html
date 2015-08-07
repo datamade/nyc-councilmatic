@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="row-fluid">
+        <div class="col-sm-12">
+            <h2>Council Members</h2>
+            <hr>
+            {% for post in city_council.posts.all %}
+                <p class="h4">{{post.label}}</p>
+                <p>
+                    <a href="/person/{{post.memberships.first.person.ocd_id}}">
+                        {{post.memberships.first.person.name}}
+                    </a>
+                </p>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

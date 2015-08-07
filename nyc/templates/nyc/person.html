@@ -5,6 +5,10 @@
 	<div class="row-fluid">
 		<div class="col-sm-12">
 			<h2>{{person.name}}</h2>
+            <h3>Positions</h3>
+            {% for membership in person.memberships.all %}
+                <p class="h4"><a href="committee-detail/{{membership.organization.ocd_id}}">{{membership.organization.name}}</a> <span class="badge">{{membership.role}}</span></p>
+            {% endfor %}
 		</div>
 	</div>
 

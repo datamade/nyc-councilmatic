@@ -7,11 +7,11 @@
 	    <p>Created: {{ legislation.date_created }}</p>
 	    <p>Updated: {{ legislation.date_updated }}</p>
 	    <p><a href="{{ legislation.source_url }}" target="_blank">Source</a></p>
-	    <p>Current Committee: {{ legislation.current_org }}<p>
+	    <p>Current Committee: <a href="/committee-detail/{{ legislation.current_org.ocd_id }}">{{ legislation.current_org.name }}</a><p>
 	    {% if legislation.actions.all %}
 	    	<p class="h3">Bill History</p>
 		    {% for action in legislation.actions.all %}
-		    	<p><strong>{{ action.organization.name }}</strong></p>
+		    	<p><strong><a href="/committee-detail/{{ action.organization.ocd_id }}">{{ action.organization.name }}</a></strong></p>
 		    	<p>{{ action.description }} {{ action.date }}</p>
 		    {% endfor %}
 		{% endif %}

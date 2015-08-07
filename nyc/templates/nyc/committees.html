@@ -7,7 +7,7 @@
 			<h2>Committees</h2>
 			<hr>
 			{% for committee in committees %}
-				<p class="h4"><a href="/committee-detail/{{committee.ocd_id}}">{{committee.name}}</a></p>
+				<p class="h4"><a href="/committee-detail/{{committee.ocd_id}}">{{committee.name}}</a> <span class="badge"> {{committee.actions.all | length}}</span></p>
 			{% endfor %}
 		</div>
 	</div>

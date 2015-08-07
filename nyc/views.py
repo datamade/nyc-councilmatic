@@ -15,6 +15,14 @@ def about(request):
 def search(request):
 	return render(request, 'nyc/search.html')
 
+def council_members(request):
+	city_council = Organization.objects.filter(ocd_id='ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731').first()
+	context = {
+		'city_council': city_council
+	}
+
+	return render(request, 'nyc/council_members.html', context)
+
 def bill_detail(request, bill_id):
 
 	legislation = Bill.objects.filter(ocd_id=bill_id).first()
