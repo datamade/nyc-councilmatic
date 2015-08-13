@@ -33,7 +33,7 @@ cp councilmatic/settings_local.py.example councilmatic/settings_local.py
 Then edit `councilmatic/settings_local.py`:
 - `USER` should be your username
 
-## Setup your database
+**Setup your database**
 
 Before we can run the website, we need to create a database.
 
