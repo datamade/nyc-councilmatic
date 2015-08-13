@@ -46,7 +46,7 @@ createdb nyc_councilmatic
 Then, run migrations
 
 ```bash
-python manage.py migrate nyc
+python manage.py migrate --no-initial-data
 ```
 
 Create an admin user - set a username & password when prompted

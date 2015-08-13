@@ -1,13 +1,28 @@
 {% extends "base.html" %}
-
+{% block title %}Keep tabs on what your city council is doing{% endblock %}
 {% block content %}
   	<div class="row-fluid">
-  		<div>
-  			<p class="h2">Keep tabs on what your city council is doing</p>
-  		</div>
-  		<div id="recent-legislation">
+        <div class='col-sm-12'>
+            <div class='jumbotron'>
+      			<p>Keep tabs on what your city council is doing</p>
+                <form class="search form-search" action="/search/" method="GET">
+                  <div class="input-group">
+                    <input name="q" type="text" class="input-lg form-control" placeholder="Bill de Blasio, zoning, Res 0815-2015, etc.">
+                    <div class='input-group-btn'>
+                        <button type="submit" class="btn btn-lg btn-info">
+                            <i class='fa fa-fw fa-search'></i>
+                            Search
+                        </button>
+                    </div>
+                  </div>
+                </form>
+      		</div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class='col-sm-8'>
   			<h2>Recent Legislation</h2>
   			{% include "partials/legislation_list.html" %}
-  		</div>
+        </div>
   	</div>
 {% endblock %}
