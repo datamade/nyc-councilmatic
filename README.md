@@ -20,24 +20,42 @@ mkvirtualenv nyc-councilmatic
 git clone https://github.com/datamade/nyc-councilmatic.git
 cd nyc-councilmatic
 pip install -r requirements.txt
-cp councilmatic/settings_local.py.example councilmatic/settings_local.py.example
 ```
 
-Afterwards, whenever you want to work on nyc-councilmatic,
+Afterwards, whenever you want to use this virtual environment to work on nyc-councilmatic, run `workon nyc-councilmatic`
+
+**Create your settings file**
 
 ```bash
-workon nyc-councilmatic
+cp councilmatic/settings_local.py.example councilmatic/settings_local.py
 ```
+
+Then edit `councilmatic/settings_local.py`:
+- `USER` should be your username
 
 ## Setup your database
 
 Before we can run the website, we need to create a database.
 
 ```bash
-createdb nyc-councilmatic
+createdb nyc_councilmatic
 ```
 
-## Running NYC Councilmatic
+Then, run migrations
+
+```bash
+python manage.py migrate nyc
+```
+
+## Importing data from the open civic data api
+
+Run the loaddata management command. This will take a few minutes.
+
+```bash
+python manage.py loaddata
+```
+
+## Running NYC Councilmatic locally
 
 ``` bash
 python manage.py runserver
