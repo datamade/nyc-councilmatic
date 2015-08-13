@@ -8,7 +8,7 @@ SECRET_KEY = 'replacethiswithsomethingsecret'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'councilmatic',
+        'NAME': 'nyc_councilmatic',
         'USER': '',
         'PASSWORD': '',
     }
