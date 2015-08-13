@@ -47,6 +47,12 @@ Then, run migrations
 python manage.py migrate nyc
 ```
 
+Create an admin user - set a username & password when prompted
+
+```bash
+python manage.py createsuperuser
+```
+
 ## Importing data from the open civic data api
 
 Run the loaddata management command. This will take a few minutes.
