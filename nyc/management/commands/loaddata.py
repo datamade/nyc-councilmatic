@@ -16,8 +16,17 @@ class Command(BaseCommand):
 
 	def add_arguments(self, parser):
 		parser.add_argument('--endpoint', help="a specific endpoint to load data from")
+		
+		parser.add_argument('--delete',
+            action='store_true',
+            default=False,
+            help='delete data before loading')
 
 	def handle(self, *args, **options):
+
+		if options['delete']:
+			print("deleting existing data")
+			self.delete_data()
 
 		if options['endpoint'] == 'organizations':
 			print "\nLOADING ORGANIZATIONS\n"
@@ -38,6 +47,12 @@ class Command(BaseCommand):
 			self.grab_people()
 			print "\ndone!"
 
+	def delete_data(self):
+		Person.objects.all().delete()
+		Bill.objects.all().delete()
+		Action.objects.all().delete()
+		Post.objects.all().delete()
+		Membership.objects.all().delete()
 
 	def grab_organizations(self):
 		# this grabs all organizations within a jurisdiction
@@ -123,7 +138,8 @@ class Command(BaseCommand):
 		obj, created = Bill.objects.get_or_create(
 				ocd_id=bill_id,
 				name=page_json['title'],
-				classification=page_json['classification'],
+				identifier=page_json['identifier'],
+				classification=page_json['classification'][0],
 				date_created=page_json['created_at'],
 				date_updated=page_json['updated_at'],
 				source_url=page_json['sources'][0]['url'],
@@ -133,9 +149,6 @@ class Command(BaseCommand):
 
 		if created:
 			print '   adding %s' % bill_id
-		else:
-			print '   already exists'
-
 
 		for action_json in page_json['actions']:
 			self.load_action(action_json, obj)
@@ -154,8 +167,6 @@ class Command(BaseCommand):
 
 		if created:
 			print '      adding action: %s' %action_json['description']
-		else:
-			print '      action already exists'
 
 	def grab_person_memberships(self, person_id):
 		# this grabs a person and all their memberships
@@ -175,8 +186,6 @@ class Command(BaseCommand):
 				source_note = page_json['sources'][0]['note']
 			)
 			print '      adding person: %s' % person.name
-		else:
-			print '      person already exists'
 
 		for membership_json in page_json['memberships']:
 
@@ -208,5 +217,3 @@ class Command(BaseCommand):
 
 			if created:
 				print '      adding membership: %s' % obj.role
-			else:
-				print '      membership already exists'

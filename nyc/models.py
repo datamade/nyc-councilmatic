@@ -11,9 +11,15 @@ class Person(models.Model):
 	def __str__(self):
 		return self.name
 
+	@property
+	def council_seat(self):
+		return self.memberships.filter(organization__ocd_id='ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731').first().post.label
+
 class Bill(models.Model):
 	ocd_id = models.CharField(max_length=100)
 	name = models.TextField()
+	identifier = models.CharField(max_length=50)
+	bill_type = models.CharField(max_length=50)
 	classification = models.CharField(max_length=100)
 	date_created = models.DateTimeField(default=None)
 	date_updated = models.DateTimeField(default=None, null=True)
@@ -43,6 +49,10 @@ class Organization(models.Model):
 	@property
 	def recent_activity(self):
 		return self.actions.all() if self.actions.all() else None
+
+	@property
+	def chairs(self):
+		return self.memberships.filter(role='CHAIRPERSON')
 
 class Action(models.Model):
 	date = models.DateTimeField(default=None)

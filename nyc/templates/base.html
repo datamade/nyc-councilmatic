@@ -12,7 +12,7 @@
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.journal.min.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
 
 </head>
 <body>
@@ -57,6 +57,13 @@
   <div class="container-fluid">
     {% block content %}
     {% endblock %}
+
+    <div class='clearfix'></div>
+      <div class="footer">
+        <p class='pull-right'>
+          Brought to you by the <a href='http://www.participatorypolitics.org/'>Participatory Politics Foundation</a><br />
+          Built by <a href='http://datamade.us'>DataMade</a>
+      </div>
   </div>
 
   <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>

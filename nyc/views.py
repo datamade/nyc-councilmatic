@@ -35,10 +35,16 @@ def bill_detail(request, bill_id):
 
 def committees(request):
 
-	committees = Organization.committees()
+	committees = Organization.committees().filter(name__startswith='Committee')
+
+	subcommittees = Organization.committees().filter(name__startswith='Subcommittee')
+
+	taskforces = Organization.committees().filter(name__startswith='Task Force')
 
 	context={
-		'committees': committees
+		'committees': committees,
+		'subcommittees': subcommittees,
+		'taskforces': taskforces,
 	}
 
 	return render(request, 'nyc/committees.html', context)
