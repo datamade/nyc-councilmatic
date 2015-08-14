@@ -19,9 +19,13 @@
                     {% for post in city_council.posts.all %}
                         <tr>
                             <td>
-                                <a href="/person/{{post.memberships.first.person.ocd_id}}">
-                                    {{post.memberships.first.person.name}}
-                                </a>
+                                {% if post.memberships.first %}
+                                    <a href="/person/{{post.memberships.first.person.ocd_id}}">
+                                        {{post.memberships.first.person.name}}
+                                    </a>
+                                {% else %}
+                                    Vacant
+                                {% endif %}
                             </td>
                             <td>{{post.label}}</td>
                             <td></td>
