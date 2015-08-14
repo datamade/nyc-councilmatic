@@ -1,34 +1,41 @@
 {% extends "base.html" %}
 {% block title %}{{ legislation.identifier }}{% endblock %}
 {% block content %}
-  <div class="row-fluid">
   	{% if legislation %}
-  		<div class='col-sm-8'>
-		    <h1>{{ legislation.identifier }}</h1>
-		    <p>{{ legislation.name }}</p>
-		    {% if legislation.actions.all %}
-		    	<h3>Bill History</h3>
+  		<div class="row-fluid">
+	        <div class="col-sm-12">
+	            <h1>{{ legislation.identifier }}</h1>
+	            <hr />
+	        </div>
+	    </div>
 
-		    	<p>Current Committee: <a href="/committee-detail/{{ legislation.current_org.ocd_id }}">{{ legislation.current_org.name }}</a><p>
+  		<div class="row-fluid">
+	  		<div class='col-sm-8'>
+			    <p>{{ legislation.name }}</p>
+			    {% if legislation.actions.all %}
+			    	<h3>Bill History</h3>
 
-			    {% for action in legislation.actions.all %}
-			    	<p><strong><a href="/committee-detail/{{ action.organization.ocd_id }}">{{ action.organization.name }}</a></strong></p>
-			    	<p>{{ action.description }} {{ action.date }}</p>
-			    {% endfor %}
-			{% endif %}
-		</div>
-		<div class='col-sm-4'>
-			<div class='well'>
-				<p>Created: {{ legislation.date_created|date:'M d, Y' }}</p>
-		    	<p>Updated: {{ legislation.date_updated|date:'M d, Y' }}</p>
+			    	<p>Current Committee: <a href="/committee-detail/{{ legislation.current_org.ocd_id }}">{{ legislation.current_org.name }}</a><p>
 
-		    	<p><a href="{{ legislation.source_url }}" target="_blank"><i class='fa fa-fw fa-external-link'></i> View this on NYC.gov</a></p>
+				    {% for action in legislation.actions.all %}
+				    	<p><strong><a href="/committee-detail/{{ action.organization.ocd_id }}">{{ action.organization.name }}</a></strong></p>
+				    	<p>{{ action.description }} {{ action.date }}</p>
+				    {% endfor %}
+				{% endif %}
+			</div>
+			<div class='col-sm-4'>
+				<div class='well'>
+					<p>Created: {{ legislation.date_created|date:'M d, Y' }}</p>
+			    	<p>Updated: {{ legislation.date_updated|date:'M d, Y' }}</p>
+
+			    	<p><a href="{{ legislation.source_url }}" target="_blank"><i class='fa fa-fw fa-external-link'></i> View this on NYC.gov</a></p>
+				</div>
 			</div>
 		</div>
 
 	{% else %}
-		Legislation not found
+		<h3>Legislation not found</h3>
 	{% endif %}
 
-  </div>
+
 {% endblock %}
