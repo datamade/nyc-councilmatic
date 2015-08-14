@@ -63,8 +63,13 @@ def person(request, person_id):
 
 	person = Person.objects.filter(ocd_id=person_id).first()
 
+	chairs = person.memberships.filter(role="CHAIRPERSON")
+	memberships = person.memberships.filter(role="Committee Member")
+
 	context = {
-		'person': person
+		'person': person,
+		'chairs': chairs,
+		'memberships': memberships,
 	}
 
 	return render(request, 'nyc/person.html', context)

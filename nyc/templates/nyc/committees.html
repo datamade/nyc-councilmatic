@@ -19,7 +19,6 @@
                         <th>Committee</th>
                         <th>Chairperson(s)</th>
                         <th>Members</th>
-                        <th>Current Legislation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,7 +33,6 @@
                                 {% endfor %}
                             </td>
                             <td>{{ committee.memberships.all | length }}</td>
-                            <td>{{ committee.actions.all | length }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -47,7 +45,6 @@
                         <th>Subcommittee</th>
                         <th>Chairperson(s)</th>
                         <th>Members</th>
-                        <th>Current Legislation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +59,6 @@
                                 {% endfor %}
                             </td>
                             <td>{{ committee.memberships.all | length }}</td>
-                            <td>{{ committee.actions.all | length }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -75,7 +71,6 @@
                         <th>Task Force</th>
                         <th>Chairperson(s)</th>
                         <th>Members</th>
-                        <th>Current Legislation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,7 +85,6 @@
                                 {% endfor %}
                             </td>
                             <td>{{ committee.memberships.all | length }}</td>
-                            <td>{{ committee.actions.all | length }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -98,7 +92,7 @@
 		</div>
         <div class="col-sm-4">
             <div class='well'>
-                <h3><i class='fa fa-fw fa-info-circle'></i> What do committees do?</h3>
+                <h4><i class='fa fa-fw fa-info-circle'></i> What do committees do?</h4>
                 <p>Most of the Council's legislative work is done in committee. It is there that proposed legislation is initially debated and the members of other government branches and the public are given a chance to comment.</p>
 
                 <p>Each Council Member serves on at least three of the Council's standing committees, sub- and select committees and panels. The standing committees must meet at least once a month unless the Charter mandates otherwise. Committee assignments are made by the Committee on Rules, Privileges and Elections and voted on by the entire Council.</p>
@@ -124,7 +118,6 @@
             "aoColumns": [
                 null,
                 null,
-                null,
                 null
             ]
         });
@@ -138,7 +131,6 @@
             "aoColumns": [
                 null,
                 null,
-                null,
                 null
             ]
         });
@@ -150,7 +142,6 @@
             "paging": false,
             "aaSorting": [ [0,'asc'] ],
             "aoColumns": [
-                null,
                 null,
                 null,
                 null

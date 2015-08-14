@@ -15,6 +15,10 @@ class Person(models.Model):
 	def council_seat(self):
 		return self.memberships.filter(organization__ocd_id='ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731').first().post.label
 
+	@property
+	def is_speaker(self):
+		return True if self.memberships.filter(role='Speaker').first() else False	
+
 class Bill(models.Model):
 	ocd_id = models.CharField(max_length=100)
 	name = models.TextField()

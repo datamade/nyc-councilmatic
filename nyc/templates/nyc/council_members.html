@@ -12,13 +12,11 @@
 
     <div class="row-fluid">
         <div class="col-sm-8">
-            <hr />
             <table class='table' id='council-members'>
                 <thead>
                     <tr>
                         <th>Council Member</th>
                         <th>District</th>
-                        <th>Recent Legislation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,12 +27,14 @@
                                     <a href="/person/{{post.memberships.first.person.ocd_id}}">
                                         {{post.memberships.first.person.name}}
                                     </a>
+                                    {% if post.memberships.first.person.is_speaker %}
+                                        <span class='label label-default'>Council Speaker</span>
+                                    {% endif %}
                                 {% else %}
                                     Vacant
                                 {% endif %}
                             </td>
                             <td>{{post.label}}</td>
-                            <td></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -42,7 +42,7 @@
         </div>
         <div class='col-sm-4'>
             <div class='well'>
-                <h3><i class='fa fa-fw fa-info-circle'></i> What does City Council do?</h3>
+                <h4><i class='fa fa-fw fa-info-circle'></i> What does City Council do?</h4>
                 <p>New York City Council monitors the operation and performance of city agencies, makes land use decisions and has sole responsibility for approving the city's budget. It also legislates on a wide range of other subjects. The Council is an equal partner with the Mayor in the governing of New York City.</p>
             </div>
         </div>
@@ -64,8 +64,7 @@
             "aaSorting": [ [1,'asc'] ],
             "aoColumns": [
                 null,
-                { "sType": "num-html" },
-                null
+                { "sType": "num-html" }
             ]
         });
     </script>
