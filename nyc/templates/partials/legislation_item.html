@@ -1,4 +1,8 @@
 <h4><a href="/bill-detail/{{ legislation.ocd_id }}">{{ legislation.name }}</a></h4>
 <p> 
-  <span class='label label-inverse'>Action label</span> on {{ legislation.date_created }} 
+  <span class='label label-default'>Action label</span> on {{ legislation.date_created }} 
+</p>
+
+<p> Current Committee: 
+  {{ legislation.current_org.name }}
 </p>

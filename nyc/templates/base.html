@@ -10,8 +10,9 @@
   <meta name="author" content="">
 
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="{% static 'nyc/bootstrap.journal.min.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'nyc/style.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.journal.min.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 
 </head>
 <body>
@@ -58,9 +59,12 @@
     {% endblock %}
   </div>
 
-  <script type="text/javascript">
+  <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  
+  {% block extra_js %}{% endblock %}
 
-  </script>
+  <script src="{% static 'js/analytics_lib.js' %}"></script>
 
 </body>
 </html>

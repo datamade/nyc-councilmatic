@@ -1,20 +1,55 @@
 {% extends "base.html" %}
-{% block title %}Council Members{% endblock %}
+{% load staticfiles %}
+{% block title %}New York City Council Members{% endblock %}
 {% block content %}
 
     <div class="row-fluid">
         <div class="col-sm-12">
-            <h2>Council Members</h2>
-            <hr>
-            {% for post in city_council.posts.all %}
-                <p class="h4">{{post.label}}</p>
-                <p>
-                    <a href="/person/{{post.memberships.first.person.ocd_id}}">
-                        {{post.memberships.first.person.name}}
-                    </a>
-                </p>
-            {% endfor %}
+            <h2>New York City Council Members</h2>
+            <hr />
+            <table class='table' id='council-members'>
+                <thead>
+                    <tr>
+                        <th>Council Member</th>
+                        <th>District</th>
+                        <th>Recent Legislation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in city_council.posts.all %}
+                        <tr>
+                            <td>
+                                <a href="/person/{{post.memberships.first.person.ocd_id}}">
+                                    {{post.memberships.first.person.name}}
+                                </a>
+                            </td>
+                            <td>{{post.label}}</td>
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/jquery.dataTables.sorting.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap.js' %}"></script>
+
+    <script>
+        $("#council-members").DataTable({
+            "info": false,
+            "searching": false,
+            "bLengthChange": false,
+            "paging": false,
+            "aaSorting": [ [1,'asc'] ],
+            "aoColumns": [
+                null,
+                { "sType": "num-html" },
+                null
+            ]
+        });
+    </script>
 {% endblock %}
