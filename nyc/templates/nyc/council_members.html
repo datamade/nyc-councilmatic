@@ -25,14 +25,14 @@
                         <tr>
                             <td>
                                 {% if post.memberships.first %}
-                                    <img src='{{post.memberships.first.person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail' style='width: 70px;' />
+                                    <img src='{{post.memberships.first.person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail' />
                                 {% endif %}
                             </td>
                             <td>
                                 {% if post.memberships.first %}
-                                    <h4><a href="/person/{{post.memberships.first.person.ocd_id}}">
+                                    <a href="/person/{{post.memberships.first.person.ocd_id}}">
                                         {{post.memberships.first.person.name}}
-                                    </a></h4>
+                                    </a>
                                     {% if post.memberships.first.person.is_speaker %}
                                         <br /><span class='label label-default'>Council Speaker</span>
                                     {% endif %}

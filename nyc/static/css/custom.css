@@ -18,3 +18,11 @@ h1, h2, h3, h4 {
     border-top: 1px solid #ccc;
     padding: 20px 0;
 }
+
+#council-members img {
+    width: 70px;
+}
+
+#council-members td {
+    font-size: 1.2em;
+}
