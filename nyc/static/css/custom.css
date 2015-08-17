@@ -14,13 +14,17 @@ h1, h2, h3, h4 {
 	font-weight: 900;
 }
 
+.navbar {
+    font-size: 20px;
+}
+
 .footer {
     border-top: 1px solid #ccc;
     padding: 20px 0;
 }
 
 #council-members img {
-    width: 70px;
+    width: 50px;
 }
 
 #council-members td {

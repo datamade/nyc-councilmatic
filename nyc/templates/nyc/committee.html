@@ -4,9 +4,34 @@
 
 	<div class="row-fluid">
 		<div class="col-sm-12">
-			<h2>{{committee.name}}</h2>
+			<h1>{{committee.name}}</h1>
+
+			<table class='table' id='council-members'>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Committee Member</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for membership in committee.memberships.all %}
+                        <tr>
+                            <td>
+                                <img src='{{membership.person.headshot_url}}' alt='{{membership.person.name}}' title='{{membership.person.name}}' class='img-responsive img-thumbnail' />
+                            </td>
+                            <td>
+                                <a href="/person/{{membership.person.ocd_id}}">
+                                    {{membership.person.name}}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
 			{% if committee.recent_activity %}
-				<h4>Recent Activity</h4>
+				<h2>Recent Activity</h2>
 				<ul>
 				{% for action in committee.recent_activity %}
 					<li>
@@ -18,17 +43,6 @@
 				</ul>
 			{% else %}
 				<h4>No recent activity</h4>
-			{% endif %}
-
-			{% if committee.memberships.all %}
-				<h4>Members</h4>
-				<ul>
-					{% for membership in committee.memberships.all %}
-						<li>
-							<a href='/person/{{membership.person.ocd_id}}'>{{membership.person.name}}</a>
-						</li>
-					{% endfor %}
-				</ul>
 			{% endif %}
 		</div>
 	</div>
