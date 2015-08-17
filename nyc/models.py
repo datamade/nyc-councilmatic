@@ -19,6 +19,13 @@ class Person(models.Model):
 	def is_speaker(self):
 		return True if self.memberships.filter(role='Speaker').first() else False	
 
+	@property
+	def headshot_url(self):
+		if self.headshot:
+			return '/static/images/' + self.ocd_id + ".jpg"
+		else:
+			return '/static/images/headshot_placeholder.png'
+
 class Bill(models.Model):
 	ocd_id = models.CharField(max_length=100)
 	name = models.TextField()

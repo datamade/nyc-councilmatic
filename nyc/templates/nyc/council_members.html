@@ -15,6 +15,7 @@
             <table class='table' id='council-members'>
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Council Member</th>
                         <th>District</th>
                     </tr>
@@ -24,11 +25,16 @@
                         <tr>
                             <td>
                                 {% if post.memberships.first %}
-                                    <a href="/person/{{post.memberships.first.person.ocd_id}}">
+                                    <img src='{{post.memberships.first.person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail' style='width: 70px;' />
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if post.memberships.first %}
+                                    <h4><a href="/person/{{post.memberships.first.person.ocd_id}}">
                                         {{post.memberships.first.person.name}}
-                                    </a>
+                                    </a></h4>
                                     {% if post.memberships.first.person.is_speaker %}
-                                        <span class='label label-default'>Council Speaker</span>
+                                        <br /><span class='label label-default'>Council Speaker</span>
                                     {% endif %}
                                 {% else %}
                                     Vacant
@@ -61,8 +67,9 @@
             "searching": false,
             "bLengthChange": false,
             "paging": false,
-            "aaSorting": [ [1,'asc'] ],
+            "aaSorting": [ [2,'asc'] ],
             "aoColumns": [
+                { "bSortable": false },
                 null,
                 { "sType": "num-html" }
             ]

@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from nyc.models import Person, Bill, Organization, Action, Post, Membership
-from councilmatic.settings import BASE_DIR
+from councilmatic.settings import HEADSHOT_PATH
 import requests
 import json
 import pytz
@@ -187,12 +187,11 @@ class Command(BaseCommand):
 		if not person:
 
 			# save image to disk
-			images_folder = os.path.join(BASE_DIR, 'nyc/static/images/')
 			if page_json['image']:
 				print("saving image for %s" % page_json['name'])
 				r = requests.get(page_json['image'])
 				if r.status_code == 200:
-				    with open((images_folder + page_json['id'] + ".jpg"), 'wb') as f:
+				    with open((HEADSHOT_PATH + page_json['id'] + ".jpg"), 'wb') as f:
 				        for chunk in r.iter_content(1000):
         					f.write(chunk)
 
