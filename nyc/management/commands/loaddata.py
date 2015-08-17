@@ -1,9 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from nyc.models import Person, Bill, Organization, Action, Post, Membership
+from councilmatic.settings import BASE_DIR
 import requests
 import json
 import pytz
+import os.path
 
 ocd_jurisdiction_id = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
 ocd_city_council_id = 'ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731'
@@ -24,37 +26,32 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **options):
 
-		if options['delete']:
-			print("deleting existing data")
-			self.delete_data()
-
 		if options['endpoint'] == 'organizations':
 			print "\nLOADING ORGANIZATIONS\n"
-			self.grab_organizations()
+			self.grab_organizations(delete=options['delete'])
 			print "\ndone!"
 		elif options['endpoint'] == 'bills':
 			print "\nLOADING BILLS\n"
-			self.grab_bills()
+			self.grab_bills(delete=options['delete'])
 			print "\ndone!"
 		elif options['endpoint'] == 'people':
 			print "\nLOADING PEOPLE\n"
-			self.grab_people()
+			self.grab_people(delete=options['delete'])
 			print "\ndone!"
 		else:
 			print "\nLOADING EVERYTHING\n"
-			self.grab_organizations()
-			self.grab_bills()
-			self.grab_people()
+			self.grab_organizations(delete=options['delete'])
+			self.grab_bills(delete=options['delete'])
+			self.grab_people(delete=options['delete'])
 			print "\ndone!"
+		
+	def grab_organizations(self, delete=False):
 
-	def delete_data(self):
-		Person.objects.all().delete()
-		Bill.objects.all().delete()
-		Action.objects.all().delete()
-		Post.objects.all().delete()
-		Membership.objects.all().delete()
+		if delete:
+			print("deleting all organizations and posts")
+			Organization.objects.all().delete()
+			Post.objects.all().delete()
 
-	def grab_organizations(self):
 		# this grabs all organizations within a jurisdiction
 		org_url = base_url+'/organizations/?jurisdiction_id='+ocd_jurisdiction_id
 		r = requests.get(org_url)
@@ -96,8 +93,13 @@ class Command(BaseCommand):
 			if created:
 				print '      adding post: %s %s' %(post_json['role'], post_json['label'])
 
-	def grab_people(self):
+	def grab_people(self, delete=False):
 		# find people associated with existing organizations
+
+		if delete:
+			print("deleting all people and memberships")
+			Person.objects.all().delete()
+			Membership.objects.all().delete()
 
 		orgs = Organization.objects.all()
 
@@ -111,10 +113,15 @@ class Command(BaseCommand):
 				self.grab_person_memberships(membership_json['person']['id'])
 
 
-
-	def grab_bills(self):
+	def grab_bills(self, delete=False):
 		# this grabs all bills & associated actions from city council
 		# organizations need to be populated before bills & actions are populated
+		
+		if delete:
+			print("deleting all bills and actions")
+			Bill.objects.all().delete()
+			Action.objects.all().delete()
+
 		bill_url = base_url+'/bills/?from_organization_id='+ocd_city_council_id
 		r = requests.get(bill_url)
 		page_json = json.loads(r.text)
@@ -178,6 +185,17 @@ class Command(BaseCommand):
 		# TO DO: handle updating people & memberships
 		person = Person.objects.filter(ocd_id=person_id).first()
 		if not person:
+
+			# save image to disk
+			images_folder = os.path.join(BASE_DIR, 'nyc/static/images/')
+			if page_json['image']:
+				print("saving image for %s" % page_json['name'])
+				r = requests.get(page_json['image'])
+				if r.status_code == 200:
+				    with open((images_folder + page_json['id'] + ".jpg"), 'wb') as f:
+				        for chunk in r.iter_content(1000):
+        					f.write(chunk)
+
 			person = Person.objects.create(
 				ocd_id = page_json['id'],
 				name = page_json['name'],
