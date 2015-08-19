@@ -7,6 +7,7 @@ class Person(models.Model):
 	headshot = models.CharField(max_length=255, blank=True)
 	source_url = models.CharField(max_length=255)
 	source_note = models.CharField(max_length=255, blank=True)
+	slug = models.CharField(max_length=255)
 
 	def __str__(self):
 		return self.name
@@ -37,6 +38,7 @@ class Bill(models.Model):
 	source_url = models.CharField(max_length=255)
 	source_note = models.CharField(max_length=255, blank=True)
 	from_organization = models.ForeignKey('Organization', related_name='bills', null=True)
+	slug = models.CharField(max_length=255)
 
 	def __str__(self):
 		return self.name
@@ -49,6 +51,7 @@ class Organization(models.Model):
 	ocd_id = models.CharField(max_length=100)
 	name = models.CharField(max_length=255)
 	classification = models.CharField(max_length=255, null=True)
+	slug = models.CharField(max_length=255)
 
 	def __str__(self):
 		return self.name
@@ -86,3 +89,9 @@ class Membership(models.Model):
 	role = models.CharField(max_length=255, blank=True)
 	start_date = models.DateField(default=None, null=True)
 	end_date = models.DateField(default=None, null=True)
+
+class Sponsorship(models.Model):
+	bill = models.ForeignKey('Bill', related_name='sponsorships')
+	person = models.ForeignKey('Person', related_name='sponsorships')
+	classification = models.CharField(max_length=255)
+
