@@ -27,23 +27,23 @@ class Command(BaseCommand):
 	def handle(self, *args, **options):
 
 		if options['endpoint'] == 'organizations':
-			print "\nLOADING ORGANIZATIONS\n"
+			print("\nLOADING ORGANIZATIONS\n")
 			self.grab_organizations(delete=options['delete'])
-			print "\ndone!"
+			print("\ndone!")
 		elif options['endpoint'] == 'bills':
-			print "\nLOADING BILLS\n"
+			print("\nLOADING BILLS\n")
 			self.grab_bills(delete=options['delete'])
-			print "\ndone!"
+			print("\ndone!")
 		elif options['endpoint'] == 'people':
-			print "\nLOADING PEOPLE\n"
+			print("\nLOADING PEOPLE\n")
 			self.grab_people(delete=options['delete'])
-			print "\ndone!"
+			print("\ndone!")
 		else:
-			print "\nLOADING EVERYTHING\n"
+			print("\nLOADING EVERYTHING\n")
 			self.grab_organizations(delete=options['delete'])
 			self.grab_bills(delete=options['delete'])
 			self.grab_people(delete=options['delete'])
-			print "\ndone!"
+			print("\ndone!")
 		
 	def grab_organizations(self, delete=False):
 
@@ -70,7 +70,7 @@ class Command(BaseCommand):
 					)
 
 				if created:
-					print '   adding %s' % result['id'] 
+					print('   adding %s' % result['id'] )
 
 				self.grab_posts(obj)
 
@@ -91,7 +91,7 @@ class Command(BaseCommand):
 				)
 
 			if created:
-				print '      adding post: %s %s' %(post_json['role'], post_json['label'])
+				print('      adding post: %s %s' %(post_json['role'], post_json['label']))
 
 	def grab_people(self, delete=False):
 		# find people associated with existing organizations
@@ -155,7 +155,7 @@ class Command(BaseCommand):
 			)
 
 		if created:
-			print '   adding %s' % bill_id
+			print('   adding %s' % bill_id)
 
 		for action_json in page_json['actions']:
 			self.load_action(action_json, obj)
@@ -173,7 +173,7 @@ class Command(BaseCommand):
 			)
 
 		if created:
-			print '      adding action: %s' %action_json['description']
+			print('      adding action: %s' %action_json['description'])
 
 	def grab_person_memberships(self, person_id):
 		# this grabs a person and all their memberships
@@ -202,7 +202,7 @@ class Command(BaseCommand):
 				source_url = page_json['sources'][0]['url'],
 				source_note = page_json['sources'][0]['note']
 			)
-			print '      adding person: %s' % person.name
+			print('      adding person: %s' % person.name)
 
 		for membership_json in page_json['memberships']:
 
@@ -233,4 +233,4 @@ class Command(BaseCommand):
 				)
 
 			if created:
-				print '      adding membership: %s' % obj.role
+				print('      adding membership: %s' % obj.role)
