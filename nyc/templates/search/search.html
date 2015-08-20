@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load highlight %}
 {% block content %}
     <h2>Search</h2>
 
@@ -12,14 +12,32 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
         {% if query %}
+            <div class="col-md-3">
+                {% for facet_name, facet_values in facets.fields.items %}
+                <p><strong>{{ facet_name }}</strong></p>
+                <ul>
+                    {% for name, count in facet_values %}
+                        {% if count %}
+                            <li>
+                                <a href="/search/?q={{query}}&selected_facets={{facet_name}}_exact:{{name}}">
+                                    {{ name }} ({{ count }})
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+            </div>
+            <div class="col-md-9">
             <h3>Results</h3>
 
             {% for result in page.object_list %}
                 <p>
                     <a href="/bill-detail/{{ result.object.ocd_id }}">{{ result.object.name }}</a>
                 </p>
+                <small>{% highlight result.object.name with query css_class "bg-info" %}</small>
+                <hr />
             {% empty %}
                 <p>No results found.</p>
             {% endfor %}
