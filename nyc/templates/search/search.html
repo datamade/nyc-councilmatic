@@ -1,59 +1,73 @@
 {% extends 'base.html' %}
+{% load nyc_extras %}
 {% load highlight %}
+{% block title %}Search results for '{{ request.GET.q }}'{% endblock %}
 {% block content %}
     <h2>Search</h2>
 
-    <form method="get" action=".">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for..." name="q" value="{{ request.GET.q }}">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="submit">Go!</button>
-            </span>
-        </div>
-
-        <div class="row">
-        {% if query %}
-            <div class="col-md-3">
-                {% for facet_name, facet_values in facets.fields.items %}
-                <p><strong>{{ facet_name }}</strong></p>
-                <ul>
-                    {% for name, count in facet_values %}
-                        {% if count %}
-                            <li>
-                                <a href="/search/?q={{query}}&selected_facets={{facet_name}}_exact:{{name}}">
-                                    {{ name }} ({{ count }})
-                                </a>
-                            </li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-                {% endfor %}
-            </div>
-            <div class="col-md-9">
-            <h3>Results</h3>
-
-            {% for result in page.object_list %}
-                <p>
-                    <a href="/bill-detail/{{ result.object.ocd_id }}">{{ result.object.name }}</a>
-                </p>
-                <small>{% highlight result.object.name with query css_class "bg-info" %}</small>
-                <hr />
-            {% empty %}
-                <p>No results found.</p>
-            {% endfor %}
-            </div>
-        </div>
-        {% if page.has_previous or page.has_next %}
-            <div class="row">
-                <div class="col-md-12">
-                {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                |
-                {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+    <div class='jumbotron'>
+        <h3>Search for New York City Legislation</h3>
+        <form method="get" action=".">
+            <div class="input-group">
+                <input name="q" type="text" class="input-lg form-control" placeholder="Bill de Blasio, zoning, Res 0815-2015, etc." value="{{ request.GET.q }}">
+                <div class='input-group-btn'>
+                    <button type="submit" class="btn btn-lg btn-info">
+                        <i class='fa fa-fw fa-search'></i>
+                        Search
+                    </button>
                 </div>
             </div>
-        {% endif %}
-        {% else %}
-            {# Show some example queries to run, maybe query syntax, something else? #}
-        {% endif %}
-    </form>
+        </form>
+    </div>
+
+    <div class="row">
+    {% if query %}
+        <div class="col-md-3">
+            {% for facet_name, facet_values in facets.fields.items %}
+            <p><strong>{{ facet_name | sentence_case }}</strong></p>
+            <ul>
+                {% for name, count in facet_values %}
+                    {% if count %}
+                        <li>
+                            <a href="/search/?q={{query}}&selected_facets={{facet_name}}_exact:{{name}}">
+                                {{ name|sentence_case }} ({{ count }})
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {% endfor %}
+        </div>
+        <div class="col-md-9">
+        <h3>{{ paginator.count }} result{{ paginator.count|pluralize }} for '{{ request.GET.q }}'</h3>
+
+        {% for result in page.object_list %}
+            <h4>
+                <a href="/bill-detail/{{ result.object.ocd_id }}">{{ result.object.identifier }}</a>
+            </h4>
+            <p> 
+              <span class='label label-default'>Action label</span> on {{ result.object.date_created|date:'M d, Y' }} 
+            </p>
+            <p>Committee: 
+              {{ legislation.current_org.name }}
+            </p>
+            <p>{% highlight result.object.name with query css_class "bg-info" %}</p>
+            <hr />
+        {% empty %}
+            <p>No results found.</p>
+        {% endfor %}
+        </div>
+    </div>
+    {% if page.has_previous or page.has_next %}
+        <div class="row">
+            <div class="col-md-12">
+            {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+            |
+            {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+            </div>
+        </div>
+    {% endif %}
+    {% else %}
+        {# Show some example queries to run, maybe query syntax, something else? #}
+    {% endif %}
 {% endblock %}
