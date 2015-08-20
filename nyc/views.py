@@ -53,8 +53,13 @@ def committee_detail(request, org_id):
 
 	committee = Organization.objects.filter(ocd_id=org_id).first()
 
+	chairs = committee.memberships.filter(role="CHAIRPERSON")
+	memberships = committee.memberships.filter(role="Committee Member")
+
 	context = {
-		'committee': committee
+		'committee': committee,
+		'chairs': chairs,
+		'memberships': memberships
 	}
 
 	return render(request, 'nyc/committee.html', context)

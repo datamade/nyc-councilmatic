@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block title %}{{committee.name}}{% endblock %}
 {% block content %}
 
@@ -11,10 +12,12 @@
                     <tr>
                         <th></th>
                         <th>Committee Member</th>
+                        <th>District</th>
+                        <th>Role</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for membership in committee.memberships.all %}
+                    {% for membership in chairs %}
                         <tr>
                             <td>
                                 <img src='{{membership.person.headshot_url}}' alt='{{membership.person.name}}' title='{{membership.person.name}}' class='img-responsive img-thumbnail' />
@@ -24,14 +27,38 @@
                                     {{membership.person.name}}
                                 </a>
                             </td>
+                            <td>
+                                {{membership.person.council_seat}}
+                            </td>
+                            <td>
+                                Chairperson
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% for membership in memberships %}
+                        <tr>
+                            <td>
+                                <img src='{{membership.person.headshot_url}}' alt='{{membership.person.name}}' title='{{membership.person.name}}' class='img-responsive img-thumbnail' />
+                            </td>
+                            <td>
+                                <a href="/person/{{membership.person.ocd_id}}">
+                                    {{membership.person.name}}
+                                </a>
+                            </td>
+                            <td>
+                                {{membership.person.council_seat}}
+                            </td>
+                            <td>
+                                Member
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
 
-
+            <h2>Recent Activity</h2>
 			{% if committee.recent_activity %}
-				<h2>Recent Activity</h2>
+				
 				<ul>
 				{% for action in committee.recent_activity %}
 					<li>
@@ -42,9 +69,31 @@
 				{% endfor %}
 				</ul>
 			{% else %}
-				<h4>No recent activity</h4>
+				<p>No recent activity</p>
 			{% endif %}
 		</div>
 	</div>
 
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/jquery.dataTables.sorting.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap.js' %}"></script>
+
+    <script>
+        $("#council-members").DataTable({
+            "info": false,
+            "searching": false,
+            "bLengthChange": false,
+            "paging": false,
+            "aaSorting": [ [3,'asc'] ],
+            "aoColumns": [
+                { "bSortable": false },
+                null,
+                { "sType": "num-html" },
+                null
+            ]
+        });
+    </script>
 {% endblock %}

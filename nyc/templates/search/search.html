@@ -23,20 +23,27 @@
     <div class="row">
     {% if query %}
         <div class="col-md-3">
-            {% for facet_name, facet_values in facets.fields.items %}
-            <p><strong>{{ facet_name | sentence_case }}</strong></p>
-            <ul>
-                {% for name, count in facet_values %}
-                    {% if count %}
-                        <li>
-                            <a href="/search/?q={{query}}&selected_facets={{facet_name}}_exact:{{name}}">
-                                {{ name|sentence_case }} ({{ count }})
-                            </a>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            {% endfor %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Filter results</h3>
+                </div>
+                <div class="panel-body">
+                    {% for facet_name, facet_values in facets.fields.items %}
+                    <p><strong>{{ facet_name | sentence_case }}</strong></p>
+                    <ul>
+                        {% for name, count in facet_values %}
+                            {% if count %}
+                                <li>
+                                    <a href="/search/?q={{query}}&selected_facets={{facet_name}}_exact:{{name}}">
+                                        {{ name|sentence_case }} ({{ count }})
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
         <div class="col-md-9">
         <h3>{{ paginator.count }} result{{ paginator.count|pluralize }} for '{{ request.GET.q }}'</h3>

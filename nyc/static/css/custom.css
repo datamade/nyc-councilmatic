@@ -29,4 +29,5 @@ h1, h2, h3, h4 {
 
 #council-members td {
     font-size: 1.2em;
+    vertical-align: middle;
 }
