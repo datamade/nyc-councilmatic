@@ -79,7 +79,7 @@ On Ubuntu:
 
 ``` bash
 $ sudo apt-get update
-$ sudo apt-get install openjdk-7-jre-headless jetty
+$ sudo apt-get install openjdk-7-jre-headless
 ```
 
 On OS X:
@@ -119,7 +119,7 @@ $ python manage.py rebuild_index
 **Install and configure Jetty for Solr**
 
 Just running Solr as described above is probably OK in a development setting.
-To deploy Solr in production, you'll want to using something like Jetty. Here's
+To deploy Solr in production, you'll want to use something like Jetty. Here's
 how you'd do that on Ubuntu:
 
 ``` bash 
@@ -129,22 +129,12 @@ $ sudo apt-get install jetty
 $ sudo mv /etc/init.d/jetty ~/jetty.orig
 
 # Get init.d script suggested by Solr docs
-$ wget http://svn.codehaus.org/jetty/jetty/branches/jetty-6.1/bin/jetty.sh
-$ sudo mv jetty.sh /etc/init.d/jetty
+$ sudo cp solr_scripts/jetty.sh /etc/init.d/jetty
 $ sudo chown root.root /etc/init.d/jetty
 $ sudo chmod 755 /etc/init.d/jetty
 
 # Add Solr specific configs to /etc/default/jetty
-$ sudo mv /etc/defualt/jetty /etc/default/jetty.orig
-$ sudo vim /etc/default/jetty
-
-# Add these lines:
-JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
-JAVA_OPTIONS="-Dsolr.solr.home=/opt/solr/solr $JAVA_OPTIONS"
-JETTY_HOME=/opt/solr
-JETTY_USER=jetty
-JETTY_LOGS=/opt/solr/logs
-CONFIGS=/opt/solr/etc/jetty.xml
+$ sudo cp solr_scripts/jetty.conf /etc/default/jetty
 
 # Change ownership of the Solr directory so Jetty can get at it
 $ sudo chown -R jetty.jetty /opt/solr
@@ -153,7 +143,7 @@ $ sudo chown -R jetty.jetty /opt/solr
 $ sudo service jetty start
 
 # Solr should now be running on port 8983
-
+```
 
 ## Team
 
