@@ -101,12 +101,8 @@ $ wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
 $ tar -xvf solr-4.10.4.tgz
 $ sudo cp -R solr-4.10.4/example /opt/solr
 
-# Tell Django Haystack to generate a schema file for you. (Run this with your
-# virtual environment activated)
-$ python manage.py build_solr_schema > schema.xml
-
 # Copy schema.xml for this app to solr directory
-$ cp /path/to/search/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+$ cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
 
 # Test to see that it's working. If you see error output, somethings wrong
 $ cd /opt/solr
@@ -144,6 +140,19 @@ $ sudo service jetty start
 
 # Solr should now be running on port 8983
 ```
+
+**Regenerate Solr schema**
+
+While developing, if you need to make changes to the fields that are getting
+indexed or how they are getting indexed, you'll need to regenerate the
+schema.xml file that Solr uses to make it's magic. Here's how that works:
+
+```
+$ python manage.py build_solr_schema > solor_scripts/schema.xml
+$ cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+```
+
+In order for Solr to use the new schema file, you'll need to restart it.
 
 ## Team
 
