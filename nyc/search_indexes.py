@@ -9,8 +9,6 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     classification = indexes.CharField(model_attr='classification', faceted=True)
     identifier = indexes.CharField(model_attr='identifier')
     name = indexes.CharField(model_attr='name')
-    date_created = indexes.DateTimeField(model_attr='date_created')
-    date_updated = indexes.DateTimeField(model_attr='date_updated')
     sponsors = indexes.MultiValueField()
     source_url = indexes.CharField(model_attr='source_url', indexed=False)
     source_note = indexes.CharField(model_attr='source_note')
