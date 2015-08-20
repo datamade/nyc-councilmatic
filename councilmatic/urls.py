@@ -15,8 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from haystack.query import SearchQuerySet
+from haystack.views import FacetedSearchView
+
+sqs = SearchQuerySet().facet('bill_type')\
+                      .facet('classification')\
+                      .facet('from_organization')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^search/', FacetedSearchView(searchqueryset=sqs)),
     url(r'', include('nyc.urls')),
 ]
