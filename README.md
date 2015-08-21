@@ -99,11 +99,10 @@ On OS X:
 ``` bash 
 wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
 tar -xvf solr-4.10.4.tgz
-sudo mkdir -p /opt/solr/solr/collection1/conf/
 sudo cp -R solr-4.10.4/example /opt/solr
 
 # Copy schema.xml for this app to solr directory
-sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+sudo cp solr_scripts/schema.xml /opt/solr/example/solr/collection1/conf/schema.xml
 ```
 
 **Run Solr**
