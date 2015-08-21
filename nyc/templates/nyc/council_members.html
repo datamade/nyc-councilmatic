@@ -30,7 +30,7 @@
                             </td>
                             <td>
                                 {% if post.memberships.first %}
-                                    <a href="/person/{{post.memberships.first.person.ocd_id}}">
+                                    <a href="/person/{{post.memberships.first.person.slug}}">
                                         {{post.memberships.first.person.name}}
                                     </a>
                                     {% if post.memberships.first.person.is_speaker %}

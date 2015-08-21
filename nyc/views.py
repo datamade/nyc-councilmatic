@@ -23,9 +23,9 @@ def council_members(request):
 
 	return render(request, 'nyc/council_members.html', context)
 
-def bill_detail(request, bill_id):
+def bill_detail(request, slug):
 
-	legislation = Bill.objects.filter(ocd_id=bill_id).first()
+	legislation = Bill.objects.filter(slug=slug).first()
 
 	context={
 		'legislation': legislation
@@ -49,9 +49,9 @@ def committees(request):
 
 	return render(request, 'nyc/committees.html', context)
 
-def committee_detail(request, org_id):
+def committee_detail(request, slug):
 
-	committee = Organization.objects.filter(ocd_id=org_id).first()
+	committee = Organization.objects.filter(slug=slug).first()
 
 	chairs = committee.memberships.filter(role="CHAIRPERSON")
 	memberships = committee.memberships.filter(role="Committee Member")
@@ -64,9 +64,9 @@ def committee_detail(request, org_id):
 
 	return render(request, 'nyc/committee.html', context)
 
-def person(request, person_id):
+def person(request, slug):
 
-	person = Person.objects.filter(ocd_id=person_id).first()
+	person = Person.objects.filter(slug=slug).first()
 
 	chairs = person.memberships.filter(role="CHAIRPERSON")
 	memberships = person.memberships.filter(role="Committee Member")

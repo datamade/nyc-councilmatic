@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
+from django.utils.text import slugify
 from nyc.models import Person, Bill, Organization, Action, Post, Membership
 from councilmatic.settings import HEADSHOT_PATH
 import requests
@@ -66,7 +67,8 @@ class Command(BaseCommand):
 				obj, created = Organization.objects.get_or_create(
 						ocd_id=result['id'],
 						name=result['name'],
-						classification=result['classification']
+						classification=result['classification'],
+						slug=slugify(result['name']),
 					)
 
 				if created:
@@ -151,7 +153,8 @@ class Command(BaseCommand):
 				date_updated=page_json['updated_at'],
 				source_url=page_json['sources'][0]['url'],
 				source_note=page_json['sources'][0]['note'],
-				from_organization=from_org
+				from_organization=from_org,
+				slug=slugify(page_json['identifier']),
 			)
 
 		if created:
@@ -200,7 +203,8 @@ class Command(BaseCommand):
 				name = page_json['name'],
 				headshot = page_json['image'],
 				source_url = page_json['sources'][0]['url'],
-				source_note = page_json['sources'][0]['note']
+				source_note = page_json['sources'][0]['note'],
+				slug = slugify(page_json['name']),
 			)
 			print('      adding person: %s' % person.name)
 

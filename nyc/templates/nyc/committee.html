@@ -23,7 +23,7 @@
                                 <img src='{{membership.person.headshot_url}}' alt='{{membership.person.name}}' title='{{membership.person.name}}' class='img-responsive img-thumbnail' />
                             </td>
                             <td>
-                                <a href="/person/{{membership.person.ocd_id}}">
+                                <a href="/person/{{membership.person.slug}}">
                                     {{membership.person.name}}
                                 </a>
                             </td>
@@ -41,7 +41,7 @@
                                 <img src='{{membership.person.headshot_url}}' alt='{{membership.person.name}}' title='{{membership.person.name}}' class='img-responsive img-thumbnail' />
                             </td>
                             <td>
-                                <a href="/person/{{membership.person.ocd_id}}">
+                                <a href="/person/{{membership.person.slug}}">
                                     {{membership.person.name}}
                                 </a>
                             </td>
@@ -64,7 +64,7 @@
 					<li>
 						<p class="small">{{action.date}}</p>
 						<p>{{action.description}}</p>
-						<p><a href="/bill-detail/{{action.bill.ocd_id}}">{{action.bill.name}}</a></p>
+						<p><a href="/bill-detail/{{action.bill.slug}}">{{action.bill.name}}</a></p>
 					</li>
 				{% endfor %}
 				</ul>
