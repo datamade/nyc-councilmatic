@@ -89,27 +89,27 @@ On OS X:
 2. Follow normal install procedure
 3. Change system Java to use the version you just installed:
 
-``` bash
-$ sudo mv /usr/bin/java /usr/bin/java16
-$ sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
-```
+    ``` bash
+    sudo mv /usr/bin/java /usr/bin/java16
+    sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
+    ```
 
 **Download and test Solr**
 
 ``` bash 
-$ wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
-$ tar -xvf solr-4.10.4.tgz
-$ sudo cp -R solr-4.10.4/example /opt/solr
+wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
+tar -xvf solr-4.10.4.tgz
+sudo cp -R solr-4.10.4/example /opt/solr
 
 # Copy schema.xml for this app to solr directory
-$ cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
 
 # Test to see that it's working. If you see error output, somethings wrong
-$ cd /opt/solr
-$ sudo java -jar start.jar
+cd /opt/solr
+sudo java -jar start.jar
 
 # Now index the database
-$ python manage.py rebuild_index
+python manage.py rebuild_index
 ```
 
 **Install and configure Jetty for Solr**
@@ -119,24 +119,24 @@ To deploy Solr in production, you'll want to use something like Jetty. Here's
 how you'd do that on Ubuntu:
 
 ``` bash 
-$ sudo apt-get install jetty
+sudo apt-get install jetty
 
 # Backup stock init.d script
-$ sudo mv /etc/init.d/jetty ~/jetty.orig
+sudo mv /etc/init.d/jetty ~/jetty.orig
 
 # Get init.d script suggested by Solr docs
-$ sudo cp solr_scripts/jetty.sh /etc/init.d/jetty
-$ sudo chown root.root /etc/init.d/jetty
-$ sudo chmod 755 /etc/init.d/jetty
+sudo cp solr_scripts/jetty.sh /etc/init.d/jetty
+sudo chown root.root /etc/init.d/jetty
+sudo chmod 755 /etc/init.d/jetty
 
 # Add Solr specific configs to /etc/default/jetty
-$ sudo cp solr_scripts/jetty.conf /etc/default/jetty
+sudo cp solr_scripts/jetty.conf /etc/default/jetty
 
 # Change ownership of the Solr directory so Jetty can get at it
-$ sudo chown -R jetty.jetty /opt/solr
+sudo chown -R jetty.jetty /opt/solr
 
 # Start up Solr
-$ sudo service jetty start
+sudo service jetty start
 
 # Solr should now be running on port 8983
 ```
@@ -148,8 +148,8 @@ indexed or how they are getting indexed, you'll need to regenerate the
 schema.xml file that Solr uses to make it's magic. Here's how that works:
 
 ```
-$ python manage.py build_solr_schema > solor_scripts/schema.xml
-$ cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+python manage.py build_solr_schema > solor_scripts/schema.xml
+cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
 ```
 
 In order for Solr to use the new schema file, you'll need to restart it.
