@@ -94,7 +94,7 @@ On OS X:
     sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
     ```
 
-**Download and test Solr**
+**Download & setup Solr**
 
 ``` bash 
 wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
@@ -104,16 +104,24 @@ sudo cp -R solr-4.10.4/example /opt/solr
 
 # Copy schema.xml for this app to solr directory
 sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+```
 
-# Test to see that it's working. If you see error output, somethings wrong
-cd /opt/solr
+**Run Solr**
+```bash
+# Next, start the java application that runs solr
+# Do this in another terminal window & keep it running
+# If you see error output, somethings wrong
+cd /opt/solr/example
 sudo java -jar start.jar
+```
 
-# Now index the database
+**Index the database**
+```bash
+# back in the nyc-councilmatic directory:
 python manage.py rebuild_index
 ```
 
-**Install and configure Jetty for Solr**
+**OPTIONAL: Install and configure Jetty for Solr**
 
 Just running Solr as described above is probably OK in a development setting.
 To deploy Solr in production, you'll want to use something like Jetty. Here's
