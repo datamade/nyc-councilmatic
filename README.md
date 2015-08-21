@@ -99,6 +99,7 @@ On OS X:
 ``` bash 
 wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
 tar -xvf solr-4.10.4.tgz
+sudo mkdir -p /opt/solr
 sudo cp -R solr-4.10.4/example /opt/solr
 
 # Copy schema.xml for this app to solr directory
