@@ -88,7 +88,7 @@ On OS X:
 [http://java.com/en/download/mac_download.jsp?locale=en](http://java.com/en/download/mac_download.jsp?locale=en)
 2. Follow normal install procedure
 3. Change system Java to use the version you just installed:
-
+    
     ``` bash
     sudo mv /usr/bin/java /usr/bin/java16
     sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
@@ -99,11 +99,11 @@ On OS X:
 ``` bash 
 wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
 tar -xvf solr-4.10.4.tgz
-sudo mkdir -p /opt/solr
+sudo mkdir -p /opt/solr/solr/collection1/conf/
 sudo cp -R solr-4.10.4/example /opt/solr
 
 # Copy schema.xml for this app to solr directory
-cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
+sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
 
 # Test to see that it's working. If you see error output, somethings wrong
 cd /opt/solr
