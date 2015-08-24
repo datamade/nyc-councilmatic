@@ -181,6 +181,12 @@ class Command(BaseCommand):
 
 		from_org = Organization.objects.filter(ocd_id=page_json['from_organization']['id']).first()
 
+		# this is a temporary fix - remove when outdated bills are no longer in ocd
+		if 'local_classification' in page_json['extras']:
+			bill_type = page_json['extras']['local_classification']
+		else:
+			bill_type = 'NO TYPE'
+
 		try:
 			obj, created = Bill.objects.get_or_create(
 					ocd_id=bill_id,
@@ -192,6 +198,7 @@ class Command(BaseCommand):
 					source_url=page_json['sources'][0]['url'],
 					source_note=page_json['sources'][0]['note'],
 					from_organization=from_org,
+					bill_type=bill_type,
 					slug=slugify(page_json['identifier']),
 				)
 		except IntegrityError:
@@ -206,6 +213,7 @@ class Command(BaseCommand):
 					source_url=page_json['sources'][0]['url'],
 					source_note=page_json['sources'][0]['note'],
 					from_organization=from_org,
+					bill_type=bill_type,
 					slug=slugify(page_json['identifier'])+ocd_id_part,
 				)
 
