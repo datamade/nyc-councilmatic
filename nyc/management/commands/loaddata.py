@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
+from django.db.utils import IntegrityError
 from nyc.models import Person, Bill, Organization, Action, Post, Membership
 from councilmatic.settings import HEADSHOT_PATH
 import requests
@@ -64,12 +65,21 @@ class Command(BaseCommand):
 			page_json = json.loads(r.text)
 
 			for result in page_json['results']:
-				obj, created = Organization.objects.get_or_create(
-						ocd_id=result['id'],
-						name=result['name'],
-						classification=result['classification'],
-						slug=slugify(result['name']),
-					)
+				try:
+					obj, created = Organization.objects.get_or_create(
+							ocd_id=result['id'],
+							name=result['name'],
+							classification=result['classification'],
+							slug=slugify(result['name']),
+						)
+				except IntegrityError:
+					ocd_id_part = result['id'].rsplit('-',1)[1]
+					obj, created = Organization.objects.get_or_create(
+							ocd_id=result['id'],
+							name=result['name'],
+							classification=result['classification'],
+							slug=slugify(result['name'])+ocd_id_part,
+						)
 
 				if created:
 					print('   adding %s' % result['id'] )
@@ -144,18 +154,33 @@ class Command(BaseCommand):
 
 		from_org = Organization.objects.filter(ocd_id=page_json['from_organization']['id']).first()
 
-		obj, created = Bill.objects.get_or_create(
-				ocd_id=bill_id,
-				name=page_json['title'],
-				identifier=page_json['identifier'],
-				classification=page_json['classification'][0],
-				date_created=page_json['created_at'],
-				date_updated=page_json['updated_at'],
-				source_url=page_json['sources'][0]['url'],
-				source_note=page_json['sources'][0]['note'],
-				from_organization=from_org,
-				slug=slugify(page_json['identifier']),
-			)
+		try:
+			obj, created = Bill.objects.get_or_create(
+					ocd_id=bill_id,
+					name=page_json['title'],
+					identifier=page_json['identifier'],
+					classification=page_json['classification'][0],
+					date_created=page_json['created_at'],
+					date_updated=page_json['updated_at'],
+					source_url=page_json['sources'][0]['url'],
+					source_note=page_json['sources'][0]['note'],
+					from_organization=from_org,
+					slug=slugify(page_json['identifier']),
+				)
+		except IntegrityError:
+			ocd_id_part = bill_id.rsplit('-',1)[1]
+			obj, created = Bill.objects.get_or_create(
+					ocd_id=bill_id,
+					name=page_json['title'],
+					identifier=page_json['identifier'],
+					classification=page_json['classification'][0],
+					date_created=page_json['created_at'],
+					date_updated=page_json['updated_at'],
+					source_url=page_json['sources'][0]['url'],
+					source_note=page_json['sources'][0]['note'],
+					from_organization=from_org,
+					slug=slugify(page_json['identifier'])+ocd_id_part,
+				)
 
 		if created:
 			print('   adding %s' % bill_id)
@@ -198,14 +223,26 @@ class Command(BaseCommand):
 				        for chunk in r.iter_content(1000):
         					f.write(chunk)
 
-			person = Person.objects.create(
-				ocd_id = page_json['id'],
-				name = page_json['name'],
-				headshot = page_json['image'],
-				source_url = page_json['sources'][0]['url'],
-				source_note = page_json['sources'][0]['note'],
-				slug = slugify(page_json['name']),
-			)
+			try:
+				person = Person.objects.create(
+					ocd_id=page_json['id'],
+					name=page_json['name'],
+					headshot=page_json['image'],
+					source_url=page_json['sources'][0]['url'],
+					source_note=page_json['sources'][0]['note'],
+					slug=slugify(page_json['name']),
+				)
+			except IntegrityError:
+				ocd_id_part=page_json['id'].rsplit('-',1)[1]
+				person = Person.objects.create(
+					ocd_id=page_json['id'],
+					name=page_json['name'],
+					headshot=page_json['image'],
+					source_url=page_json['sources'][0]['url'],
+					source_note=page_json['sources'][0]['note'],
+					slug=slugify(page_json['name'])+ocd_id_part,
+				)
+
 			print('      adding person: %s' % person.name)
 
 		for membership_json in page_json['memberships']:
