@@ -23,11 +23,12 @@ h1, h2, h3, h4 {
     padding: 20px 0;
 }
 
+.nowrap { white-space:nowrap; }
+
 #council-members img {
     width: 50px;
 }
 
-#council-members td {
-    font-size: 1.2em;
+#council-members td, #committee-actions td {
     vertical-align: middle;
 }

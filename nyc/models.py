@@ -68,7 +68,7 @@ class Organization(models.Model):
 
 	@property
 	def recent_activity(self):
-		return self.actions.all() if self.actions.all() else None
+		return self.actions.all().order_by('-date') if self.actions.all() else None
 
 	@property
 	def chairs(self):
