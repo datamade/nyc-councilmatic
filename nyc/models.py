@@ -2,12 +2,12 @@ from django.db import models
 
 
 class Person(models.Model):
-	ocd_id = models.CharField(max_length=100)
+	ocd_id = models.CharField(max_length=100, unique=True)
 	name = models.CharField(max_length=100)
 	headshot = models.CharField(max_length=255, blank=True)
 	source_url = models.CharField(max_length=255)
 	source_note = models.CharField(max_length=255, blank=True)
-	slug = models.CharField(max_length=255)
+	slug = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
 		return self.name
@@ -28,7 +28,7 @@ class Person(models.Model):
 			return '/static/images/headshot_placeholder.png'
 
 class Bill(models.Model):
-	ocd_id = models.CharField(max_length=100)
+	ocd_id = models.CharField(max_length=100, unique=True)
 	name = models.TextField()
 	identifier = models.CharField(max_length=50)
 	bill_type = models.CharField(max_length=50)
@@ -38,7 +38,7 @@ class Bill(models.Model):
 	source_url = models.CharField(max_length=255)
 	source_note = models.CharField(max_length=255, blank=True)
 	from_organization = models.ForeignKey('Organization', related_name='bills', null=True)
-	slug = models.CharField(max_length=255)
+	slug = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
 		return self.name
@@ -48,10 +48,10 @@ class Bill(models.Model):
 		return self.actions.all().order_by('date').first().organization if self.actions.all() else None
 
 class Organization(models.Model):
-	ocd_id = models.CharField(max_length=100)
+	ocd_id = models.CharField(max_length=100, unique=True)
 	name = models.CharField(max_length=255)
 	classification = models.CharField(max_length=255, null=True)
-	slug = models.CharField(max_length=255)
+	slug = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
 		return self.name
@@ -76,7 +76,7 @@ class Action(models.Model):
 	bill = models.ForeignKey('Bill', related_name='actions', null=True)
 
 class Post(models.Model):
-	ocd_id = models.CharField(max_length=100)
+	ocd_id = models.CharField(max_length=100, unique=True)
 	label = models.CharField(max_length=255)
 	role = models.CharField(max_length=255)
 	organization = models.ForeignKey('Organization', related_name='posts')
