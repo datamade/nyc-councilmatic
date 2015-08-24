@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% load nyc_extras %}
 {% load highlight %}
-{% block title %}Search results for '{{ request.GET.q }}'{% endblock %}
+{% block title %}
+    {% if request.GET.q %}
+        Search results for '{{ request.GET.q }}'
+    {% else %}
+        Search for New York City Legislation
+    {% endif %}
+{% endblock %}
 {% block content %}
     <h2>Search</h2>
 
