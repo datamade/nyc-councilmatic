@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
-from nyc.models import Person, Bill, Organization, Action, Post, Membership
+from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship
 from councilmatic.settings import HEADSHOT_PATH
 import requests
 import json
@@ -133,15 +133,16 @@ class Command(BaseCommand):
 
 
 	def grab_people(self, delete=False):
-		# find people associated with existing organizations
+		# find people associated with existing organizations & bills
 
 		if delete:
-			print("deleting all people and memberships")
+			print("deleting all people, memberships, sponsorships")
 			Person.objects.all().delete()
 			Membership.objects.all().delete()
+			Sponsorship.objects.all().delete()
 
+		# grab people associated with all existing organizations
 		orgs = Organization.objects.all()
-
 		for organization in orgs:
 			url = base_url+'/'+organization.ocd_id
 			r = requests.get(url)
@@ -151,6 +152,25 @@ class Command(BaseCommand):
 
 				self.grab_person_memberships(membership_json['person']['id'])
 
+		# add sponsorships for all existing bills
+		bills = Bill.objects.all()
+		for bill in bills:
+			url = base_url+'/'+bill.ocd_id
+			r = requests.get(url)
+			page_json = json.loads(r.text)
+
+			for sponsor_json in page_json['sponsorships']:
+				sponsor=Person.objects.filter(ocd_id=sponsor_json['entity_id']).first()
+				if sponsor:
+					obj, created = Sponsorship.objects.get_or_create(
+							bill=bill,
+							person=sponsor,
+							classification=sponsor_json['classification'],
+						)
+
+					if created:
+						print('      adding sponsorship: %s %s' % (obj.bill, obj.person))
+	
 
 	def grab_bills(self, delete=False):
 		# this grabs all bills & associated actions from city council
@@ -223,6 +243,7 @@ class Command(BaseCommand):
 		for action_json in page_json['actions']:
 			self.load_action(action_json, obj)
 
+
 	def load_action(self, action_json, bill):
 
 		org = Organization.objects.filter(ocd_id=action_json['organization']['id']).first()
@@ -251,7 +272,7 @@ class Command(BaseCommand):
 
 			# save image to disk
 			if page_json['image']:
-				print("saving image for %s" % page_json['name'])
+				print("   saving image for %s" % page_json['name'])
 				r = requests.get(page_json['image'])
 				if r.status_code == 200:
 				    with open((HEADSHOT_PATH + page_json['id'] + ".jpg"), 'wb') as f:
@@ -278,7 +299,7 @@ class Command(BaseCommand):
 					slug=slugify(page_json['name'])+ocd_id_part,
 				)
 
-			print('      adding person: %s' % person.name)
+			print('   adding person: %s' % person.name)
 
 		for membership_json in page_json['memberships']:
 
