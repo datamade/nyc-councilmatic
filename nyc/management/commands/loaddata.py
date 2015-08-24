@@ -54,44 +54,67 @@ class Command(BaseCommand):
 			Organization.objects.all().delete()
 			Post.objects.all().delete()
 
+		# first grab ny city council root
+		self.grab_organization_posts(ocd_city_council_id)
+
 		# this grabs all organizations within a jurisdiction
-		org_url = base_url+'/organizations/?jurisdiction_id='+ocd_jurisdiction_id
-		r = requests.get(org_url)
+		orgs_url = base_url+'/organizations/?jurisdiction_id='+ocd_jurisdiction_id
+		r = requests.get(orgs_url)
 		page_json = json.loads(r.text)
 
 		for i in range(page_json['meta']['max_page']):
 
-			r = requests.get(org_url+'&page='+str(i+1))
+			r = requests.get(orgs_url+'&page='+str(i+1))
 			page_json = json.loads(r.text)
 
 			for result in page_json['results']:
-				try:
-					obj, created = Organization.objects.get_or_create(
-							ocd_id=result['id'],
-							name=result['name'],
-							classification=result['classification'],
-							slug=slugify(result['name']),
-						)
-				except IntegrityError:
-					ocd_id_part = result['id'].rsplit('-',1)[1]
-					obj, created = Organization.objects.get_or_create(
-							ocd_id=result['id'],
-							name=result['name'],
-							classification=result['classification'],
-							slug=slugify(result['name'])+ocd_id_part,
-						)
 
-				if created:
-					print('   adding %s' % result['id'] )
+				self.grab_organization_posts(result['id'])
 
-				self.grab_posts(obj)
 
-	def grab_posts(self, organization):
-		# loads posts for a given organization
+	def grab_organization_posts(self, organization_ocd_id, parent=None):
 
-		url = base_url+'/'+organization.ocd_id
+		url = base_url+'/'+organization_ocd_id
 		r = requests.get(url)
 		page_json = json.loads(r.text)
+
+		if parent:
+			try:
+				org_obj, created = Organization.objects.get_or_create(
+						ocd_id=organization_ocd_id,
+						name=page_json['name'],
+						classification=page_json['classification'],
+						slug=slugify(page_json['name']),
+						parent=parent,
+					)
+			except IntegrityError:
+				ocd_id_part = organization_ocd_id.rsplit('-',1)[1]
+				org_obj, created = Organization.objects.get_or_create(
+						ocd_id=organization_ocd_id,
+						name=page_json['name'],
+						classification=page_json['classification'],
+						slug=slugify(page_json['name'])+ocd_id_part,
+						parent=parent,
+					)
+		else:
+			try:
+				org_obj, created = Organization.objects.get_or_create(
+						ocd_id=organization_ocd_id,
+						name=page_json['name'],
+						classification=page_json['classification'],
+						slug=slugify(page_json['name']),
+					)
+			except IntegrityError:
+				ocd_id_part = organization_ocd_id.rsplit('-',1)[1]
+				org_obj, created = Organization.objects.get_or_create(
+						ocd_id=organization_ocd_id,
+						name=page_json['name'],
+						classification=page_json['classification'],
+						slug=slugify(page_json['name'])+ocd_id_part,
+					)
+
+		if created:
+			print('   adding organization: %s' % org_obj.name )
 
 		for post_json in page_json['posts']:
 
@@ -99,11 +122,15 @@ class Command(BaseCommand):
 					ocd_id = post_json['id'],
 					label = post_json['label'],
 					role = post_json['role'],
-					organization = organization
+					organization = org_obj,
 				)
 
 			if created:
 				print('      adding post: %s %s' %(post_json['role'], post_json['label']))
+
+		for child in page_json['children']:
+			self.grab_organization_posts(child['id'], org_obj)
+
 
 	def grab_people(self, delete=False):
 		# find people associated with existing organizations
