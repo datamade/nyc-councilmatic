@@ -41,11 +41,16 @@ class Bill(models.Model):
 	slug = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
-		return self.name
+		return self.friendly_name
 
 	@property
 	def current_org(self):
 		return self.actions.all().order_by('date').first().organization if self.actions.all() else None
+
+	@property
+	def friendly_name(self):
+		nums_only = self.identifier.split(' ')[-1]
+		return self.bill_type+' '+nums_only
 
 class Organization(models.Model):
 	ocd_id = models.CharField(max_length=100, unique=True)
