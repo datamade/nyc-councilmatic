@@ -29,7 +29,7 @@ class Person(models.Model):
 
 class Bill(models.Model):
 	ocd_id = models.CharField(max_length=100, unique=True)
-	name = models.TextField()
+	description = models.TextField()
 	identifier = models.CharField(max_length=50)
 	bill_type = models.CharField(max_length=50)
 	classification = models.CharField(max_length=100)
@@ -38,6 +38,8 @@ class Bill(models.Model):
 	source_url = models.CharField(max_length=255)
 	source_note = models.CharField(max_length=255, blank=True)
 	from_organization = models.ForeignKey('Organization', related_name='bills', null=True)
+	full_text = models.TextField(blank=True)
+	last_action_date = models.DateTimeField(default=None, null=True)
 	slug = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
@@ -84,6 +86,7 @@ class Action(models.Model):
 	description = models.TextField(blank=True)
 	organization = models.ForeignKey('Organization', related_name='actions', null=True)
 	bill = models.ForeignKey('Bill', related_name='actions', null=True)
+	order = models.IntegerField()
 
 	@property 
 	def label(self):
@@ -123,4 +126,16 @@ class Sponsorship(models.Model):
 	bill = models.ForeignKey('Bill', related_name='sponsorships')
 	person = models.ForeignKey('Person', related_name='sponsorships')
 	classification = models.CharField(max_length=255)
+	is_primary = models.BooleanField(default=False)
+
+class Documents(models.Model):
+	bill = models.ForeignKey('Bill', related_name='documents')
+	note = models.TextField()
+	url = models.TextField()
+
+class LegislativeSession(models.Model):
+	identifier = models.CharField(max_length=255)
+	organization = models.ForeignKey('Organization', related_name='legislative_sessions')
+	name = models.CharField(max_length=255)
+
 
