@@ -1,5 +1,6 @@
 from nyc.models import Bill
 from haystack import indexes
+import re
 
 class BillIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
@@ -13,6 +14,7 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     sponsorships = indexes.MultiValueField(faceted=True)
     source_url = indexes.CharField(model_attr='source_url', indexed=False)
     source_note = indexes.CharField(model_attr='source_note')
+    full_text = indexes.CharField(model_attr='full_text')
 
     actions = indexes.MultiValueField()
 
@@ -40,3 +42,6 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_from_organization_slug(self, obj):
         if obj.current_org:
             return obj.current_org.slug
+
+    def prepare_full_text(self, obj):
+        return re.sub(r'<[^>]*?>', ' ', obj.full_text)

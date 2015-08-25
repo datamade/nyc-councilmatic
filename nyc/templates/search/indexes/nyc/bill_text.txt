@@ -7,3 +7,4 @@
     {{ s.organization.name }}
     {{ s.description }}
 {% endfor %}
+{{ object.full_text }}

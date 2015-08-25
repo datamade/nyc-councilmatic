@@ -45,8 +45,8 @@
 
             <h2>Sponsored Bills</h2>
 
-            {% if person.sponsorships.all %}
-                {% for s in person.sponsorships.all %}
+            {% if sponsorships %}
+                {% for s in sponsorships %}
                     <h3><a href="/bill-detail/{{ s.bill.slug }}">{{ s.bill.friendly_name }}</a></h3>
 
                     <span class='label label-{{s.bill.current_action.label}}'>{{s.bill.current_action.description}}</span> by <a href='/committee-detail/{{ s.bill.current_org.ocd_id }}'>{{ s.bill.current_org.name }}</a> on {{s.bill.current_action.date|date:'M d, Y'}}

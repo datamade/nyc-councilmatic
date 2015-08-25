@@ -48,11 +48,11 @@ class Bill(models.Model):
 
 	@property
 	def current_org(self):
-		return self.actions.all().order_by('-date').first().organization if self.actions.all() else None
+		return self.actions.all().order_by('-order').first().organization if self.actions.all() else None
 
 	@property
 	def current_action(self):
-		return self.actions.all().order_by('-date').first() if self.actions.all() else None
+		return self.actions.all().order_by('-order').first() if self.actions.all() else None
 
 	@property
 	def friendly_name(self):
@@ -78,7 +78,7 @@ class Organization(models.Model):
 
 	@property
 	def recent_activity(self):
-		return self.actions.all().order_by('-date') if self.actions.all() else None
+		return self.actions.all().order_by('-order') if self.actions.all() else None
 
 	@property
 	def chairs(self):
