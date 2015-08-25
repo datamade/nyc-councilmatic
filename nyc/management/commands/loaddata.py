@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
-from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship
+from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship, LegislativeSession
 from councilmatic.settings import HEADSHOT_PATH
 import requests
 import json
@@ -166,6 +166,7 @@ class Command(BaseCommand):
 							bill=bill,
 							person=sponsor,
 							classification=sponsor_json['classification'],
+							is_primary=sponsor_json['primary'],
 						)
 
 					if created:
@@ -177,9 +178,13 @@ class Command(BaseCommand):
 		# organizations need to be populated before bills & actions are populated
 		
 		if delete:
-			print("deleting all bills and actions")
+			print("deleting all bills, actions, legislative sessions")
 			Bill.objects.all().delete()
 			Action.objects.all().delete()
+			LegislativeSession.objects.all().delete()
+
+		# get legislative sessions
+		self.grab_legislative_sessions()
 
 		bill_url = base_url+'/bills/?from_organization_id='+ocd_city_council_id
 		r = requests.get(bill_url)
@@ -193,6 +198,17 @@ class Command(BaseCommand):
 			for result in page_json['results']:
 				self.grab_bill(result['id'])
 
+	def grab_legislative_sessions(self):
+
+		# TO-DO: update this when ocd data is fixed
+		obj, created = LegislativeSession.objects.get_or_create(
+				identifier='2014',
+				jurisdiction_ocd_id=ocd_jurisdiction_id,
+				name='2014 Legislative Session',
+			)
+		if created:
+			print('adding legislative session: %s' %obj.name)
+
 	def grab_bill(self, bill_id):
 
 		bill_url = base_url+'/'+bill_id
@@ -200,6 +216,7 @@ class Command(BaseCommand):
 		page_json = json.loads(r.text)
 
 		from_org = Organization.objects.filter(ocd_id=page_json['from_organization']['id']).first()
+		legislative_session = LegislativeSession.objects.filter(identifier=page_json['legislative_session']['identifier']).first()
 
 		# this is a temporary fix - remove when outdated bills are no longer in ocd
 		if 'local_classification' in page_json['extras']:
@@ -207,10 +224,15 @@ class Command(BaseCommand):
 		else:
 			bill_type = 'NO TYPE'
 
+		if 'full_text' in page_json['extras']:
+			full_text = page_json['extras']['full_text']
+		else:
+			full_text = ''
+
 		try:
 			obj, created = Bill.objects.get_or_create(
 					ocd_id=bill_id,
-					name=page_json['title'],
+					description=page_json['title'],
 					identifier=page_json['identifier'],
 					classification=page_json['classification'][0],
 					date_created=page_json['created_at'],
@@ -218,6 +240,8 @@ class Command(BaseCommand):
 					source_url=page_json['sources'][0]['url'],
 					source_note=page_json['sources'][0]['note'],
 					from_organization=from_org,
+					full_text=full_text,
+					legislative_session=legislative_session,
 					bill_type=bill_type,
 					slug=slugify(page_json['identifier']),
 				)
@@ -225,7 +249,7 @@ class Command(BaseCommand):
 			ocd_id_part = bill_id.rsplit('-',1)[1]
 			obj, created = Bill.objects.get_or_create(
 					ocd_id=bill_id,
-					name=page_json['title'],
+					description=page_json['title'],
 					identifier=page_json['identifier'],
 					classification=page_json['classification'][0],
 					date_created=page_json['created_at'],
@@ -233,6 +257,8 @@ class Command(BaseCommand):
 					source_url=page_json['sources'][0]['url'],
 					source_note=page_json['sources'][0]['note'],
 					from_organization=from_org,
+					full_text=full_text,
+					legislative_session=legislative_session,
 					bill_type=bill_type,
 					slug=slugify(page_json['identifier'])+ocd_id_part,
 				)
@@ -240,11 +266,17 @@ class Command(BaseCommand):
 		if created:
 			print('   adding %s' % bill_id)
 
-		for action_json in page_json['actions']:
-			self.load_action(action_json, obj)
+		action_order = 0
+		for action_json in reversed(page_json['actions']):
+			self.load_action(action_json, obj, action_order)
+			action_order+=1
+
+		# TO-DO: update bill last_action_date with most recent action
+
+		# TO-DO: update documents associated with a bill
 
 
-	def load_action(self, action_json, bill):
+	def load_action(self, action_json, bill, action_order):
 
 		org = Organization.objects.filter(ocd_id=action_json['organization']['id']).first()
 
@@ -258,6 +290,7 @@ class Command(BaseCommand):
 				description=action_json['description'],
 				organization=org,
 				bill=bill,
+				order=action_order,
 			)
 
 		if created:
