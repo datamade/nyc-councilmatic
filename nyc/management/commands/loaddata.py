@@ -3,7 +3,7 @@ from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
 from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship, LegislativeSession, Document
-from councilmatic.settings import HEADSHOT_PATH
+from councilmatic.settings import HEADSHOT_PATH, DEBUG
 import requests
 import json
 import pytz
@@ -13,7 +13,6 @@ ocd_jurisdiction_id = 'ocd-jurisdiction/country:us/state:ny/place:new_york/gover
 ocd_city_council_id = 'ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731'
 base_url = 'http://api.opencivicdata.org'
 eastern = pytz.timezone('US/Eastern')
-
 
 class Command(BaseCommand):
 	help = 'loads in data from the open civic data API'
@@ -113,7 +112,7 @@ class Command(BaseCommand):
 						slug=slugify(page_json['name'])+ocd_id_part,
 					)
 
-		if created:
+		if created and DEBUG:
 			print('   adding organization: %s' % org_obj.name )
 
 		for post_json in page_json['posts']:
@@ -125,7 +124,7 @@ class Command(BaseCommand):
 					organization = org_obj,
 				)
 
-			if created:
+			if created and DEBUG:
 				print('      adding post: %s %s' %(post_json['role'], post_json['label']))
 
 		for child in page_json['children']:
@@ -169,7 +168,7 @@ class Command(BaseCommand):
 							is_primary=sponsor_json['primary'],
 						)
 
-					if created:
+					if created and DEBUG:
 						print('      adding sponsorship: %s %s' % (obj.bill, obj.person))
 	
 
@@ -206,7 +205,7 @@ class Command(BaseCommand):
 				jurisdiction_ocd_id=ocd_jurisdiction_id,
 				name='2014 Legislative Session',
 			)
-		if created:
+		if created and DEBUG:
 			print('adding legislative session: %s' %obj.name)
 
 	def grab_bill(self, bill_id):
@@ -263,7 +262,7 @@ class Command(BaseCommand):
 					slug=slugify(page_json['identifier'])+ocd_id_part,
 				)
 
-		if created:
+		if created and DEBUG:
 			print('   adding %s' % bill_id)
 
 		action_order = 0
@@ -297,7 +296,7 @@ class Command(BaseCommand):
 				order=action_order,
 			)
 
-		if created:
+		if created and DEBUG:
 			print('      adding action: %s' %action_json['description'])
 
 	def load_document(self, document_json, bill):
@@ -351,7 +350,8 @@ class Command(BaseCommand):
 					slug=slugify(page_json['name'])+ocd_id_part,
 				)
 
-			print('   adding person: %s' % person.name)
+			if DEBUG:
+				print('   adding person: %s' % person.name)
 
 		for membership_json in page_json['memberships']:
 
@@ -381,5 +381,5 @@ class Command(BaseCommand):
 					end_date = end_date
 				)
 
-			if created:
+			if created and DEBUG:
 				print('      adding membership: %s' % obj.role)
