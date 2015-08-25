@@ -132,7 +132,7 @@ class Sponsorship(models.Model):
 	classification = models.CharField(max_length=255)
 	is_primary = models.BooleanField(default=False)
 
-class Documents(models.Model):
+class Document(models.Model):
 	bill = models.ForeignKey('Bill', related_name='documents')
 	note = models.TextField()
 	url = models.TextField()
