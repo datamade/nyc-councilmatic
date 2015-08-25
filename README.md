@@ -156,7 +156,7 @@ indexed or how they are getting indexed, you'll need to regenerate the
 schema.xml file that Solr uses to make it's magic. Here's how that works:
 
 ```
-python manage.py build_solr_schema > solor_scripts/schema.xml
+python manage.py build_solr_schema > solr_scripts/schema.xml
 cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
 ```
 
