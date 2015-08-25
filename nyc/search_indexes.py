@@ -9,9 +9,12 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     classification = indexes.CharField(model_attr='classification', faceted=True)
     identifier = indexes.CharField(model_attr='identifier')
     name = indexes.CharField(model_attr='name')
-    sponsors = indexes.MultiValueField()
+    friendly_name = indexes.CharField()
+    sponsorships = indexes.MultiValueField()
     source_url = indexes.CharField(model_attr='source_url', indexed=False)
     source_note = indexes.CharField(model_attr='source_note')
+
+    actions = indexes.MultiValueField()
 
     from_organization = indexes.CharField(model_attr='from_organization', 
                                           faceted=True)
@@ -21,8 +24,14 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     def get_model(self):
         return Bill
 
-    def prepare_sponsors(self, obj):
+    def prepare_friendly_name(self, obj):
+        return obj.friendly_name
+
+    def prepare_sponsorships(self, obj):
         return [person for person in obj.sponsorships.all()]
+
+    def prepare_actions(self, obj):
+        return [action for action in obj.actions.all()]
     
     def prepare_from_organization(self, obj):
         if obj.current_org:

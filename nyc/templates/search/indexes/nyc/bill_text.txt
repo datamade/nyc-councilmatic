@@ -1,2 +1,9 @@
-{{ object.name }}
+{{ object.friendly_name }}
 {{ object.classification }}
+{% for s in object.sponsorships.all %}
+    {{ s.person.name }}
+{% endfor %}
+{% for a in object.actions.all %}
+    {{ s.organization.name }}
+    {{ s.description }}
+{% endfor %}

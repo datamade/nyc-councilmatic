@@ -88,13 +88,12 @@ class Action(models.Model):
 	@property 
 	def label(self):
 		c = self.classification
-
 		
 		if c == 'committee-passage': return 'success'
 		if c == 'passage': return 'success'
 		if c == 'executive-signature': return 'success'
+		if c == 'amendment-passage': return 'success'
 
-		if c == 'amendment-passage': return 'info'
 		if c == 'amendment-introduction': return 'info'
 		if c == 'introduction': return 'info'
 		if c == 'committee-referral': return 'info'
