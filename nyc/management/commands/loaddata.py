@@ -271,7 +271,9 @@ class Command(BaseCommand):
 			self.load_action(action_json, obj, action_order)
 			action_order+=1
 
-		# TO-DO: update bill last_action_date with most recent action
+		# update bill last_action_date with most recent action
+		obj.last_action_date = obj.get_last_action_date()
+		obj.save()
 
 		# TO-DO: update documents associated with a bill
 
@@ -295,6 +297,7 @@ class Command(BaseCommand):
 
 		if created:
 			print('      adding action: %s' %action_json['description'])
+
 
 	def grab_person_memberships(self, person_id):
 		# this grabs a person and all their memberships

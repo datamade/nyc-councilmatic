@@ -59,6 +59,9 @@ class Bill(models.Model):
 		nums_only = self.identifier.split(' ')[-1]
 		return self.bill_type+' '+nums_only
 
+	def get_last_action_date(self):
+		return self.actions.all().order_by('-order').first().date if self.actions.all() else None
+
 class Organization(models.Model):
 	ocd_id = models.CharField(max_length=100, unique=True)
 	name = models.CharField(max_length=255)
