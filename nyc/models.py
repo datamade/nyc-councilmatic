@@ -135,7 +135,7 @@ class Documents(models.Model):
 
 class LegislativeSession(models.Model):
 	identifier = models.CharField(max_length=255)
-	organization = models.ForeignKey('Organization', related_name='legislative_sessions')
+	jurisdiction_ocd_id = models.CharField(max_length=255)
 	name = models.CharField(max_length=255)
 
 
