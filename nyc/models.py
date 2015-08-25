@@ -40,6 +40,7 @@ class Bill(models.Model):
 	from_organization = models.ForeignKey('Organization', related_name='bills', null=True)
 	full_text = models.TextField(blank=True)
 	last_action_date = models.DateTimeField(default=None, null=True)
+	legislative_session = models.ForeignKey('LegislativeSession', related_name='bills')
 	slug = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
