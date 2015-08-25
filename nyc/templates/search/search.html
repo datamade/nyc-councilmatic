@@ -15,7 +15,7 @@
         <h3>Search for New York City Legislation</h3>
         <form method="get" action=".">
             <div class="input-group">
-                <input name="q" type="text" class="input-lg form-control" placeholder="Bill de Blasio, zoning, Res 0815-2015, etc." value="{{ request.GET.q }}">
+                <input name="q" type="text" class="input-lg form-control" placeholder="Bill de Blasio, zoning, Resolution 0815-2015, etc." value="{{ request.GET.q }}">
                 <div class='input-group-btn'>
                     <button type="submit" class="btn btn-lg btn-info">
                         <i class='fa fa-fw fa-search'></i>
@@ -28,21 +28,21 @@
 
     <div class="row">
     {% if query %}
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Filter results</h3>
                 </div>
                 <div class="panel-body">
                     {% for facet_name, facet_values in facets.fields.items %}
-                    <p><strong>{{ facet_name | sentence_case }}</strong></p>
+                    <p><strong>{{ facet_name | facet_name }}</strong></p>
                     <ul>
                         {% for name, count in facet_values %}
                             {% if count %}
                                 <li>
                                     <a href="/search/?q={{query}}&selected_facets={{facet_name}}_exact:{{name}}">
-                                        {{ name|sentence_case }} ({{ count }})
-                                    </a>
+                                        {{ name|title }}
+                                    </a> ({{ count }})
                                 </li>
                             {% endif %}
                         {% endfor %}
@@ -51,20 +51,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
         <h3>{{ paginator.count }} result{{ paginator.count|pluralize }} for '{{ request.GET.q }}'</h3>
 
         {% for result in page.object_list %}
-            <h4>
-                <a href="/bill-detail/{{ result.object.slug }}">{{ result.object.identifier }}</a>
-            </h4>
-            <p> 
-              <span class='label label-default'>Action label</span> on {{ result.object.date_created|date:'M d, Y' }} 
+
+            <h3><a href="/bill-detail/{{ result.object.slug }}">{{ result.object.friendly_name }}</a></h3>
+
+            <span class='label label-{{result.object.actions.first.label}}'>{{result.object.actions.first.description}}</span> by <a href='/committee-detail/{{ result.object.from_organization.ocd_id }}'>{{ result.object.from_organization.name }}</a> on {{result.object.actions.first.date|date:'M d, Y'}}
             </p>
-            <p>Committee: 
-              {{ legislation.current_org.name }}
-            </p>
-            <p>{% highlight result.object.name with query css_class "bg-info" %}</p>
+
+            <p>{{ result.object.name }}</p>
+
+            {% if result.object.sponsorships.all %}
+                Sponsored by: 
+                {% for s in result.object.sponsorships.all %}
+                    <a href="/person/{{s.person.slug}}">{{s.person.name}}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            {% endif %}
             <hr />
         {% empty %}
             <p>No results found.</p>
@@ -73,10 +77,30 @@
     </div>
     {% if page.has_previous or page.has_next %}
         <div class="row">
-            <div class="col-md-12">
-            {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-            |
-            {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+            <div class="col-md-8 col-md-offset-4">
+                <nav>
+                    <ul class="pagination">
+                        {% if page.has_previous %}
+                            <li>
+                                <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">&laquo; Previous</span></a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <a href="#" aria-label="Previous"><span aria-hidden="true">&laquo; Previous</span></a>
+                            </li>
+                        {% endif %}
+
+                        {% if page.has_next %}
+                            <li>
+                                <a href="?q={{ query }}&amp;page={{ page.next_page_number }}" aria-label="Next"><span aria-hidden="true">Next &raquo;</span></a>
+                            </li>
+                        {% else %}
+                            <li class="disabled">
+                                <a href="#" aria-label="Next"><span aria-hidden="true">Next &raquo;</span></a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
             </div>
         </div>
     {% endif %}

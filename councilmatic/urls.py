@@ -19,7 +19,7 @@ from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 
 sqs = SearchQuerySet().facet('bill_type')\
-                      .facet('classification')\
+                      .facet('sponsorships')\
                       .facet('from_organization')
 
 urlpatterns = [
