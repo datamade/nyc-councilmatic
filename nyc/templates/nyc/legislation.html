@@ -1,10 +1,16 @@
 {% extends "base.html" %}
-{% block title %}{{ legislation.identifier }}{% endblock %}
+{% block title %}{{ legislation.friendly_name }}{% endblock %}
 {% block content %}
   	{% if legislation %}
   		<div class="row-fluid">
 	        <div class="col-sm-12">
-	            <h1>{{ legislation.identifier }}</h1>
+	            <h1>
+                    {{ legislation.friendly_name }}
+                </h1>
+
+                {% if actions %}
+                    <span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description}}</span> by <a href='/committee-detail/{{ legislation.current_org.ocd_id }}'>{{ legislation.current_org.name }}</a> on {{legislation.current_action.date|date:'M d, Y'}}
+                {% endif %}
 	            <hr />
 	        </div>
 	    </div>
@@ -12,23 +18,48 @@
   		<div class="row-fluid">
 	  		<div class='col-sm-8'>
 			    <p>{{ legislation.name }}</p>
-			    {% if legislation.actions.all %}
-			    	<h3>Bill History</h3>
+			    {% if actions %}
+			    	<h2>Bill History</h2>
 
 			    	<p>Current Committee: <a href="/committee-detail/{{ legislation.current_org.slug }}">{{ legislation.current_org.name }}</a><p>
 
-				    {% for action in legislation.actions.all %}
-				    	<p><strong><a href="/committee-detail/{{ action.organization.slug }}">{{ action.organization.name }}</a></strong></p>
-				    	<p>{{ action.description }} {{ action.date }}</p>
-				    {% endfor %}
+				    
+                    <table class='table' id='committee-actions'>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Legislative body</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for action in actions %}
+                                <tr>
+                                    <td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
+                                    <td><a href="/committee-detail/{{ action.organization.slug }}">{{ action.organization.name }}</a></td>
+                                    <td><span class='label label-{{action.label}}'>{{action.description}}</span></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
 				{% endif %}
 			</div>
 			<div class='col-sm-4'>
 				<div class='well'>
-					<p>Created: {{ legislation.date_created|date:'M d, Y' }}</p>
-			    	<p>Updated: {{ legislation.date_updated|date:'M d, Y' }}</p>
+                    {% if legislation.sponsorships.all %}
+                        <h3>Sponsors ({{legislation.sponsorships.all | length}})</h3>
 
-			    	<p><a href="{{ legislation.source_url }}" target="_blank"><i class='fa fa-fw fa-external-link'></i> View this on NYC.gov</a></p>
+                        <ul class='list-unstyled' id='sponsors'>
+                            {% for s in legislation.sponsorships.all %}
+                                <li><a href="/person/{{s.person.slug}}">
+                                    <img src='{{s.person.headshot_url}}' alt='{{s.person.name}}' title='{{s.person.name}}' class='img-responsive img-thumbnail' />
+                                    {{s.person.name}}
+                                </a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <h3>No sponsors</h3>
+                    {% endif %}
 				</div>
 			</div>
 		</div>

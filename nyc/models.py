@@ -45,7 +45,11 @@ class Bill(models.Model):
 
 	@property
 	def current_org(self):
-		return self.actions.all().order_by('date').first().organization if self.actions.all() else None
+		return self.actions.all().order_by('-date').first().organization if self.actions.all() else None
+
+	@property
+	def current_action(self):
+		return self.actions.all().order_by('-date').first() if self.actions.all() else None
 
 	@property
 	def friendly_name(self):
@@ -80,6 +84,26 @@ class Action(models.Model):
 	description = models.TextField(blank=True)
 	organization = models.ForeignKey('Organization', related_name='actions', null=True)
 	bill = models.ForeignKey('Bill', related_name='actions', null=True)
+
+	@property 
+	def label(self):
+		c = self.classification
+
+		
+		if c == 'committee-passage': return 'success'
+		if c == 'passage': return 'success'
+		if c == 'executive-signature': return 'success'
+
+		if c == 'amendment-passage': return 'info'
+		if c == 'amendment-introduction': return 'info'
+		if c == 'introduction': return 'info'
+		if c == 'committee-referral': return 'info'
+		if c == 'filing': return 'info'
+		if c == 'executive-received': return 'info'
+
+		if c == 'deferred': return 'primary'
+
+		else: return 'info'
 
 class Post(models.Model):
 	ocd_id = models.CharField(max_length=100, unique=True)

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Person, Bill, Organization, Action
 
 def index(request):
-	recent_legislation = Bill.objects.order_by('date_updated')[:10]
+	recent_legislation = Bill.objects.exclude(bill_type='NO TYPE').order_by('-date_updated')[:10]
 	context = {
 		'recent_legislation': recent_legislation
 	}
@@ -26,9 +26,11 @@ def council_members(request):
 def bill_detail(request, slug):
 
 	legislation = Bill.objects.filter(slug=slug).first()
+	actions = legislation.actions.all().order_by('-date')
 
 	context={
-		'legislation': legislation
+		'legislation': legislation,
+		'actions': actions
 	}
 
 	return render(request, 'nyc/legislation.html', context)

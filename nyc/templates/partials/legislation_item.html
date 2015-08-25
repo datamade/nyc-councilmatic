@@ -1,10 +1,13 @@
-<h4><a href="/bill-detail/{{ legislation.slug }}">{{ legislation.identifier }}</a></h4>
-<p> 
-  <span class='label label-default'>Action label</span> on {{ legislation.date_created|date:'M d, Y' }} 
-</p>
+<h3><a href="/bill-detail/{{ legislation.slug }}">{{ legislation.friendly_name }}</a></h3>
 
-<p>Committee: 
-  {{ legislation.current_org.name }}
+<span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description}}</span> by <a href='/committee-detail/{{ legislation.current_org.ocd_id }}'>{{ legislation.current_org.name }}</a> on {{legislation.current_action.date|date:'M d, Y'}}
 </p>
 
 <p>{{ legislation.name }}</p>
+
+{% if legislation.sponsorships.all %}
+    Sponsored by: 
+    {% for s in legislation.sponsorships.all %}
+        <a href="/person/{{s.person.slug}}">{{s.person.name}}</a>{% if not forloop.last %}, {% endif %}
+    {% endfor %}
+{% endif %}

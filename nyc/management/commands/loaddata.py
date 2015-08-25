@@ -248,9 +248,13 @@ class Command(BaseCommand):
 
 		org = Organization.objects.filter(ocd_id=action_json['organization']['id']).first()
 
+		classification = ""
+		if action_json['classification']:
+			classification = action_json['classification'][0]
+
 		obj, created = Action.objects.get_or_create(
 				date=action_json['date'],
-				classification=action_json['classification'],
+				classification=classification,
 				description=action_json['description'],
 				organization=org,
 				bill=bill,

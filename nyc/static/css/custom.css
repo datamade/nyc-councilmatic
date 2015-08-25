@@ -29,6 +29,10 @@ h1, h2, h3, h4 {
     width: 50px;
 }
 
+#sponsors img {
+    width: 50px;
+}
+
 #council-members td, #committee-actions td {
     vertical-align: middle;
 }
