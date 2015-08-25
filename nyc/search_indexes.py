@@ -6,11 +6,11 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     slug = indexes.CharField(model_attr='slug', indexed=False)
     ocd_id = indexes.CharField(model_attr='ocd_id', indexed=False)
     bill_type = indexes.CharField(model_attr='bill_type', faceted=True)
-    classification = indexes.CharField(model_attr='classification', faceted=True)
+    classification = indexes.CharField(model_attr='classification')
     identifier = indexes.CharField(model_attr='identifier')
     description = indexes.CharField(model_attr='description')
     friendly_name = indexes.CharField()
-    sponsorships = indexes.MultiValueField()
+    sponsorships = indexes.MultiValueField(faceted=True)
     source_url = indexes.CharField(model_attr='source_url', indexed=False)
     source_note = indexes.CharField(model_attr='source_note')
 
@@ -28,7 +28,7 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
         return obj.friendly_name
 
     def prepare_sponsorships(self, obj):
-        return [person for person in obj.sponsorships.all()]
+        return [sponsorship.person for sponsorship in obj.sponsorships.all()]
 
     def prepare_actions(self, obj):
         return [action for action in obj.actions.all()]

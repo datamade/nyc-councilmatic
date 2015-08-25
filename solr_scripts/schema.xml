@@ -151,39 +151,39 @@
     <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false"/>
 
 
+    <field name="source_note" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="actions" type="text_en" indexed="true" stored="true" multiValued="true" />
+
     <field name="source_url" type="string" indexed="false" stored="true" multiValued="false" />
 
     <field name="from_organization_slug" type="string" indexed="false" stored="true" multiValued="false" />
-
-    <field name="bill_type_exact" type="string" indexed="true" stored="true" multiValued="false" />
-
-    <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="classification" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="from_organization_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
-    <field name="from_organization" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="ocd_id" type="string" indexed="false" stored="true" multiValued="false" />
+
+    <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="identifier" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="bill_type" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="slug" type="string" indexed="false" stored="true" multiValued="false" />
+    <field name="from_organization" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="classification_exact" type="string" indexed="true" stored="true" multiValued="false" />
-
-    <field name="ocd_id" type="string" indexed="false" stored="true" multiValued="false" />
-
-    <field name="sponsorships" type="text_en" indexed="true" stored="true" multiValued="true" />
-
     <field name="friendly_name" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="actions" type="text_en" indexed="true" stored="true" multiValued="true" />
+    <field name="bill_type" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="source_note" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="sponsorships_exact" type="string" indexed="true" stored="true" multiValued="true" />
+
+    <field name="bill_type_exact" type="string" indexed="true" stored="true" multiValued="false" />
+
+    <field name="slug" type="string" indexed="false" stored="true" multiValued="false" />
+
+    <field name="sponsorships" type="text_en" indexed="true" stored="true" multiValued="true" />
 
   </fields>
 

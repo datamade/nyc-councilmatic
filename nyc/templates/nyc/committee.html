@@ -29,8 +29,7 @@
             				{% for action in committee.recent_activity %}
                                 <tr>
                 					<td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
-                                    <td><h4><a href="/bill-detail/{{action.bill.slug}}">{{action.bill.friendly_name}}</a></h4>
-                                        {{action.bill.name}}</td>
+                                    <td><a href="/bill-detail/{{action.bill.slug}}">{{action.bill.friendly_name}}</a></td>
                 					<td><span class='label label-{{action.label}}'>{{action.description}}</span></td>
                                 </tr>
             				{% endfor %}
