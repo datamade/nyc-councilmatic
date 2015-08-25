@@ -70,6 +70,8 @@ def person(request, slug):
 
 	person = Person.objects.filter(slug=slug).first()
 
+	sponsorships = person.sponsorships.order_by('-date_updated')
+
 	chairs = person.memberships.filter(role="CHAIRPERSON")
 	memberships = person.memberships.filter(role="Committee Member")
 
