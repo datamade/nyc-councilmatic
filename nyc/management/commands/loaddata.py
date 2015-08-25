@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
-from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship, LegislativeSession
+from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship, LegislativeSession, Document
 from councilmatic.settings import HEADSHOT_PATH
 import requests
 import json
@@ -275,7 +275,9 @@ class Command(BaseCommand):
 		obj.last_action_date = obj.get_last_action_date()
 		obj.save()
 
-		# TO-DO: update documents associated with a bill
+		# update documents associated with a bill
+		for document_json in page_json['documents']:
+			self.load_document(document_json, obj)
 
 
 	def load_action(self, action_json, bill, action_order):
@@ -297,6 +299,16 @@ class Command(BaseCommand):
 
 		if created:
 			print('      adding action: %s' %action_json['description'])
+
+	def load_document(self, document_json, bill):
+
+		obj, created = Document.objects.get_or_create(
+				bill=bill,
+				note=document_json['note'],
+				url=document_json['links'][0]['url'],
+			)
+		if created:
+			print('      adding document: %s' % obj.note)
 
 
 	def grab_person_memberships(self, person_id):
