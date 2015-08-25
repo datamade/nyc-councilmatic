@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bill',
             name='legislative_session',
-            field=models.ForeignKey(related_name='bills', to='nyc.LegislativeSession', default=''),
+            field=models.ForeignKey(related_name='bills', to='nyc.LegislativeSession', null=True),
             preserve_default=False,
         ),
     ]
