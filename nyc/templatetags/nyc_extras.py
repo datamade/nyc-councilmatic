@@ -25,3 +25,12 @@ def remove_action_subj(bill_action_desc):
 	clean_action = re.sub(r'\bRecved\b', 'Received', clean_action)
 	clean_action = re.sub(r'[,\s]*by\s[^\s]*', '', clean_action)
 	return clean_action
+
+@register.filter
+def organization_link(organization):
+	# make link to committee if committee
+	if organization.classification == 'committee':
+		return '<a href="/committee-detail/'+organization.slug+'">'+organization.name+'</a>'
+	# just return text if legislature or executive
+	else:
+		return organization.name
