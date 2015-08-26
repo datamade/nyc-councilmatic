@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load nyc_extras %}
+{% load staticfiles %}
 {% block title %}{{ legislation.friendly_name }}{% endblock %}
 {% block content %}
   	{% if legislation %}
@@ -12,53 +13,110 @@
                 {% if actions %}
                     <span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description | remove_action_subj }}</span> by <a href='/committee-detail/{{ legislation.current_org.ocd_id }}'>{{ legislation.current_org.name }}</a> on {{legislation.current_action.date|date:'M d, Y'}}
                 {% endif %}
+
+                <p><br />{{ legislation.description }}</p>
 	            <hr />
-	        </div>
-	    </div>
 
-  		<div class="row-fluid">
-	  		<div class='col-sm-8'>
-			    <p>{{ legislation.name }}</p>
-			    {% if actions %}
-			    	<h2>Bill History</h2>
+                <ul class="nav nav-pills">
+                  {% if actions %}
+                    <li role="presentation" {% if request.GET.view == 'actions' or request.GET.view == None %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=actions">Bill History</a></li>
+                  {% endif %}
+                  <li role="presentation" {% if request.GET.view == 'sponsors' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=sponsors">Sponsors ({{ legislation.sponsorships.all | length }})</a></li>
+                  <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=text">Legislation Text</a></li>
+                  <li role="presentation" {% if request.GET.view == 'comments' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=comments">Comments (2)</a></li>
+                </ul>
 
-                    <table class='table' id='committee-actions'>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Legislative body</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for action in actions %}
+
+			    {% if request.GET.view == 'actions' or request.GET.view == None %}
+                    {% if actions %}
+    			    	<h3>Bill History</h3>
+
+                        <table class='table' id='committee-actions'>
+                            <thead>
                                 <tr>
-                                    <td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
-                                    <td><a href="/committee-detail/{{ action.organization.slug }}">{{ action.organization.name }}</a></td>
-                                    <td><span class='label label-{{action.label}}'>{{action.description}}</span></td>
+                                    <th>Date</th>
+                                    <th>Legislative body</th>
+                                    <th>Action</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-				{% endif %}
-			</div>
-			<div class='col-sm-4'>
-				<div class='well'>
+                            </thead>
+                            <tbody>
+                                {% for action in actions %}
+                                    <tr>
+                                        <td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
+                                        <td><a href="/committee-detail/{{ action.organization.slug }}">{{ action.organization.name }}</a></td>
+                                        <td><span class='label label-{{action.label}}'>{{action.description}}</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    				{% endif %}
+                {% endif %}
+
+                {% if request.GET.view == 'sponsors' %}
                     {% if legislation.sponsorships.all %}
                         <h3>Sponsors ({{legislation.sponsorships.all | length}})</h3>
 
-                        <ul class='list-unstyled' id='sponsors'>
-                            {% for s in legislation.sponsorships.all %}
-                                <li><a href="/person/{{s.person.slug}}">
-                                    <img src='{{s.person.headshot_url}}' alt='{{s.person.name}}' title='{{s.person.name}}' class='img-responsive img-thumbnail' />
-                                    {{s.person.name}}
-                                </a></li>
-                            {% endfor %}
-                        </ul>
+                        <table class='table' id='council-members'>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Sponsor</th>
+                                    <th>District</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in legislation.sponsorships.all %}
+                                    <tr>
+                                        <td>
+                                            <img src='{{s.person.headshot_url}}' alt='{{s.person.name}}' title='{{s.person.name}}' class='img-responsive img-thumbnail' />
+                                        </td>
+                                        <td>
+                                            <a href="/person/{{s.person.slug}}">
+                                                {{s.person.name}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{s.person.council_seat}}
+                                        </td>
+                                        <td>
+                                            {% if s.is_primary %}
+                                                Primary sponsor
+                                            {% else %}
+                                                Sponsor
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     {% else %}
-                        <h3>No sponsors</h3>
+                        <h3>This legislation has no sponsors</h3>
                     {% endif %}
-				</div>
+                {% endif %}
+
+                {% if request.GET.view == 'text' %}
+                    <h3>Coming soon!</h3>
+                    <p>The full text of the legislation will be shown here, if available.</p>
+                {% endif %}
+
+                {% if request.GET.view == 'comments' %}
+                    <h3>What's your opinion?</h3>
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        /* * * CONFIGURATION VARIABLES * * */
+                        var disqus_shortname = 'nyccouncilmatic';
+                        
+                        /* * * DON'T EDIT BELOW THIS LINE * * */
+                        (function() {
+                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+                {% endif %}
+
 			</div>
 		</div>
 
@@ -70,7 +128,25 @@
 {% endblock %}
 
 {% block extra_js %}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/jquery.dataTables.sorting.js' %}"></script>
+    <script src="{% static 'js/dataTables.bootstrap.js' %}"></script>
+
     <script>
+
+        $("#council-members").DataTable({
+            "info": false,
+            "searching": false,
+            "bLengthChange": false,
+            "paging": false,
+            "aaSorting": [ [3,'asc'] ],
+            "aoColumns": [
+                { "bSortable": false },
+                null,
+                { "sType": "num-html" },
+                null
+            ]
+        });
 
         // for reference purposes
         console.log( "OCD ID: {{legislation.ocd_id}}" )
