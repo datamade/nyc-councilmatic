@@ -11,8 +11,10 @@
                 </h1>
 
                 {% if actions %}
-                    <span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description | remove_action_subj }}</span> by {{legislation.current_org.link_html}} on {{legislation.last_action_date|date:'M d, Y'}}
+                    <p><span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description | remove_action_subj }}</span> by {{legislation.current_org.link_html}} on {{legislation.last_action_date|date:'M d, Y'}}</p>
                 {% endif %}
+
+                <p><a href='{{legislation.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a></p>
 
                 <p><br />{{ legislation.description }}</p>
 	            <hr />
@@ -54,7 +56,7 @@
                                     <tr>
                                         <td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
                                         <td><span class='label label-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
-                                        <td><a href="/committee-detail/{{ action.organization.slug }}">{{ action.organization.name }}</a></td>
+                                        <td>{{action.organization.link_html|safe}}</td>
                                     </tr>
                                 {% endfor %}
                             </tbody>

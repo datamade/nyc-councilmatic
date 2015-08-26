@@ -93,7 +93,10 @@ class Organization(models.Model):
 		# make link to committee if committee
 		if self.classification == 'committee':
 			return '<a href="/committee-detail/'+self.slug+'">'+self.name+'</a>'
-		# just return text if legislature or executive
+		# link to the council members page if its the council
+		if self.classification == 'legislature':
+			return '<a href="/council-members">'+self.name+'</a>'
+		# just return text if executive
 		else:
 			return self.name
 
