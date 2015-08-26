@@ -25,7 +25,7 @@
                     {% for committee in committees %}
                         <tr>
                             <td>
-                                <a href="/committee-detail/{{committee.slug}}">{{ committee.name }}</a>
+                                <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
                             </td>
                             <td>
                                 {% for chair in committee.chairs.all %}
@@ -51,7 +51,7 @@
                     {% for committee in subcommittees %}
                         <tr>
                             <td>
-                                <a href="/committee-detail/{{committee.slug}}">{{ committee.name }}</a>
+                                <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
                             </td>
                             <td>
                                 {% for chair in committee.chairs.all %}
@@ -77,7 +77,7 @@
                     {% for committee in taskforces %}
                         <tr>
                             <td>
-                                <a href="/committee-detail/{{committee.slug}}">{{ committee.name }}</a>
+                                <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
                             </td>
                             <td>
                                 {% for chair in committee.chairs.all %}

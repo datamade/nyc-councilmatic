@@ -11,8 +11,8 @@
 
             <hr />
             <ul class="nav nav-pills">
-              <li role="presentation" {% if request.GET.view != 'members' %}class='active' {% endif %}><a href="/committee-detail/{{committee.slug}}?view=actions"><i class='fa fa-fw fa-list-ul'></i> Committee Activity</a></li>
-              <li role="presentation" {% if request.GET.view == 'members' %}class='active' {% endif %}><a href="/committee-detail/{{committee.slug}}?view=members"><i class='fa fa-fw fa-group'></i> Committee Members ({{ committee.memberships.all|length }})</a></li>
+              <li role="presentation" {% if request.GET.view != 'members' %}class='active' {% endif %}><a href="/committee/{{committee.slug}}?view=actions"><i class='fa fa-fw fa-list-ul'></i> Committee Activity</a></li>
+              <li role="presentation" {% if request.GET.view == 'members' %}class='active' {% endif %}><a href="/committee/{{committee.slug}}?view=members"><i class='fa fa-fw fa-group'></i> Committee Members ({{ committee.memberships.all|length }})</a></li>
             </ul>
 
             {% if request.GET.view != 'members' %}
@@ -30,7 +30,7 @@
             				{% for action in committee.recent_activity %}
                                 <tr>
                 					<td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
-                                    <td><a href="/bill-detail/{{action.bill.slug}}">{{action.bill.friendly_name}}</a></td>
+                                    <td><a href="/legislation/{{action.bill.slug}}">{{action.bill.friendly_name}}</a></td>
                 					<td><span class='label label-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
                                 </tr>
             				{% endfor %}

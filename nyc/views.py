@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 from .models import Person, Bill, Organization, Action
 from haystack.forms import FacetedSearchForm
 
@@ -23,6 +24,9 @@ def index(request):
 def about(request):
 	return render(request, 'nyc/about.html')
 
+def not_found(request):
+	return render(request, 'nyc/404.html')
+
 def search(request):
 	return render(request, 'nyc/search.html')
 
@@ -37,6 +41,10 @@ def council_members(request):
 def bill_detail(request, slug):
 
 	legislation = Bill.objects.filter(slug=slug).first()
+	
+	if not legislation:
+		raise Http404("Legislation does not exist")
+
 	actions = legislation.actions.all().order_by('-order')
 
 	context={
@@ -66,6 +74,9 @@ def committee_detail(request, slug):
 
 	committee = Organization.objects.filter(slug=slug).first()
 
+	if not committee:
+		raise Http404("Committee does not exist")
+
 	chairs = committee.memberships.filter(role="CHAIRPERSON")
 	memberships = committee.memberships.filter(role="Committee Member")
 
@@ -80,6 +91,9 @@ def committee_detail(request, slug):
 def person(request, slug):
 
 	person = Person.objects.filter(slug=slug).first()
+
+	if not person:
+		raise Http404("Person does not exist")
 
 	sponsorships = person.sponsorships.order_by('-bill__last_action_date')[:20]
 

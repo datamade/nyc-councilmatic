@@ -22,19 +22,19 @@
                 <ul class="nav nav-pills">
                   {% if actions %}
                     <li role="presentation" {% if request.GET.view == 'actions' or request.GET.view == None %}class='active' {% endif %}>
-                        <a href="/bill-detail/{{legislation.slug}}?view=actions"><i class='fa fa-fw fa-list-ul'></i> Bill History</a>
+                        <a href="/legislation/{{legislation.slug}}?view=actions"><i class='fa fa-fw fa-list-ul'></i> Bill History</a>
                     </li>
                   {% endif %}
                   <li role="presentation" {% if request.GET.view == 'sponsors' %}class='active' {% endif %}>
-                    <a href="/bill-detail/{{legislation.slug}}?view=sponsors"><i class='fa fa-fw fa-group'></i> Sponsors ({{ legislation.sponsorships.all | length }})</a>
+                    <a href="/legislation/{{legislation.slug}}?view=sponsors"><i class='fa fa-fw fa-group'></i> Sponsors ({{ legislation.sponsorships.all | length }})</a>
                   </li>
                   {% if legislation.full_text != "" %}
                     <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}>
-                        <a href="/bill-detail/{{legislation.slug}}?view=text"><i class='fa fa-fw fa-file-text-o'></i> Legislation Text</a>
+                        <a href="/legislation/{{legislation.slug}}?view=text"><i class='fa fa-fw fa-file-text-o'></i> Legislation Text</a>
                     </li>
                   {% endif %}
                   <li role="presentation" {% if request.GET.view == 'comments' %}class='active' {% endif %}>
-                    <a href="/bill-detail/{{legislation.slug}}?view=comments"><i class='fa fa-fw fa-comments-o'></i> Comments (2)</a>
+                    <a href="/legislation/{{legislation.slug}}?view=comments"><i class='fa fa-fw fa-comments-o'></i> Comments (2)</a>
                 </li>
                 </ul>
 
