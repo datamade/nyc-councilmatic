@@ -4,7 +4,7 @@
     {{ s.person.name }}
 {% endfor %}
 {% for a in object.actions.all %}
-    {{ s.organization.name }}
-    {{ s.description }}
+    {{ a.organization.name }}
+    {{ a.description }}
 {% endfor %}
 {{ object.full_text }}
