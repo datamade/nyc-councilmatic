@@ -1,5 +1,16 @@
 from django.shortcuts import render
 from .models import Person, Bill, Organization, Action
+from haystack.forms import FacetedSearchForm
+
+class CouncilmaticSearchForm(FacetedSearchForm):
+    
+    def __init__(self, *args, **kwargs):
+        self.load_all = True
+
+        super(CouncilmaticSearchForm, self).__init__(*args, **kwargs)
+
+    def no_query_found(self):
+        return self.searchqueryset.all()
 
 def index(request):
 	recent_legislation = Bill.objects.exclude(bill_type='NO TYPE').exclude(last_action_date=None).order_by('-last_action_date')[:10]

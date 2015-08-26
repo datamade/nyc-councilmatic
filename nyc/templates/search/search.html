@@ -27,20 +27,19 @@
     </div>
 
     <div class="row">
-    {% if query %}
         <div class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Filter results</h3>
                 </div>
                 <div class="panel-body">
-                    {% for facet_name, facet_values in facets.fields.items %}
-                    <p><strong>{{ facet_name | facet_name }}</strong></p>
+                    {% for f_name, facet_values in facets.fields.items %}
+                    <p><strong>{{ f_name | facet_name }}</strong></p>
                     <ul>
                         {% for name, count in facet_values %}
                             {% if count %}
                                 <li>
-                                    <a href="/search/?q={{query}}&selected_facets={{facet_name}}_exact:{{name}}">
+                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}">
                                         {{ name|title }}
                                     </a> ({{ count }})
                                 </li>
@@ -52,19 +51,27 @@
             </div>
         </div>
         <div class="col-md-8">
-        <h3>{{ paginator.count }} result{{ paginator.count|pluralize }} for '{{ request.GET.q }}'</h3>
+            {% if query %}
+                <h3>{{ paginator.count }} result{{ paginator.count|pluralize }} for '{{ request.GET.q }}'</h3>
+            {% endif %}
 
         {% for result in page.object_list %}
 
             <h3><a href="/bill-detail/{{ result.object.slug }}">{{ result.object.friendly_name }}</a></h3>
 
-            <span class='label label-{{result.object.actions.first.label}}'>{{result.object.actions.first.description}}</span> by <a href='/committee-detail/{{ result.object.from_organization.ocd_id }}'>{{ result.object.from_organization.name }}</a> on {{result.object.actions.first.date|date:'M d, Y'}}
+            <span class='label label-{{result.object.actions.first.label}}'>
+                {{result.object.actions.first.description}}
+            </span>
+            &nbsp;by
+
+            <a href='/committee-detail/{{ result.object.from_organization.ocd_id }}'>{{ result.object.from_organization.name }}</a>
+            on {{result.object.last_action_date|date:'M d, Y'}}
             </p>
 
             <p>{{ result.object.name }}</p>
 
             {% if result.object.sponsorships.all %}
-                Sponsored by: 
+                Sponsored by:
                 {% for s in result.object.sponsorships.all %}
                     <a href="/person/{{s.person.slug}}">{{s.person.name}}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
@@ -103,8 +110,5 @@
                 </nav>
             </div>
         </div>
-    {% endif %}
-    {% else %}
-        {# Show some example queries to run, maybe query syntax, something else? #}
     {% endif %}
 {% endblock %}
