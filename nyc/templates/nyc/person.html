@@ -8,14 +8,15 @@
             <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail' />
 
             <h4>
-                {{person.name}}<br />
-                <small>
-                    {{ person.council_seat }}<br />
-                    {% if person.is_speaker %}
-                        <br /><span class='label label-default'>Council Speaker</span> <span class='label label-success'><i class='fa fa-fw fa-check-square-o'></i> Verified</span>
-                    {% endif %}
-                </small>
+                {{person.name}}
             </h4>
+
+            <p>
+                {{ person.council_seat }}<br />
+                {% if person.is_speaker %}
+                    <br /><span class='label label-default'>Council Speaker</span> <span class='label label-success'><i class='fa fa-fw fa-check-square-o'></i> Verified</span>
+                {% endif %}
+            </p>
 
             <p class='small'><a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a></p>
         </div>
@@ -24,18 +25,15 @@
                 {{person.name}} 
                 <small>
                     {{ person.council_seat }}
-                    {% if person.is_speaker %}
-                        <br /><span class='label label-default'>Council Speaker</span> <span class='label label-success'><i class='fa fa-fw fa-check-square-o'></i> Verified</span>
-                    {% endif %}
                 </small>
             </h1>
+
+            <hr />
 
             <ul class="nav nav-pills">
               <li role="presentation" {% if request.GET.view == 'bills' or request.GET.view == None %}class='active' {% endif %}><a href="/person/{{person.slug}}?view=bills"><i class='fa fa-fw fa-group'></i> Sponsored Legislation ({{sponsored_legislation|length}})</a></li>
               <li role="presentation" {% if request.GET.view == 'committees' %}class='active' {% endif %}><a href="/person/{{person.slug}}?view=committees"><i class='fa fa-fw fa-group'></i> Committees ({{ person.memberships.all|length }})</a></li>
             </ul>
-
-            <hr />
 
             {% if request.GET.view == 'bills' or request.GET.view == None %}
                 <h2>Sponsored Legislation</h2>
