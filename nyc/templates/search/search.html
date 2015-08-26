@@ -9,13 +9,11 @@
     {% endif %}
 {% endblock %}
 {% block content %}
-    <h2>Search</h2>
-
     <div class='jumbotron'>
         <h3>Search for New York City Legislation</h3>
         <form method="get" action=".">
             <div class="input-group">
-                <input name="q" type="text" class="input-lg form-control" placeholder="Bill de Blasio, zoning, Resolution 0815-2015, etc." value="{{ request.GET.q }}">
+                <input name="q" type="text" class="input-lg form-control" placeholder="Committee on Finance, taxi, Resolution 0815-2015, etc." value="{{ request.GET.q }}">
                 <div class='input-group-btn'>
                     <button type="submit" class="btn btn-lg btn-info">
                         <i class='fa fa-fw fa-search'></i>
@@ -68,13 +66,10 @@
             on {{result.object.last_action_date|date:'M d, Y'}}
             </p>
 
-            <p>{{ result.object.name }}</p>
-
-            {% if result.object.sponsorships.all %}
-                Sponsored by:
-                {% for s in result.object.sponsorships.all %}
-                    <a href="/person/{{s.person.slug}}">{{s.person.name}}</a>{% if not forloop.last %}, {% endif %}
-                {% endfor %}
+            {% if query %}
+                <p>{% highlight result.text with query css_class "bg-info" %}</p>
+            {% else %}
+                <p>{{result.object.description}}</p>
             {% endif %}
             <hr />
         {% empty %}
