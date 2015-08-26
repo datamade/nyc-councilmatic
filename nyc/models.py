@@ -59,6 +59,10 @@ class Bill(models.Model):
 		nums_only = self.identifier.split(' ')[-1]
 		return self.bill_type+' '+nums_only
 
+	@property
+	def primary_sponsor(self):
+		return self.sponsorships.filter(is_primary=True).first()
+
 	def get_last_action_date(self):
 		return self.actions.all().order_by('-order').first().date if self.actions.all() else None
 

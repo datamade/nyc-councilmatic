@@ -5,11 +5,9 @@
 <span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description | remove_action_subj }}</span> by {{legislation.current_org.link_html | safe}} on {{legislation.current_action.date|date:'M d, Y'}}
 </p>
 
-<p>{{ legislation.name }}</p>
+<p class="small">{{ legislation.description }}</p>
 
 {% if legislation.sponsorships.all %}
-    Sponsored by: 
-    {% for s in legislation.sponsorships.all %}
-        <a href="/person/{{s.person.slug}}">{{s.person.name}}</a>{% if not forloop.last %}, {% endif %}
-    {% endfor %}
+    Primary Sponsor: 
+    <a href="/person/{{ legislation.primary_sponsor.person.slug }}">{{ legislation.primary_sponsor.person.name }}</a>
 {% endif %}
