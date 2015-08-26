@@ -164,9 +164,11 @@ In order for Solr to use the new schema file, you'll need to restart it.
 
 ## Team
 
-* Cathy Deng
-* Forest Gregg
-* Derek Eder
+* David Moore - project manager 
+* Forest Gregg - Open Civic Data (OCD) and Legistar scraping
+* Cathy Deng - data models and loading
+* Derek Eder - front end
+* Eric van Zanten - search and dev ops
 
 ## Errors / Bugs
 
