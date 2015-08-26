@@ -84,6 +84,15 @@ class Organization(models.Model):
 	def chairs(self):
 		return self.memberships.filter(role='CHAIRPERSON')
 
+	@property
+	def link_html(self):
+		# make link to committee if committee
+		if self.classification == 'committee':
+			return '<a href="/committee-detail/'+self.slug+'">'+self.name+'</a>'
+		# just return text if legislature or executive
+		else:
+			return self.name
+
 class Action(models.Model):
 	date = models.DateTimeField(default=None)
 	classification = models.CharField(max_length=100)
