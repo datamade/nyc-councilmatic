@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load nyc_extras %}
 {% load staticfiles %}
 {% block title %}{{committee.name}}{% endblock %}
 {% block content %}
@@ -30,7 +31,7 @@
                                 <tr>
                 					<td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
                                     <td><a href="/bill-detail/{{action.bill.slug}}">{{action.bill.friendly_name}}</a></td>
-                					<td><span class='label label-{{action.label}}'>{{action.description}}</span></td>
+                					<td><span class='label label-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
                                 </tr>
             				{% endfor %}
                         </tbody>

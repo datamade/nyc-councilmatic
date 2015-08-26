@@ -62,14 +62,14 @@
             </span>
             &nbsp;by
 
-            {{result.object.current_action.organization.link_html | safe}}</a>
+            {{result.object.current_action.organization.link_html | safe}}
             on {{result.object.last_action_date|date:'M d, Y'}}
             </p>
 
             {% if query %}
-                <p>{% highlight result.text with query css_class "bg-info" %}</p>
+                <p class="small">{% highlight result.text with query css_class "bg-info" %}</p>
             {% else %}
-                <p>{{result.object.description}}</p>
+                <p class="small">{{result.object.description}}</p>
             {% endif %}
             <hr />
         {% empty %}
