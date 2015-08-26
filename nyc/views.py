@@ -13,7 +13,7 @@ class CouncilmaticSearchForm(FacetedSearchForm):
         return self.searchqueryset.all()
 
 def index(request):
-	recent_legislation = Bill.objects.exclude(bill_type='NO TYPE').order_by('-last_action_date')[:10]
+	recent_legislation = Bill.objects.exclude(bill_type='NO TYPE').exclude(last_action_date=None).order_by('-last_action_date')[:10]
 	context = {
 		'recent_legislation': recent_legislation
 	}

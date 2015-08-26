@@ -1,6 +1,8 @@
+{% load nyc_extras %}
+
 <h3><a href="/bill-detail/{{ legislation.slug }}">{{ legislation.friendly_name }}</a></h3>
 
-<span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description}}</span> by <a href='/committee-detail/{{ legislation.current_org.ocd_id }}'>{{ legislation.current_org.name }}</a> on {{legislation.current_action.date|date:'M d, Y'}}
+<span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description | remove_action_subj }}</span> by <a href='/committee-detail/{{ legislation.current_org.ocd_id }}'>{{ legislation.current_org.name }}</a> on {{legislation.current_action.date|date:'M d, Y'}}
 </p>
 
 <p>{{ legislation.name }}</p>

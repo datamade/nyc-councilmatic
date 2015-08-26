@@ -217,66 +217,73 @@ class Command(BaseCommand):
 		from_org = Organization.objects.filter(ocd_id=page_json['from_organization']['id']).first()
 		legislative_session = LegislativeSession.objects.filter(identifier=page_json['legislative_session']['identifier']).first()
 
+		# THIS IF STATEMENT IS A NYC CUSTOMIZATION
+		# only load bills that have a local classification
 		# this is a temporary fix - remove when outdated bills are no longer in ocd
 		if 'local_classification' in page_json['extras']:
 			bill_type = page_json['extras']['local_classification']
+
+			if 'full_text' in page_json['extras']:
+				full_text = page_json['extras']['full_text']
+			else:
+				full_text = ''
+
+			try:
+				obj, created = Bill.objects.get_or_create(
+						ocd_id=bill_id,
+						description=page_json['title'],
+						identifier=page_json['identifier'],
+						classification=page_json['classification'][0],
+						date_created=page_json['created_at'],
+						date_updated=page_json['updated_at'],
+						source_url=page_json['sources'][0]['url'],
+						source_note=page_json['sources'][0]['note'],
+						from_organization=from_org,
+						full_text=full_text,
+						legislative_session=legislative_session,
+						bill_type=bill_type,
+						slug=slugify(page_json['identifier']),
+					)
+			except IntegrityError:
+				ocd_id_part = bill_id.rsplit('-',1)[1]
+				obj, created = Bill.objects.get_or_create(
+						ocd_id=bill_id,
+						description=page_json['title'],
+						identifier=page_json['identifier'],
+						classification=page_json['classification'][0],
+						date_created=page_json['created_at'],
+						date_updated=page_json['updated_at'],
+						source_url=page_json['sources'][0]['url'],
+						source_note=page_json['sources'][0]['note'],
+						from_organization=from_org,
+						full_text=full_text,
+						legislative_session=legislative_session,
+						bill_type=bill_type,
+						slug=slugify(page_json['identifier'])+ocd_id_part,
+					)
+
+			if created and DEBUG:
+				print('   adding %s' % bill_id)
+
+			action_order = 0
+			for action_json in reversed(page_json['actions']):
+				self.load_action(action_json, obj, action_order)
+				action_order+=1
+
+			# update bill last_action_date with most recent action
+			obj.last_action_date = obj.get_last_action_date()
+			obj.save()
+
+			# update documents associated with a bill
+			for document_json in page_json['documents']:
+				self.load_document(document_json, obj)
+
+		# if bills don't have local classification, don't load them
 		else:
-			bill_type = 'NO TYPE'
-
-		if 'full_text' in page_json['extras']:
-			full_text = page_json['extras']['full_text']
-		else:
-			full_text = ''
-
-		try:
-			obj, created = Bill.objects.get_or_create(
-					ocd_id=bill_id,
-					description=page_json['title'],
-					identifier=page_json['identifier'],
-					classification=page_json['classification'][0],
-					date_created=page_json['created_at'],
-					date_updated=page_json['updated_at'],
-					source_url=page_json['sources'][0]['url'],
-					source_note=page_json['sources'][0]['note'],
-					from_organization=from_org,
-					full_text=full_text,
-					legislative_session=legislative_session,
-					bill_type=bill_type,
-					slug=slugify(page_json['identifier']),
-				)
-		except IntegrityError:
-			ocd_id_part = bill_id.rsplit('-',1)[1]
-			obj, created = Bill.objects.get_or_create(
-					ocd_id=bill_id,
-					description=page_json['title'],
-					identifier=page_json['identifier'],
-					classification=page_json['classification'][0],
-					date_created=page_json['created_at'],
-					date_updated=page_json['updated_at'],
-					source_url=page_json['sources'][0]['url'],
-					source_note=page_json['sources'][0]['note'],
-					from_organization=from_org,
-					full_text=full_text,
-					legislative_session=legislative_session,
-					bill_type=bill_type,
-					slug=slugify(page_json['identifier'])+ocd_id_part,
-				)
-
-		if created and DEBUG:
-			print('   adding %s' % bill_id)
-
-		action_order = 0
-		for action_json in reversed(page_json['actions']):
-			self.load_action(action_json, obj, action_order)
-			action_order+=1
-
-		# update bill last_action_date with most recent action
-		obj.last_action_date = obj.get_last_action_date()
-		obj.save()
-
-		# update documents associated with a bill
-		for document_json in page_json['documents']:
-			self.load_document(document_json, obj)
+			print("*"*60)
+			print("SKIPPING BILL %s" %bill_id)
+			print("bill data looks incomplete")
+			print("*"*60)
 
 
 	def load_action(self, action_json, bill, action_order):
