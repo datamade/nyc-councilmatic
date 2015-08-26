@@ -1,6 +1,6 @@
 from nyc.models import Bill
 from haystack import indexes
-import re
+from nyc.templatetags.nyc_extras import clean_html
 
 class BillIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
@@ -45,7 +45,7 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
             return obj.current_org.slug
 
     def prepare_full_text(self, obj):
-        return re.sub(r'<[^>]*?>', ' ', obj.full_text)
+        return clean_html(obj.full_text)
     
     def prepare_last_action_date(self, obj):
         from datetime import datetime, timedelta

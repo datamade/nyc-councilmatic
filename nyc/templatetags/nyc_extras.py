@@ -1,5 +1,6 @@
 from django import template
 from django.template.defaultfilters import stringfilter
+from django.utils.html import strip_entities, strip_tags
 import re
 
 register = template.Library()
@@ -27,6 +28,7 @@ def remove_action_subj(bill_action_desc):
 	return clean_action
 
 @register.filter
+@stringfilter
 def organization_link(organization):
 	# make link to committee if committee
 	if organization.classification == 'committee':
@@ -34,3 +36,8 @@ def organization_link(organization):
 	# just return text if legislature or executive
 	else:
 		return organization.name
+
+@register.filter
+@stringfilter
+def clean_html(text):
+    return strip_entities(strip_tags(text)).replace('\n','')

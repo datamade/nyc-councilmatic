@@ -1,3 +1,4 @@
+{% load nyc_extras %}
 {{ object.friendly_name }}
 {{ object.classification }}
 {% for s in object.sponsorships.all %}
@@ -7,4 +8,4 @@
     {{ a.organization.name }}
     {{ a.description }}
 {% endfor %}
-{{ object.full_text }}
+{{ object.full_text|clean_html }}
