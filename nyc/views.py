@@ -90,7 +90,8 @@ def person(request, slug):
 		'person': person,
 		'chairs': chairs,
 		'memberships': memberships,
-		'sponsorships': sponsorships
+		'sponsorships': sponsorships,
+		'sponsored_legislation': [s.bill for s in sponsorships]
 	}
 
 	return render(request, 'nyc/person.html', context)

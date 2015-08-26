@@ -45,25 +45,12 @@
 
             <h2>Sponsored Bills</h2>
 
-            {% if sponsorships %}
-                {% for s in sponsorships %}
-                    <h3><a href="/bill-detail/{{ s.bill.slug }}">{{ s.bill.friendly_name }}</a></h3>
+            {% for legislation in sponsored_legislation %}
 
-                    <span class='label label-{{s.bill.current_action.label}}'>{{s.bill.current_action.description}}</span> by <a href='/committee-detail/{{ s.bill.current_org.ocd_id }}'>{{ s.bill.current_org.name }}</a> on {{s.bill.current_action.date|date:'M d, Y'}}
-                    </p>
+                {% include "partials/legislation_item.html" %}
 
-                    <p>{{ s.bill.name }}</p>
+            {% endfor %}
 
-                    {% if s.bill.sponsorships.all %}
-                        Sponsored by: 
-                        {% for sp in s.bill.sponsorships.all %}
-                            <a href="/person/{{sp.person.slug}}">{{sp.person.name}}</a>{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    {% endif %}
-
-                {% endfor %}
-
-            {% endif %}
         </div>
     </div>
 
