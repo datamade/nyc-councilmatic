@@ -19,19 +19,27 @@
 
                 <ul class="nav nav-pills">
                   {% if actions %}
-                    <li role="presentation" {% if request.GET.view == 'actions' or request.GET.view == None %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=actions">Bill History</a></li>
+                    <li role="presentation" {% if request.GET.view == 'actions' or request.GET.view == None %}class='active' {% endif %}>
+                        <a href="/bill-detail/{{legislation.slug}}?view=actions"><i class='fa fa-fw fa-list-ul'></i> Bill History</a>
+                    </li>
                   {% endif %}
-                  <li role="presentation" {% if request.GET.view == 'sponsors' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=sponsors">Sponsors ({{ legislation.sponsorships.all | length }})</a></li>
+                  <li role="presentation" {% if request.GET.view == 'sponsors' %}class='active' {% endif %}>
+                    <a href="/bill-detail/{{legislation.slug}}?view=sponsors"><i class='fa fa-fw fa-group'></i> Sponsors ({{ legislation.sponsorships.all | length }})</a>
+                  </li>
                   {% if legislation.full_text != "" %}
-                    <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=text">Legislation Text</a></li>
+                    <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}>
+                        <a href="/bill-detail/{{legislation.slug}}?view=text"><i class='fa fa-fw fa-file-text-o'></i> Legislation Text</a>
+                    </li>
                   {% endif %}
-                  <li role="presentation" {% if request.GET.view == 'comments' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=comments">Comments (2)</a></li>
+                  <li role="presentation" {% if request.GET.view == 'comments' %}class='active' {% endif %}>
+                    <a href="/bill-detail/{{legislation.slug}}?view=comments"><i class='fa fa-fw fa-comments-o'></i> Comments (2)</a>
+                </li>
                 </ul>
 
 
 			    {% if request.GET.view == 'actions' or request.GET.view == None %}
                     {% if actions %}
-    			    	<h3>Bill History</h3>
+    			    	<h3><i class='fa fa-fw fa-list-ul'></i> Bill History</h3>
 
                         <table class='table' id='committee-actions'>
                             <thead>
@@ -56,7 +64,7 @@
 
                 {% if request.GET.view == 'sponsors' %}
                     {% if legislation.sponsorships.all %}
-                        <h3>Sponsors ({{legislation.sponsorships.all | length}})</h3>
+                        <h3><i class='fa fa-fw fa-group'></i> Sponsors ({{legislation.sponsorships.all | length}})</h3>
 
                         <table class='table' id='council-members'>
                             <thead>
@@ -98,7 +106,7 @@
                 {% endif %}
 
                 {% if request.GET.view == 'text' and legislation.full_text != "" %}
-                    <br />
+                    <h3><i class='fa fa-fw fa-file-text-o'></i> Legislation Text</h3>
                     <div class='panel panel-default'>
                         <div class='panel-body'>
                             {{ legislation.full_text|safe }}
@@ -107,7 +115,7 @@
                 {% endif %}
 
                 {% if request.GET.view == 'comments' %}
-                    <h3>What's your opinion?</h3>
+                    <h3><i class='fa fa-fw fa-comments-o'></i> What's your opinion?</h3>
                     <div id="disqus_thread"></div>
                     <script type="text/javascript">
                         /* * * CONFIGURATION VARIABLES * * */

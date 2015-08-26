@@ -10,12 +10,12 @@
 
             <hr />
             <ul class="nav nav-pills">
-              <li role="presentation" {% if request.GET.view != 'members' %}class='active' {% endif %}><a href="/committee-detail/{{committee.slug}}?view=actions">Committee actions</a></li>
-              <li role="presentation" {% if request.GET.view == 'members' %}class='active' {% endif %}><a href="/committee-detail/{{committee.slug}}?view=members">Committee Members ({{ committee.memberships.all|length }})</a></li>
+              <li role="presentation" {% if request.GET.view != 'members' %}class='active' {% endif %}><a href="/committee-detail/{{committee.slug}}?view=actions"><i class='fa fa-fw fa-list-ul'></i> Committee Activity</a></li>
+              <li role="presentation" {% if request.GET.view == 'members' %}class='active' {% endif %}><a href="/committee-detail/{{committee.slug}}?view=members"><i class='fa fa-fw fa-group'></i> Committee Members ({{ committee.memberships.all|length }})</a></li>
             </ul>
 
             {% if request.GET.view != 'members' %}
-                <h2>Committee actions</h2>
+                <h3><i class='fa fa-fw fa-list-ul'></i> Committee Activity</h3>
     			{% if committee.recent_activity %}
                     <table class='table' id='committee-actions'>
                         <thead>
@@ -42,6 +42,7 @@
 
 
             {% if request.GET.view == 'members' %}
+                <h3><i class='fa fa-fw fa-group'></i> Committee Members</h3>
                 <table class='table' id='council-members'>
                     <thead>
                         <tr>
