@@ -22,7 +22,9 @@
                     <li role="presentation" {% if request.GET.view == 'actions' or request.GET.view == None %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=actions">Bill History</a></li>
                   {% endif %}
                   <li role="presentation" {% if request.GET.view == 'sponsors' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=sponsors">Sponsors ({{ legislation.sponsorships.all | length }})</a></li>
-                  <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=text">Legislation Text</a></li>
+                  {% if legislation.full_text != "" %}
+                    <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=text">Legislation Text</a></li>
+                  {% endif %}
                   <li role="presentation" {% if request.GET.view == 'comments' %}class='active' {% endif %}><a href="/bill-detail/{{legislation.slug}}?view=comments">Comments (2)</a></li>
                 </ul>
 
@@ -95,9 +97,13 @@
                     {% endif %}
                 {% endif %}
 
-                {% if request.GET.view == 'text' %}
-                    <h3>Coming soon!</h3>
-                    <p>The full text of the legislation will be shown here, if available.</p>
+                {% if request.GET.view == 'text' and legislation.full_text != "" %}
+                    <br />
+                    <div class='panel panel-default'>
+                        <div class='panel-body'>
+                            {{ legislation.full_text|safe }}
+                        </div>
+                    </div>
                 {% endif %}
 
                 {% if request.GET.view == 'comments' %}
