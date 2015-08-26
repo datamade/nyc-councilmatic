@@ -1,4 +1,5 @@
 from django.db import models
+import re
 
 
 class Person(models.Model):
@@ -53,6 +54,15 @@ class Bill(models.Model):
 	@property
 	def current_action(self):
 		return self.actions.all().order_by('-order').first() if self.actions.all() else None
+
+	@property
+	def friendly_current_action_desc(self):
+		if self.actions.all():
+			current_action = self.actions.all().order_by('-order').first().description
+			friendly_current_action = re.sub(r'[,\s]*by.*', '', current_action)
+		else:
+			friendly_current_action = None
+		return friendly_current_action
 
 	@property
 	def friendly_name(self):

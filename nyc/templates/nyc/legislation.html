@@ -9,7 +9,7 @@
                 </h1>
 
                 {% if actions %}
-                    <span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description}}</span> by <a href='/committee-detail/{{ legislation.current_org.ocd_id }}'>{{ legislation.current_org.name }}</a> on {{legislation.current_action.date|date:'M d, Y'}}
+                    <span class='label label-{{legislation.current_action.label}}'>{{legislation.friendly_current_action_desc}}</span> by <a href='/committee-detail/{{ legislation.current_org.ocd_id }}'>{{ legislation.current_org.name }}</a> on {{legislation.current_action.date|date:'M d, Y'}}
                 {% endif %}
 	            <hr />
 	        </div>
