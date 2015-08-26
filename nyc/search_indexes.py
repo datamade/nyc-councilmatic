@@ -15,6 +15,7 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     source_url = indexes.CharField(model_attr='source_url', indexed=False)
     source_note = indexes.CharField(model_attr='source_note')
     full_text = indexes.CharField(model_attr='full_text')
+    last_action_date = indexes.DateTimeField()
 
     actions = indexes.MultiValueField()
 
@@ -30,7 +31,7 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
         return obj.friendly_name
 
     def prepare_sponsorships(self, obj):
-        return [sponsorship.person for sponsorship in obj.sponsorships.all()]
+        return [sponsorship.person.name for sponsorship in obj.sponsorships.all()]
 
     def prepare_actions(self, obj):
         return [action for action in obj.actions.all()]
@@ -45,3 +46,9 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
 
     def prepare_full_text(self, obj):
         return re.sub(r'<[^>]*?>', ' ', obj.full_text)
+    
+    def prepare_last_action_date(self, obj):
+        from datetime import datetime, timedelta
+        if not obj.last_action_date:
+            return datetime.now() - timedelta(days=36500)
+        return obj.last_action_date

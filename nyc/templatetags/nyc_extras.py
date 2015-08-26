@@ -11,6 +11,10 @@ def sentence_case(value):
 @register.filter
 @stringfilter
 def facet_name(value):
-    if value == 'bill_type': return 'Legislation type'
-    if value == 'sponsorships': return 'Sponsor'
-    if value == 'from_organization': return 'Legislative body'
+    if value == 'bill_type': 
+        value = 'Legislation type'
+    elif value == 'sponsorships': 
+        value = 'Sponsor'
+    elif value == 'from_organization': 
+        value = 'Legislative body'
+    return value

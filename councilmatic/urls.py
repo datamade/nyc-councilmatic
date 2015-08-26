@@ -17,13 +17,16 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
+from nyc.views import CouncilmaticSearchForm
 
 sqs = SearchQuerySet().facet('bill_type')\
                       .facet('sponsorships')\
-                      .facet('from_organization')
+                      .facet('from_organization')\
+                      .order_by('-last_action_date')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^search/', FacetedSearchView(searchqueryset=sqs)),
+    url(r'^search/', FacetedSearchView(searchqueryset=sqs, 
+                                       form_class=CouncilmaticSearchForm)),
     url(r'', include('nyc.urls')),
 ]
