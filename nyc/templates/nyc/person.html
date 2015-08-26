@@ -6,6 +6,18 @@
 	<div class="row-fluid">
 		<div class="col-sm-3">
             <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail' />
+
+            <h4>
+                {{person.name}}<br />
+                <small>
+                    {{ person.council_seat }}<br />
+                    {% if person.is_speaker %}
+                        <br /><span class='label label-default'>Council Speaker</span> <span class='label label-success'><i class='fa fa-fw fa-check-square-o'></i> Verified</span>
+                    {% endif %}
+                </small>
+            </h4>
+
+            <p class='small'><a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a></p>
         </div>
         <div class='col-sm-9'>
             <h1>
@@ -18,40 +30,49 @@
                 </small>
             </h1>
 
-            <p><a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a></p>
+            <ul class="nav nav-pills">
+              <li role="presentation" {% if request.GET.view == 'bills' or request.GET.view == None %}class='active' {% endif %}><a href="/person/{{person.slug}}?view=bills"><i class='fa fa-fw fa-group'></i> Sponsored Legislation ({{sponsored_legislation|length}})</a></li>
+              <li role="presentation" {% if request.GET.view == 'committees' %}class='active' {% endif %}><a href="/person/{{person.slug}}?view=committees"><i class='fa fa-fw fa-group'></i> Committees ({{ person.memberships.all|length }})</a></li>
+            </ul>
 
-            {% if memberships %}
-                <table class='table'>
-                    <thead>
-                        <tr>
-                            <th>Member of</th>
-                            <th>Position</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for membership in chairs %}
-                            <tr>
-                                <td><a href="/committee-detail/{{membership.organization.slug}}">{{membership.organization.name}}</a></td>
-                                <td>Chairperson</td>
-                            </tr>
-                        {% endfor %}
-                        {% for membership in memberships %}
-                            <tr>
-                                <td><a href="/committee-detail/{{membership.organization.slug}}">{{membership.organization.name}}</a></td>
-                                <td>Member</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <hr />
+
+            {% if request.GET.view == 'bills' or request.GET.view == None %}
+                <h2>Sponsored Legislation</h2>
+
+                {% for legislation in sponsored_legislation %}
+
+                    {% include "partials/legislation_item.html" %}
+
+                {% endfor %}
             {% endif %}
 
-            <h2>Sponsored Bills</h2>
-
-            {% for legislation in sponsored_legislation %}
-
-                {% include "partials/legislation_item.html" %}
-
-            {% endfor %}
+            {% if request.GET.view == 'committees' %}
+                {% if memberships %}
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th>Member of</th>
+                                <th>Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for membership in chairs %}
+                                <tr>
+                                    <td><a href="/committee-detail/{{membership.organization.slug}}">{{membership.organization.name}}</a></td>
+                                    <td>Chairperson</td>
+                                </tr>
+                            {% endfor %}
+                            {% for membership in memberships %}
+                                <tr>
+                                    <td><a href="/committee-detail/{{membership.organization.slug}}">{{membership.organization.name}}</a></td>
+                                    <td>Member</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% endif %}
 
         </div>
     </div>
