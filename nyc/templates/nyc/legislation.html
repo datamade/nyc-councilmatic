@@ -45,16 +45,16 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>Legislative body</th>
                                     <th>Action</th>
+                                    <th>Legislative body</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for action in actions %}
                                     <tr>
                                         <td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
+                                        <td><span class='label label-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
                                         <td><a href="/committee-detail/{{ action.organization.slug }}">{{ action.organization.name }}</a></td>
-                                        <td><span class='label label-{{action.label}}'>{{action.description}}</span></td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
