@@ -39,7 +39,7 @@
                                 <li>
                                     <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}">
                                         {{ name|title }}
-                                    </a> ({{ count }})
+                                    </a> {% if f_name != 'sponsorships' %}({{ count }}){% endif %}
                                 </li>
                             {% endif %}
                         {% endfor %}
