@@ -20,7 +20,7 @@ from haystack.views import FacetedSearchView
 from nyc.views import CouncilmaticSearchForm
 
 sqs = SearchQuerySet().facet('bill_type')\
-                      .facet('sponsorships')\
+                      .facet('sponsorships', sort='index')\
                       .facet('from_organization')\
                       .order_by('-last_action_date')
 
