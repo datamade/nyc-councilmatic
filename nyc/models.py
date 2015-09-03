@@ -148,6 +148,26 @@ class Sponsorship(models.Model):
 	classification = models.CharField(max_length=255)
 	is_primary = models.BooleanField(default=False)
 
+class Event(models.Model):
+	ocd_id = models.CharField(max_length=100, unique=True)
+	name = models.CharField(max_length=255)
+	description = models.TextField()
+	classification = models.CharField(max_length=100)
+	start_time = models.DateTimeField()
+	end_time = models.DateTimeField(null=True)
+	all_day = models.BooleanField(default=False)
+	status = models.CharField(max_length=100)
+	location_name = models.CharField(max_length=255)
+	location_url = models.CharField(max_length=255, blank=True)
+	source_url = models.CharField(max_length=255)
+	source_note = models.CharField(max_length=255, blank=True)
+
+class EventParticipant(models.Model):
+	event = models.ForeignKey('Event', related_name='participants')
+	note = models.TextField()
+	entity_name = models.CharField(max_length=255)
+	entity_type = models.CharField(max_length=100)
+
 class Document(models.Model):
 	note = models.TextField()
 	url = models.TextField()
@@ -156,9 +176,12 @@ class BillDocument(models.Model):
 	bill = models.ForeignKey('Bill', related_name='documents')
 	document = models.ForeignKey('Document', related_name='bills')
 
+class EventDocument(models.Model):
+	event = models.ForeignKey('Event', related_name='documents')
+	document = models.ForeignKey('Document', related_name='events')
+
 class LegislativeSession(models.Model):
 	identifier = models.CharField(max_length=255)
 	jurisdiction_ocd_id = models.CharField(max_length=255)
 	name = models.CharField(max_length=255)
-
 
