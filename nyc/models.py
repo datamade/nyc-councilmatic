@@ -149,9 +149,12 @@ class Sponsorship(models.Model):
 	is_primary = models.BooleanField(default=False)
 
 class Document(models.Model):
-	bill = models.ForeignKey('Bill', related_name='documents')
 	note = models.TextField()
 	url = models.TextField()
+
+class BillDocument(models.Model):
+	bill = models.ForeignKey('Bill', related_name='documents')
+	document = models.ForeignKey('Document', related_name='bills')
 
 class LegislativeSession(models.Model):
 	identifier = models.CharField(max_length=255)

@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
-from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship, LegislativeSession, Document
+from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship, LegislativeSession, Document, BillDocument
 from councilmatic.settings import HEADSHOT_PATH, DEBUG
 import requests
 import json
@@ -173,7 +173,7 @@ class Command(BaseCommand):
 	
 
 	def grab_bills(self, delete=False):
-		# this grabs all bills & associated actions from city council
+		# this grabs all bills & associated actions, documents from city council
 		# organizations need to be populated before bills & actions are populated
 		
 		if delete:
@@ -181,6 +181,8 @@ class Command(BaseCommand):
 			Bill.objects.all().delete()
 			Action.objects.all().delete()
 			LegislativeSession.objects.all().delete()
+			Document.objects.all().delete()
+			BillDocument.objects.all().delete()
 
 		# get legislative sessions
 		self.grab_legislative_sessions()
@@ -308,13 +310,18 @@ class Command(BaseCommand):
 
 	def load_document(self, document_json, bill):
 
-		obj, created = Document.objects.get_or_create(
-				bill=bill,
+		doc_obj, created = Document.objects.get_or_create(
 				note=document_json['note'],
 				url=document_json['links'][0]['url'],
 			)
+
+		obj, created = BillDocument.objects.get_or_create(
+				bill = bill,
+				document = doc_obj,
+			)
+
 		if created:
-			print('      adding document: %s' % obj.note)
+			print('      adding document: %s' % doc_obj.note)
 
 
 	def grab_person_memberships(self, person_id):
