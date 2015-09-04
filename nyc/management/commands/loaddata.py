@@ -2,8 +2,8 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
-from nyc.models import Person, Bill, Organization, Action, Post, \
-						Membership, Sponsorship, LegislativeSession, \
+from nyc.models import Person, Bill, Organization, Action, ActionRelatedEntity, \
+						Post, Membership, Sponsorship, LegislativeSession, \
 						Document, BillDocument, Event, EventParticipant, EventDocument
 from councilmatic.settings import HEADSHOT_PATH, DEBUG
 import requests
@@ -185,6 +185,7 @@ class Command(BaseCommand):
 			print("deleting all bills, actions, legislative sessions")
 			Bill.objects.all().delete()
 			Action.objects.all().delete()
+			ActionRelatedEntity.objects.all().delete()
 			LegislativeSession.objects.all().delete()
 			Document.objects.all().delete()
 			BillDocument.objects.all().delete()
@@ -301,7 +302,7 @@ class Command(BaseCommand):
 		if action_json['classification']:
 			classification = action_json['classification'][0]
 
-		obj, created = Action.objects.get_or_create(
+		action_obj, created = Action.objects.get_or_create(
 				date=action_json['date'],
 				classification=classification,
 				description=action_json['description'],
@@ -312,6 +313,18 @@ class Command(BaseCommand):
 
 		if created and DEBUG:
 			print('      adding action: %s' %action_json['description'])
+
+		for related_entity_json in action_json['related_entities']:
+			obj, created = ActionRelatedEntity.objects.get_or_create(
+				action = action_obj,
+				entity_type = related_entity_json['entity_type'],
+				entity_name = related_entity_json['name'],
+				organization_ocd_id = related_entity_json['organization_id'] if related_entity_json['organization_id'] else "",
+				person_ocd_id = related_entity_json['person_id'] if related_entity_json['person_id'] else ""
+			)
+
+			if created and DEBUG:
+				print('         adding related entity: %s' %obj.entity_name)
 
 	def load_bill_document(self, document_json, bill):
 
