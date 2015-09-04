@@ -127,6 +127,13 @@ class Action(models.Model):
 
 		else: return 'info'
 
+class ActionRelatedEntity(models.Model):
+	action = models.ForeignKey('Action', related_name='related_entities')
+	entity_type = models.CharField(max_length=100)
+	entity_name = models.CharField(max_length=255)
+	organization_ocd_id = models.CharField(max_length=100, blank=True)
+	person_ocd_id = models.CharField(max_length=100, blank=True)
+
 class Post(models.Model):
 	ocd_id = models.CharField(max_length=100, unique=True)
 	label = models.CharField(max_length=255)
