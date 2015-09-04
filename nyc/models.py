@@ -47,7 +47,7 @@ class Bill(models.Model):
 		return self.friendly_name
 
 	@property
-	def current_org(self):
+	def controlling_body(self):
 		if self.current_action:
 			related_orgs = self.current_action.related_entities.filter(entity_type='organization').all()
 			if related_orgs:
