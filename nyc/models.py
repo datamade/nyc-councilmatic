@@ -48,7 +48,19 @@ class Bill(models.Model):
 
 	@property
 	def current_org(self):
-		return self.actions.all().order_by('-order').first().organization if self.actions.all() else None
+		if self.current_action:
+			related_orgs = self.current_action.related_entities.filter(entity_type='organization').all()
+			if related_orgs:
+				current_orgs = [Organization.objects.all().filter(ocd_id=org.organization_ocd_id).first() for org in related_orgs]
+				return current_orgs
+			else:
+				return [self.current_action.organization]
+		else:
+			return None
+
+	@property
+	def last_action_org(self):
+		return self.current_action.organization if self.current_action else None
 
 	@property
 	def current_action(self):
