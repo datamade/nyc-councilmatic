@@ -2,7 +2,9 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
-from nyc.models import Person, Bill, Organization, Action, Post, Membership, Sponsorship, LegislativeSession, Document, BillDocument
+from nyc.models import Person, Bill, Organization, Action, Post, \
+						Membership, Sponsorship, LegislativeSession, \
+						Document, BillDocument, Event, EventParticipant, EventDocument
 from councilmatic.settings import HEADSHOT_PATH, DEBUG
 import requests
 import json
@@ -39,6 +41,9 @@ class Command(BaseCommand):
 			print("\nLOADING PEOPLE\n")
 			self.grab_people(delete=options['delete'])
 			print("\ndone!")
+		elif options['endpoint'] == 'events':
+			print("\nLOADING EVENTS\n")
+			self.grab_events(delete=options['delete'])
 		else:
 			print("\nLOADING EVERYTHING\n")
 			self.grab_organizations(delete=options['delete'])
@@ -56,7 +61,7 @@ class Command(BaseCommand):
 		# first grab ny city council root
 		self.grab_organization_posts(ocd_city_council_id)
 
-		# this grabs all organizations within a jurisdiction
+		# this grabs a paginated listing of all organizations within a jurisdiction
 		orgs_url = base_url+'/organizations/?jurisdiction_id='+ocd_jurisdiction_id
 		r = requests.get(orgs_url)
 		page_json = json.loads(r.text)
@@ -278,7 +283,7 @@ class Command(BaseCommand):
 
 			# update documents associated with a bill
 			for document_json in page_json['documents']:
-				self.load_document(document_json, obj)
+				self.load_bill_document(document_json, obj)
 
 		# if bills don't have local classification, don't load them
 		else:
@@ -308,7 +313,7 @@ class Command(BaseCommand):
 		if created and DEBUG:
 			print('      adding action: %s' %action_json['description'])
 
-	def load_document(self, document_json, bill):
+	def load_bill_document(self, document_json, bill):
 
 		doc_obj, created = Document.objects.get_or_create(
 				note=document_json['note'],
@@ -397,3 +402,83 @@ class Command(BaseCommand):
 
 			if created and DEBUG:
 				print('      adding membership: %s' % obj.role)
+
+	def grab_events(self, delete=False):
+
+		if delete:
+			print("deleting all events")
+			Event.objects.all().delete()
+			EventParticipant.objects.all().delete()
+			EventDocument.objects.all().delete()
+
+		# this grabs a paginated listing of all events within a jurisdiction
+		events_url = base_url+'/events/?jurisdiction_id='+ocd_jurisdiction_id
+		r = requests.get(events_url)
+		page_json = json.loads(r.text)
+
+		for i in range(page_json['meta']['max_page']):
+
+			r = requests.get(events_url+'&page='+str(i+1))
+			page_json = json.loads(r.text)
+
+			for result in page_json['results']:
+				self.grab_event(result['id'])
+
+	def grab_event(self, event_ocd_id):
+
+		event_url = base_url+'/'+event_ocd_id
+		r = requests.get(event_url)
+
+		if r.status_code == 200:
+			page_json = json.loads(r.text)
+
+			event_obj, created = Event.objects.get_or_create(
+					ocd_id = event_ocd_id,
+					name = page_json['name'],
+					description = page_json['description'],
+					classification = page_json['classification'],
+					start_time = parse_datetime(page_json['start_time']),
+					end_time = parse_datetime(page_json['end_time']) if page_json['end_time'] else None,
+					all_day = page_json['all_day'],
+					status = page_json['status'],
+					location_name = page_json['location']['name'],
+					location_url = page_json['location']['url'],
+					source_url = page_json['sources'][0]['url'],
+					source_note = page_json['sources'][0]['note'],
+				)
+
+			if created and DEBUG:
+				print('   adding event: %s' % event_ocd_id)
+
+			for participant_json in page_json['participants']:
+				obj, created = EventParticipant.objects.get_or_create(
+						event = event_obj,
+						note = participant_json['note'],
+						entity_name = participant_json['entity_name'],
+						entity_type = participant_json['entity_type']
+					)
+				if created and DEBUG:
+					print('      adding participant: %s' %obj.entity_name)
+
+			for document_json in page_json['documents']:
+				self.load_event_document(document_json, event_obj)
+		else:
+			print("*"*60)
+			print("SKIPPING EVENT %s" %event_ocd_id)
+			print("cannot retrieve event data")
+			print("*"*60)
+
+	def load_event_document(self, document_json, event):
+
+		doc_obj, created = Document.objects.get_or_create(
+				note=document_json['note'],
+				url=document_json['links'][0]['url'],
+			)
+
+		obj, created = EventDocument.objects.get_or_create(
+				event = event,
+				document = doc_obj,
+			)
+
+		if created and DEBUG:
+			print('      adding document: %s' % doc_obj.note)
