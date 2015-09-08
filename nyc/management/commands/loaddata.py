@@ -393,6 +393,11 @@ class Command(BaseCommand):
 				post = None
 
 			organization = Organization.objects.filter(ocd_id=membership_json['organization']['id']).first()
+			# adding republican or democratic party when encountered
+			# b/c parties are not added when organizations are loaded (in grab_organizations)
+			if not organization and membership_json['organization']['name'] in ['Republican', 'Democratic']:
+				self.grab_organization_posts(membership_json['organization']['id'])
+				organization = Organization.objects.filter(ocd_id=membership_json['organization']['id']).first()
 
 			try:
 				end_date = parse_date(membership_json['end_date'])
