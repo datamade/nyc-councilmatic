@@ -19,10 +19,7 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
 
     actions = indexes.MultiValueField()
 
-    from_organization = indexes.CharField(model_attr='from_organization', 
-                                          faceted=True)
-
-    from_organization_slug = indexes.CharField(indexed=False)
+    controlling_body = indexes.MultiValueField(faceted=True)
 
     def get_model(self):
         return Bill
@@ -36,13 +33,9 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_actions(self, obj):
         return [action for action in obj.actions.all()]
     
-    def prepare_from_organization(self, obj):
-        if obj.current_org:
-            return obj.current_org.name
-
-    def prepare_from_organization_slug(self, obj):
-        if obj.current_org:
-            return obj.current_org.slug
+    def prepare_controlling_body(self, obj):
+        if obj.controlling_body:
+            return [org.name for org in obj.controlling_body]
 
     def prepare_full_text(self, obj):
         return clean_html(obj.full_text)
