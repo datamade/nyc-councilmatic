@@ -36,6 +36,9 @@
                   <li role="presentation" {% if request.GET.view == 'sponsors' %}class='active' {% endif %}>
                     <a href="/legislation/{{legislation.slug}}?view=sponsors"><i class='fa fa-fw fa-group'></i> Sponsors ({{ legislation.sponsorships.all | length }})</a>
                   </li>
+                  <li role="presentation" {% if request.GET.view == 'documents' %}class='active' {% endif %}>
+                    <a href="/legislation/{{legislation.slug}}?view=documents"><i class='fa fa-fw fa-file-text-o'></i> Documents ({{ legislation.documents.all | length }})</a>
+                  </li>
                   {% if legislation.full_text != "" %}
                     <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}>
                         <a href="/legislation/{{legislation.slug}}?view=text"><i class='fa fa-fw fa-file-text-o'></i> Legislation Text</a>
@@ -112,6 +115,22 @@
                         </table>
                     {% else %}
                         <h3>This legislation has no sponsors</h3>
+                    {% endif %}
+                {% endif %}
+
+                {% if request.GET.view == 'documents' %}
+                    {% if legislation.documents.all %}
+                        <h3><i class='fa fa-fw fa-file-text-o'></i> Documents ({{legislation.documents.all | length}})</h3>
+
+                        <ul>
+                            {% for doc in legislation.documents.all %}
+                                <li>
+                                    <a href="{{doc.document.url}}" target="blank">{{ doc.document.note }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <h3>This legislation has no documents</h3>
                     {% endif %}
                 {% endif %}
 
