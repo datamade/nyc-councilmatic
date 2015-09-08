@@ -21,7 +21,7 @@ from nyc.views import CouncilmaticSearchForm
 
 sqs = SearchQuerySet().facet('bill_type')\
                       .facet('sponsorships', sort='index')\
-                      .facet('from_organization')\
+                      .facet('controlling_body')\
                       .order_by('-last_action_date')
 
 urlpatterns = [

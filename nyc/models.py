@@ -51,8 +51,8 @@ class Bill(models.Model):
 		if self.current_action:
 			related_orgs = self.current_action.related_entities.filter(entity_type='organization').all()
 			if related_orgs:
-				current_orgs = [Organization.objects.all().filter(ocd_id=org.organization_ocd_id).first() for org in related_orgs]
-				return current_orgs
+				controlling_bodies = [Organization.objects.all().filter(ocd_id=org.organization_ocd_id).first() for org in related_orgs]
+				return controlling_bodies
 			else:
 				return [self.current_action.organization]
 		else:
