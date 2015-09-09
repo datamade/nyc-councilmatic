@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime
+import pytz
 
 
 class Person(models.Model):
@@ -74,6 +76,42 @@ class Bill(models.Model):
 	@property
 	def primary_sponsor(self):
 		return self.sponsorships.filter(is_primary=True).first()
+
+	@property
+	def is_stale(self):
+		# stale = no action for 2 months
+		eastern = pytz.timezone('US/Eastern')
+		if self.current_action:
+			timediff = datetime.now().replace(tzinfo=eastern) - self.current_action.date
+			return (timediff.days > 60)
+		else:
+			return True
+
+	@property
+	def is_passed(self):
+		if self.actions:
+			return ('Signed Into Law by Mayor' in [a.description for a in self.actions.all()])
+		else:
+			return False
+
+	@property
+	def is_approved(self):
+		if self.actions:
+			return any(['Approved' in a.description for a in self.actions.all()])
+		else:
+			return False
+
+	@property
+	def inferred_status(self):
+		if self.is_passed:
+			return 'Passed'
+		elif self.is_approved:
+			return 'Approved'
+		elif self.is_stale:
+			return 'Stale'
+		else:
+			return 'Active'
+
 
 	def get_last_action_date(self):
 		return self.actions.all().order_by('-order').first().date if self.actions.all() else None

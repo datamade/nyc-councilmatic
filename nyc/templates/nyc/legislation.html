@@ -23,16 +23,13 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Legislation Status</h3>
+                        <h3 class="panel-title">Status</h3>
                     </div>
                     <div class="panel-body">
 
                         <div class="row-fluid">
                             <div class="col-xs-6">
-                                <p class="h4">Last Action</p>
-                                <p>
-                                    <span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description | remove_action_subj }}</span>
-                                </p>
+                                <p class="h3">{{legislation.inferred_status}}</p>
                             </div>
                             <div class="col-xs-6">
                                 <p class="h4">Controlling Body</p>
