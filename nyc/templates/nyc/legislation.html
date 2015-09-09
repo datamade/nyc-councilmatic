@@ -5,15 +5,10 @@
 {% block content %}
   	{% if legislation %}
   		<div class="row-fluid">
-	        <div class="col-sm-11">
+	        <div class="col-sm-12">
 	            <h1>
                     {{ legislation.friendly_name }}
                 </h1>
-            </div>
-            <div class="col-sm-1">
-                <p class='h3'>
-                    <a href='{{legislation.source_url}}' title='View the source for this page'><i class='fa fa-fw fa-external-link'></i></a>
-                </p>
             </div>
         </div>
 
@@ -29,7 +24,7 @@
 
                         <div class="row-fluid">
                             <div class="col-xs-6">
-                                <p class="h3">{{legislation.inferred_status}}</p>
+                                <span class='label label-large label-{{legislation.inferred_status | lower}}'>{{legislation.inferred_status}}</span>
                             </div>
                             <div class="col-xs-6">
                                 <p class="h4">Controlling Body</p>
@@ -50,7 +45,7 @@
         <div class="row-fluid">
             <div class="col-sm-12">
 
-                <p>{{ legislation.description }}</p>
+                <p>{{ legislation.description }} <a href='{{legislation.source_url}}' title='View the source for this page'><i class='fa fa-fw fa-external-link'></i></a></p>
 	            <hr />
 
                 <ul class="nav nav-pills">
@@ -92,7 +87,7 @@
                                 {% for action in actions %}
                                     <tr>
                                         <td class='nowrap'>{{action.date|date:'M d, Y'}}</td>
-                                        <td><span class='label label-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
+                                        <td><span class='text-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
                                         <td>{{action.organization.link_html|safe}}</td>
                                     </tr>
                                 {% endfor %}

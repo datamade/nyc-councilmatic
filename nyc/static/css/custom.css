@@ -38,3 +38,21 @@ h1, h2, h3, h4 {
 #council-members td, #committee-actions td {
     vertical-align: middle;
 }
+
+.label-large{
+    font-size: 1.6em;
+    font-family: "News Cycle","Arial Narrow Bold",sans-serif;
+}
+
+.label-stale{
+    background-color: #777;
+}
+.label-passed{
+    background-color: #22B24C;
+}
+.label-approved{
+    background-color: #A4D330;
+}
+.label-active{
+    background-color: #D3C226;
+}
