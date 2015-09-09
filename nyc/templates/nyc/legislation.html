@@ -5,26 +5,55 @@
 {% block content %}
   	{% if legislation %}
   		<div class="row-fluid">
-	        <div class="col-sm-12">
+	        <div class="col-sm-11">
 	            <h1>
                     {{ legislation.friendly_name }}
                 </h1>
-                <div class="well well-sm">
-                    <h4>Status</h4>
-                    <p>
-                        Last action: <span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description | remove_action_subj }}</span>
-                    </p>
-                    <p>
-                        Currently controlled by: 
-                        {% for org in legislation.controlling_body %}
-                            <i class="fa fa-users"></i> {{ org.name }}
-                        {% endfor %}
-                    </p>
+            </div>
+            <div class="col-sm-1">
+                <p class='h3'>
+                    <a href='{{legislation.source_url}}' title='View the source for this page'><i class='fa fa-fw fa-external-link'></i></a>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="row-fluid">
+            <div class="col-sm-10">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Legislation Status</h3>
+                    </div>
+                    <div class="panel-body">
+
+                        <div class="row-fluid">
+                            <div class="col-xs-6">
+                                <p class="h4">Last Action</p>
+                                <p>
+                                    <span class='label label-{{legislation.current_action.label}}'>{{legislation.current_action.description | remove_action_subj }}</span>
+                                </p>
+                            </div>
+                            <div class="col-xs-6">
+                                <p class="h4">Controlling Body</p>
+                                <p>
+                                    {% for org in legislation.controlling_body %}
+                                        <i class="fa fa-users"></i> {{ org.name }}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
-                <p><a href='{{legislation.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a></p>
+            </div>
+        </div>
 
-                <p><br />{{ legislation.description }}</p>
+        <div class="row-fluid">
+            <div class="col-sm-12">
+
+                <p>{{ legislation.description }}</p>
 	            <hr />
 
                 <ul class="nav nav-pills">
