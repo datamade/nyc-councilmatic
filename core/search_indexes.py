@@ -1,6 +1,6 @@
-from nyc.models import Bill
+from core.models import Bill
 from haystack import indexes
-from nyc.templatetags.nyc_extras import clean_html
+from core.templatetags.nyc_extras import clean_html
 
 class BillIndex(indexes.SearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)

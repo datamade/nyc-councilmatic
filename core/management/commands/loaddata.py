@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
 from django.db.utils import IntegrityError
-from nyc.models import Person, Bill, Organization, Action, ActionRelatedEntity, \
+from core.models import Person, Bill, Organization, Action, ActionRelatedEntity, \
 						Post, Membership, Sponsorship, LegislativeSession, \
 						Document, BillDocument, Event, EventParticipant, EventDocument
 from councilmatic.settings import HEADSHOT_PATH, DEBUG
