@@ -1,4 +1,4 @@
-{% load nyc_extras %}
+{% load extras %}
 
 <h3>
 	<a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
@@ -14,4 +14,4 @@
 	{% endif %}
 </p>
 
-<p class="small">{{ legislation.description }}</p>
+<p class="small">{{ legislation.description | short_blurb }}</p>

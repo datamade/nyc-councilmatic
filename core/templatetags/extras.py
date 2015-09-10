@@ -34,5 +34,15 @@ def remove_action_subj(bill_action_desc):
 
 @register.filter
 @stringfilter
+def short_blurb(text_blob):
+	if len(text_blob) > 200:
+		blurb = text_blob[:200]
+		blurb = blurb[:blurb.rfind(' ')]+' ...'
+		return blurb
+	else:
+		return text_blob
+
+@register.filter
+@stringfilter
 def clean_html(text):
     return strip_entities(strip_tags(text)).replace('\n','')
