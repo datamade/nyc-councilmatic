@@ -114,7 +114,7 @@ def person(request, slug):
 
 	return render(request, 'core/person.html', context)
 
-def account_login(request):
+def user_login(request):
 	if request.method == 'POST':
 		form = AuthenticationForm(data=request.POST)
 		if form.is_valid():
@@ -127,3 +127,6 @@ def account_login(request):
 
 	return render(request, 'core_user/login.html', {'form': form})
 
+def user_logout(request):
+    logout(request)
+    return redirect('index')
