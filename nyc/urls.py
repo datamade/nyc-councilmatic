@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^committee/(.*)/$', views.committee_detail, name='committee_detail'),
     url(r'^legislation/(.*)/$', views.bill_detail, name='bill_detail'),
     url(r'^person/(.*)/$', views.person, name='person'),
+    url(r'^login/$', views.account_login, name='account_login'),
 ]

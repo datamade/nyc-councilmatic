@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from .models import Person, Bill, Organization, Action
 from haystack.forms import FacetedSearchForm
 
@@ -13,22 +16,23 @@ class CouncilmaticSearchForm(FacetedSearchForm):
     def no_query_found(self):
         return self.searchqueryset.all()
 
+@login_required(login_url='/login/')
 def index(request):
 	recent_legislation = Bill.objects.exclude(bill_type='NO TYPE').exclude(last_action_date=None).order_by('-last_action_date')[:10]
 	context = {
 		'recent_legislation': recent_legislation
 	}
 
-	return render(request, 'nyc/index.html', context)
+	return render(request, 'core/index.html', context)
 
 def about(request):
-	return render(request, 'nyc/about.html')
+	return render(request, 'core/about.html')
 
 def not_found(request):
-	return render(request, 'nyc/404.html')
+	return render(request, 'core/404.html')
 
 def search(request):
-	return render(request, 'nyc/search.html')
+	return render(request, 'core/search.html')
 
 def council_members(request):
 	city_council = Organization.objects.filter(ocd_id='ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731').first()
@@ -36,7 +40,7 @@ def council_members(request):
 		'city_council': city_council
 	}
 
-	return render(request, 'nyc/council_members.html', context)
+	return render(request, 'core/council_members.html', context)
 
 def bill_detail(request, slug):
 
@@ -52,7 +56,7 @@ def bill_detail(request, slug):
 		'actions': actions
 	}
 
-	return render(request, 'nyc/legislation.html', context)
+	return render(request, 'core/legislation.html', context)
 
 def committees(request):
 
@@ -68,7 +72,7 @@ def committees(request):
 		'taskforces': taskforces,
 	}
 
-	return render(request, 'nyc/committees.html', context)
+	return render(request, 'core/committees.html', context)
 
 def committee_detail(request, slug):
 
@@ -86,7 +90,7 @@ def committee_detail(request, slug):
 		'memberships': memberships
 	}
 
-	return render(request, 'nyc/committee.html', context)
+	return render(request, 'core/committee.html', context)
 
 def person(request, slug):
 
@@ -108,4 +112,18 @@ def person(request, slug):
 		'sponsored_legislation': [s.bill for s in sponsorships]
 	}
 
-	return render(request, 'nyc/person.html', context)
+	return render(request, 'core/person.html', context)
+
+def account_login(request):
+	if request.method == 'POST':
+		form = AuthenticationForm(data=request.POST)
+		if form.is_valid():
+			user = form.get_user()
+			if user is not None:
+				login(request, user)
+				return redirect('index')
+	else:
+		form = AuthenticationForm()
+
+	return render(request, 'core_user/login.html', {'form': form})
+
