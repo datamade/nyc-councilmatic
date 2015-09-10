@@ -3,8 +3,11 @@ from django.http import Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Person, Bill, Organization, Action
+from .models import Person, Bill, Organization, Action, Event
 from haystack.forms import FacetedSearchForm
+from calendar import HTMLCalendar
+from datetime import date
+from itertools import groupby
 
 class CouncilmaticSearchForm(FacetedSearchForm):
     
@@ -113,6 +116,60 @@ def person(request, slug):
 	}
 
 	return render(request, 'core/person.html', context)
+
+
+class QuerysetCalendar(HTMLCalendar):
+
+    def __init__(self, queryset, field):
+        self.field = field
+
+        super(QuerysetCalendar, self).__init__()
+        self.queryset_by_date = self.group_by_day(queryset)
+
+    def formatday(self, day, weekday):
+        if day != 0:
+            cssclass = self.cssclasses[weekday]
+            if date.today() == date(self.year, self.month, day):
+                cssclass += ' today'
+            if day in self.queryset_by_date:
+                cssclass += ' filled'
+                body = ['<ul>']
+
+                for item in self.queryset_by_date[day]:
+                    body.append('<li>')
+                    body.append('<a href="%s">' % item.get_absolute_url())
+                    body.append(esc(item))
+                    body.append('</a></li>')
+                body.append('</ul>')
+                return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
+            return self.day_cell(cssclass, day)
+        return self.day_cell('noday', ' ')
+
+
+    def formatmonth(self, year, month):
+        self.year, self.month = year, month
+        return super(QuerysetCalendar, self).formatmonth(year, month)
+
+    def group_by_day(self, queryset):
+        field = lambda item: getattr(item, self.field).day
+        return dict(
+            [(day, list(items)) for day, items in groupby(queryset, field)]
+        )
+
+    def day_cell(self, cssclass, body):
+        return '<td class="%s">%s</td>' % (cssclass, body)
+
+
+def events(request):
+
+	events_list = Event.objects.all()[:10]
+	cal = QuerysetCalendar(events_list, 'start_time').formatmonth(date.today().year, date.today().month)
+
+	context = {
+		'calendar': cal,
+	}
+
+	return render(request, 'core/events.html', context)
 
 def user_login(request):
 	if request.method == 'POST':
