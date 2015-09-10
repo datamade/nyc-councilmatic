@@ -55,21 +55,23 @@
 
         {% for result in page.object_list %}
 
-            <h3><a href="/legislation/{{ result.object.slug }}">{{ result.object.friendly_name }}</a></h3>
+            <h3>
+                <a href="/legislation/{{ result.object.slug }}">{{ result.object.friendly_name }}</a>
+                <span class='label label-{{result.object.inferred_status | lower}}'>{{result.object.inferred_status}}</span>
+            </h3>
 
-            <span class='label label-{{result.object.actions.first.label}}'>
-                {{result.object.current_action.description | remove_action_subj}}
-            </span>
-            &nbsp;by
-
-            {{result.object.current_action.organization.link_html | safe}}
-            on {{result.object.last_action_date|date:'M d, Y'}}
+            <p>
+                Last Activity: 
+                <span class='text-{{result.object.actions.first.label}}'>
+                    {{result.object.current_action.description | remove_action_subj}}
+                </span>
+                on {{result.object.last_action_date|date:'M d, Y'}}
             </p>
 
             {% if query %}
                 <p class="small">{% highlight result.text with query css_class "bg-info" %}</p>
             {% else %}
-                <p class="small">{{result.object.description}}</p>
+                <p class="small">{{result.object.description | short_blurb}}</p>
             {% endif %}
             <hr />
         {% empty %}
