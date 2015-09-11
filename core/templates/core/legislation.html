@@ -30,7 +30,7 @@
                                 <p class="h4">Controlling Body</p>
                                 <p>
                                     {% for org in legislation.controlling_body %}
-                                        <i class="fa fa-users"></i> {{ org.name }}
+                                        <i class="fa fa-users"></i> {{ org.link_html|safe }}
                                     {% endfor %}
                                 </p>
                             </div>

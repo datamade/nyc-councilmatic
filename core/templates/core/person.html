@@ -57,13 +57,17 @@
                         <tbody>
                             {% for membership in chairs %}
                                 <tr>
-                                    <td><a href="/committee/{{membership.organization.slug}}">{{membership.organization.name}}</a></td>
+                                    <td>
+                                        {{membership.organization.link_html|safe}}
+                                    </td>
                                     <td>Chairperson</td>
                                 </tr>
                             {% endfor %}
                             {% for membership in memberships %}
                                 <tr>
-                                    <td><a href="/committee/{{membership.organization.slug}}">{{membership.organization.name}}</a></td>
+                                    <td>
+                                        {{membership.organization.link_html|safe}}
+                                    </td>
                                     <td>Member</td>
                                 </tr>
                             {% endfor %}
