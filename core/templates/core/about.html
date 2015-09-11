@@ -7,6 +7,28 @@
 			<h2>About</h2>
 			<hr>
 			Keep track of what New York City Council is doing.
+
+			<h3>Types of Legislation</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Legislation Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for leg_type in legislation_type_descriptions %}
+					<tr>
+						<td>
+							<a href="/search/?q=&selected_facets=bill_type_exact:{{leg_type.search_term}}">
+								{{leg_type.name}}
+							</a>
+						</td>
+						<td>{{leg_type.desc}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
 

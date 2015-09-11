@@ -8,6 +8,7 @@ from haystack.forms import FacetedSearchForm
 from calendar import HTMLCalendar
 from datetime import date
 from itertools import groupby
+from councilmatic.city_config import LEGISLATION_TYPE_DESCRIPTIONS
 
 class CouncilmaticSearchForm(FacetedSearchForm):
     
@@ -29,7 +30,10 @@ def index(request):
 	return render(request, 'core/index.html', context)
 
 def about(request):
-	return render(request, 'core/about.html')
+	context = {
+		'legislation_type_descriptions': LEGISLATION_TYPE_DESCRIPTIONS,
+	}
+	return render(request, 'core/about.html', context)
 
 def not_found(request):
 	return render(request, 'core/404.html')
@@ -160,10 +164,19 @@ class QuerysetCalendar(HTMLCalendar):
         return '<td class="%s">%s</td>' % (cssclass, body)
 
 
-def events(request):
+def events(request, year=None, month=None):
 
-	events_list = Event.objects.all()[:10]
-	cal = QuerysetCalendar(events_list, 'start_time').formatmonth(date.today().year, date.today().month)
+	if not year or not month:
+		year = date.today().year
+		month = date.today().month
+	else:
+		year = int(year)
+		month = int(month)
+
+	events_list = Event.objects.all()
+	for event in events_list:
+		print(event.start_time)
+	cal = QuerysetCalendar(events_list, 'start_time').formatmonth(year, month)
 
 	context = {
 		'calendar': cal,
