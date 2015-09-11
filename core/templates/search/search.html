@@ -57,10 +57,10 @@
 
             <h3>
                 <a href="/legislation/{{ result.object.slug }}">{{ result.object.friendly_name }}</a>
-                <span class='label label-{{result.object.inferred_status | lower}}'>{{result.object.inferred_status}}</span>
+                <span class='pull-right label label-{{result.object.inferred_status | lower}}'>{{result.object.inferred_status}}</span>
             </h3>
 
-            <p>
+            <p class="small text-muted">
                 Last Activity: 
                 <span class='text-{{result.object.actions.first.label}}'>
                     {{result.object.current_action.description | remove_action_subj}}

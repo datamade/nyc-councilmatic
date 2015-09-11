@@ -73,8 +73,7 @@
 
 			    {% if request.GET.view == 'actions' or request.GET.view == None %}
                     {% if actions %}
-    			    	<h3><i class='fa fa-fw fa-list-ul'></i> Bill History</h3>
-
+                        <br/>
                         <table class='table' id='committee-actions'>
                             <thead>
                                 <tr>
@@ -98,8 +97,7 @@
 
                 {% if request.GET.view == 'sponsors' %}
                     {% if legislation.sponsorships.all %}
-                        <h3><i class='fa fa-fw fa-group'></i> Sponsors ({{legislation.sponsorships.all | length}})</h3>
-
+                        <br/>
                         <table class='table' id='council-members'>
                             <thead>
                                 <tr>
@@ -141,8 +139,7 @@
 
                 {% if request.GET.view == 'documents' %}
                     {% if legislation.documents.all %}
-                        <h3><i class='fa fa-fw fa-file-text-o'></i> Documents ({{legislation.documents.all | length}})</h3>
-
+                        <br/>
                         <ul>
                             {% for doc in legislation.documents.all %}
                                 <li>
@@ -156,7 +153,7 @@
                 {% endif %}
 
                 {% if request.GET.view == 'text' and legislation.full_text != "" %}
-                    <h3><i class='fa fa-fw fa-file-text-o'></i> Legislation Text</h3>
+                    <br/>
                     <div class='panel panel-default'>
                         <div class='panel-body'>
                             {{ legislation.full_text|safe }}

@@ -19,6 +19,15 @@ h1, h2, h3, h4 {
     font-size: 20px;
 }
 
+.nav-pills > li > a{
+    border-radius: 0px;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
+    background: none;
+    color: #EB6864;
+    border-bottom: 8px solid #EB6864;
+}
+
 .footer {
     border-top: 1px solid #ccc;
     padding: 20px 0;
