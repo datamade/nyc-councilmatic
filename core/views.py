@@ -169,20 +169,39 @@ def events(request, year=None, month=None):
 	if not year or not month:
 		year = date.today().year
 		month = date.today().month
+
+		upcoming_dates = Event.objects.filter(start_time__gt=date.today()).datetimes('start_time', 'day').order_by('start_time')[:50]
+		upcoming_events = []
+		for d in upcoming_dates:
+			events_on_day = Event.objects.filter(start_time__year=d.year).filter(start_time__month=d.month).filter(start_time__day=d.day).order_by('start_time').all()
+			upcoming_events.append([d, events_on_day])
+
+		past_dates = Event.objects.datetimes('start_time', 'day').order_by('-start_time')[:50]
+		past_events = []
+		for d in past_dates:
+			events_on_day = Event.objects.filter(start_time__year=d.year).filter(start_time__month=d.month).filter(start_time__day=d.day).order_by('start_time').all()
+			past_events.append([d, events_on_day])
+
+		context = {
+			'upcoming_events': upcoming_events,
+			'past_events': past_events,
+		}
+
+		return render(request, 'core/events.html', context)
 	else:
 		year = int(year)
 		month = int(month)
 
-	events_list = Event.objects.all()
-	for event in events_list:
-		print(event.start_time)
-	cal = QuerysetCalendar(events_list, 'start_time').formatmonth(year, month)
+		events_list = Event.objects.all()
+		for event in events_list:
+			print(event.start_time)
+		cal = QuerysetCalendar(events_list, 'start_time').formatmonth(year, month)
 
-	context = {
-		'calendar': cal,
-	}
+		context = {
+			'calendar': cal,
+		}
 
-	return render(request, 'core/events.html', context)
+		return render(request, 'core/events.html', context)
 
 def user_login(request):
 	if request.method == 'POST':
