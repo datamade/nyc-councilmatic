@@ -192,13 +192,15 @@ def events(request, year=None, month=None):
 		year = int(year)
 		month = int(month)
 
-		events_list = Event.objects.all()
-		for event in events_list:
-			print(event.start_time)
-		cal = QuerysetCalendar(events_list, 'start_time').formatmonth(year, month)
+		month_dates = Event.objects.filter(start_time__year=year).filter(start_time__month=month).datetimes('start_time', 'day').order_by('start_time')
+		month_events = []
+		for d in month_dates:
+			events_on_day = Event.objects.filter(start_time__year=d.year).filter(start_time__month=d.month).filter(start_time__day=d.day).order_by('start_time').all()
+			month_events.append([d, events_on_day])
 
 		context = {
-			'calendar': cal,
+			'first_date': month_dates[0],
+			'month_events': month_events,
 		}
 
 		return render(request, 'core/events.html', context)
