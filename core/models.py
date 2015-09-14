@@ -1,7 +1,10 @@
 from django.db import models
 from datetime import datetime
 import pytz
+from councilmatic.city_config import TIMEZONE
 
+
+app_timezone = pytz.timezone(TIMEZONE)
 
 class Person(models.Model):
 	ocd_id = models.CharField(max_length=100, unique=True)
@@ -80,9 +83,8 @@ class Bill(models.Model):
 	@property
 	def is_stale(self):
 		# stale = no action for 2 months
-		eastern = pytz.timezone('US/Eastern')
 		if self.current_action:
-			timediff = datetime.now().replace(tzinfo=eastern) - self.current_action.date
+			timediff = datetime.now().replace(tzinfo=app_timezone) - self.current_action.date
 			return (timediff.days > 60)
 		else:
 			return True
