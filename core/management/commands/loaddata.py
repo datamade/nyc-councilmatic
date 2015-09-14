@@ -1,20 +1,19 @@
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.dateparse import parse_datetime, parse_date
 from django.utils.text import slugify
-from django.db.utils import IntegrityError
+from django.db.utils import IntegrityError, DataError
 from core.models import Person, Bill, Organization, Action, ActionRelatedEntity, \
 						Post, Membership, Sponsorship, LegislativeSession, \
 						Document, BillDocument, Event, EventParticipant, EventDocument
 from councilmatic.settings import HEADSHOT_PATH, DEBUG
+from councilmatic.city_config import OCD_JURISDICTION_ID, OCD_CITY_COUNCIL_ID, TIMEZONE
 import requests
 import json
 import pytz
 import os.path
 
-ocd_jurisdiction_id = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
-ocd_city_council_id = 'ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731'
+app_timezone = pytz.timezone(TIMEZONE)
 base_url = 'http://api.opencivicdata.org'
-eastern = pytz.timezone('US/Eastern')
 
 class Command(BaseCommand):
 	help = 'loads in data from the open civic data API'
@@ -49,6 +48,7 @@ class Command(BaseCommand):
 			self.grab_organizations(delete=options['delete'])
 			self.grab_bills(delete=options['delete'])
 			self.grab_people(delete=options['delete'])
+			self.grab_events(delete=options['delete'])
 			print("\ndone!")
 		
 	def grab_organizations(self, delete=False):
@@ -59,10 +59,10 @@ class Command(BaseCommand):
 			Post.objects.all().delete()
 
 		# first grab ny city council root
-		self.grab_organization_posts(ocd_city_council_id)
+		self.grab_organization_posts(OCD_CITY_COUNCIL_ID)
 
 		# this grabs a paginated listing of all organizations within a jurisdiction
-		orgs_url = base_url+'/organizations/?jurisdiction_id='+ocd_jurisdiction_id
+		orgs_url = base_url+'/organizations/?jurisdiction_id='+OCD_JURISDICTION_ID
 		r = requests.get(orgs_url)
 		page_json = json.loads(r.text)
 
@@ -193,7 +193,7 @@ class Command(BaseCommand):
 		# get legislative sessions
 		self.grab_legislative_sessions()
 
-		bill_url = base_url+'/bills/?from_organization_id='+ocd_city_council_id
+		bill_url = base_url+'/bills/?from_organization_id='+OCD_CITY_COUNCIL_ID
 		r = requests.get(bill_url)
 		page_json = json.loads(r.text)
 
@@ -210,7 +210,7 @@ class Command(BaseCommand):
 		# TO-DO: update this when ocd data is fixed
 		obj, created = LegislativeSession.objects.get_or_create(
 				identifier='2014',
-				jurisdiction_ocd_id=ocd_jurisdiction_id,
+				jurisdiction_ocd_id=OCD_JURISDICTION_ID,
 				name='2014 Legislative Session',
 			)
 		if created and DEBUG:
@@ -430,7 +430,7 @@ class Command(BaseCommand):
 			EventDocument.objects.all().delete()
 
 		# this grabs a paginated listing of all events within a jurisdiction
-		events_url = base_url+'/events/?jurisdiction_id='+ocd_jurisdiction_id
+		events_url = base_url+'/events/?jurisdiction_id='+OCD_JURISDICTION_ID
 		r = requests.get(events_url)
 		page_json = json.loads(r.text)
 
@@ -447,39 +447,50 @@ class Command(BaseCommand):
 		event_url = base_url+'/'+event_ocd_id
 		r = requests.get(event_url)
 
+
 		if r.status_code == 200:
 			page_json = json.loads(r.text)
 
-			event_obj, created = Event.objects.get_or_create(
-					ocd_id = event_ocd_id,
-					name = page_json['name'],
-					description = page_json['description'],
-					classification = page_json['classification'],
-					start_time = parse_datetime(page_json['start_time']),
-					end_time = parse_datetime(page_json['end_time']) if page_json['end_time'] else None,
-					all_day = page_json['all_day'],
-					status = page_json['status'],
-					location_name = page_json['location']['name'],
-					location_url = page_json['location']['url'],
-					source_url = page_json['sources'][0]['url'],
-					source_note = page_json['sources'][0]['note'],
-				)
-
-			if created and DEBUG:
-				print('   adding event: %s' % event_ocd_id)
-
-			for participant_json in page_json['participants']:
-				obj, created = EventParticipant.objects.get_or_create(
-						event = event_obj,
-						note = participant_json['note'],
-						entity_name = participant_json['entity_name'],
-						entity_type = participant_json['entity_type']
+			try:
+				event_obj, created = Event.objects.get_or_create(
+						ocd_id = event_ocd_id,
+						name = page_json['name'],
+						description = page_json['description'],
+						classification = page_json['classification'],
+						start_time = parse_datetime(page_json['start_time']),
+						end_time = parse_datetime(page_json['end_time']) if page_json['end_time'] else None,
+						all_day = page_json['all_day'],
+						status = page_json['status'],
+						location_name = page_json['location']['name'],
+						location_url = page_json['location']['url'],
+						source_url = page_json['sources'][0]['url'],
+						source_note = page_json['sources'][0]['note'],
 					)
-				if created and DEBUG:
-					print('      adding participant: %s' %obj.entity_name)
 
-			for document_json in page_json['documents']:
-				self.load_event_document(document_json, event_obj)
+				if created and DEBUG:
+					print('   adding event: %s' % event_ocd_id)
+
+				for participant_json in page_json['participants']:
+					obj, created = EventParticipant.objects.get_or_create(
+							event = event_obj,
+							note = participant_json['note'],
+							entity_name = participant_json['entity_name'],
+							entity_type = participant_json['entity_type']
+						)
+					if created and DEBUG:
+						print('      adding participant: %s' %obj.entity_name)
+
+				for document_json in page_json['documents']:
+					self.load_event_document(document_json, event_obj)
+
+			# TEMPORARY - skip events w/ names that are too long
+			# this will be fixed when names no longer have descriptions appended
+			except DataError:
+				print("*"*60)
+				print("SKIPPING EVENT %s" %event_ocd_id)
+				print("error loading event data")
+				print("*"*60)
+
 		else:
 			print("*"*60)
 			print("SKIPPING EVENT %s" %event_ocd_id)
