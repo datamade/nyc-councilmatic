@@ -233,6 +233,16 @@ class EventParticipant(models.Model):
 	entity_name = models.CharField(max_length=255)
 	entity_type = models.CharField(max_length=100)
 
+class EventAgendaItem(models.Model):
+	event = models.ForeignKey('Event', related_name='agenda_items')
+	order = models.IntegerField()
+	description = models.TextField()
+
+class AgendaItemBill(models.Model):
+	agenda_item = models.ForeignKey('EventAgendaItem', related_name='related_bills')
+	bill = models.ForeignKey('Bill', related_name='related_agenda_items')
+	note = models.CharField(max_length=255)
+
 class Document(models.Model):
 	note = models.TextField()
 	url = models.TextField()
