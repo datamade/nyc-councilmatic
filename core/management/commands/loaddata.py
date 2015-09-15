@@ -11,6 +11,7 @@ import requests
 import json
 import pytz
 import os.path
+import re
 
 app_timezone = pytz.timezone(TIMEZONE)
 base_url = 'http://api.opencivicdata.org'
@@ -452,6 +453,7 @@ class Command(BaseCommand):
 			page_json = json.loads(r.text)
 
 			try:
+				legistar_id = re.findall('ID=(.*)&GUID', page_json['sources'][0]['url'])[0]
 				event_obj, created = Event.objects.get_or_create(
 						ocd_id = event_ocd_id,
 						name = page_json['name'],
@@ -465,6 +467,7 @@ class Command(BaseCommand):
 						location_url = page_json['location']['url'],
 						source_url = page_json['sources'][0]['url'],
 						source_note = page_json['sources'][0]['note'],
+						slug = legistar_id,
 					)
 
 				if created and DEBUG:
