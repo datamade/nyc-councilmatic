@@ -9,7 +9,23 @@
 			<h1>{{event.name}}</h1>
             <p>{{event.description}}</p>
 
+            <p class="small text-muted">
+                <i class="fa fa-fw fa-calendar-o"></i> {{event.start_time | date:"D m/d/Y"}}<br/>
+                <i class="fa fa-fw fa-clock-o"></i> {{event.start_time | date:"g:i a"}}<br/>
+                <i class="fa fa-fw fa-map-marker"></i> {{event.location_name}}
+            </p>
+
             <hr />
+
+<!--             <h3>Event Agenda</h3>
+            {% for agenda_item in event.agenda_items.all %}
+                <p>{{agenda_item.description}}</p>
+            {% endfor %} -->
+
+            <h3>Event Documents</h3>
+            {% for document in event.documents.all %}
+                <p><a href="{{document.document.url}}">{{document.document.note}}</a></p>
+            {% endfor %}
 
 		</div>
 	</div>
