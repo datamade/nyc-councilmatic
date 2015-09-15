@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='user_logout'),
     url(r'^events/$', views.events, name='events'),
     url(r'^events/(.*)/(.*)/$', views.events, name='events'),
+    url(r'^event/(.*)/$', views.event_detail, name='event_detail'),
 ]

@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Person, Bill, Organization, Action, Event
 from haystack.forms import FacetedSearchForm
-from calendar import HTMLCalendar
 from datetime import date
 from itertools import groupby
 from councilmatic.city_config import LEGISLATION_TYPE_DESCRIPTIONS
@@ -122,48 +121,6 @@ def person(request, slug):
 	return render(request, 'core/person.html', context)
 
 
-class QuerysetCalendar(HTMLCalendar):
-
-    def __init__(self, queryset, field):
-        self.field = field
-
-        super(QuerysetCalendar, self).__init__()
-        self.queryset_by_date = self.group_by_day(queryset)
-
-    def formatday(self, day, weekday):
-        if day != 0:
-            cssclass = self.cssclasses[weekday]
-            if date.today() == date(self.year, self.month, day):
-                cssclass += ' today'
-            if day in self.queryset_by_date:
-                cssclass += ' filled'
-                body = ['<ul>']
-
-                for item in self.queryset_by_date[day]:
-                    body.append('<li>')
-                    body.append('<a href="%s">' % item.get_absolute_url())
-                    body.append(esc(item))
-                    body.append('</a></li>')
-                body.append('</ul>')
-                return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
-            return self.day_cell(cssclass, day)
-        return self.day_cell('noday', ' ')
-
-
-    def formatmonth(self, year, month):
-        self.year, self.month = year, month
-        return super(QuerysetCalendar, self).formatmonth(year, month)
-
-    def group_by_day(self, queryset):
-        field = lambda item: getattr(item, self.field).day
-        return dict(
-            [(day, list(items)) for day, items in groupby(queryset, field)]
-        )
-
-    def day_cell(self, cssclass, body):
-        return '<td class="%s">%s</td>' % (cssclass, body)
-
-
 def events(request, year=None, month=None):
 
 	if not year or not month:
@@ -204,6 +161,15 @@ def events(request, year=None, month=None):
 		}
 
 		return render(request, 'core/events.html', context)
+
+def event_detail(request, slug):
+
+	event = Event.objects.filter(slug=slug).first()
+	context = {
+		'event': event
+	}
+
+	return render(request, 'core/event.html', context)
 
 def user_login(request):
 	if request.method == 'POST':
