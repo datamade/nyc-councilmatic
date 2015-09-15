@@ -4,7 +4,8 @@ from django.utils.text import slugify
 from django.db.utils import IntegrityError, DataError
 from core.models import Person, Bill, Organization, Action, ActionRelatedEntity, \
 						Post, Membership, Sponsorship, LegislativeSession, \
-						Document, BillDocument, Event, EventParticipant, EventDocument
+						Document, BillDocument, Event, EventParticipant, EventDocument, \
+						EventAgendaItem, AgendaItemBill
 from councilmatic.settings import HEADSHOT_PATH, DEBUG
 from councilmatic.city_config import OCD_JURISDICTION_ID, OCD_CITY_COUNCIL_ID, TIMEZONE
 import requests
@@ -429,6 +430,8 @@ class Command(BaseCommand):
 			Event.objects.all().delete()
 			EventParticipant.objects.all().delete()
 			EventDocument.objects.all().delete()
+			EventAgendaItem.objects.all().delete()
+			AgendaItemBill.objects.all().delete()
 
 		# this grabs a paginated listing of all events within a jurisdiction
 		events_url = base_url+'/events/?jurisdiction_id='+OCD_JURISDICTION_ID
@@ -484,7 +487,10 @@ class Command(BaseCommand):
 						print('      adding participant: %s' %obj.entity_name)
 
 				for document_json in page_json['documents']:
-					self.load_event_document(document_json, event_obj)
+					self.load_eventdocument(document_json, event_obj)
+
+				for agenda_item_json in page_json['agenda']:
+					self.load_eventagendaitem(agenda_item_json, event_obj)
 
 			# TEMPORARY - skip events w/ names that are too long
 			# this will be fixed when names no longer have descriptions appended
@@ -500,7 +506,33 @@ class Command(BaseCommand):
 			print("cannot retrieve event data")
 			print("*"*60)
 
-	def load_event_document(self, document_json, event):
+	def load_eventagendaitem(self, agenda_item_json, event):
+
+		agendaitem_obj, created = EventAgendaItem.objects.get_or_create(
+				event = event,
+				order = agenda_item_json['order'],
+				description = agenda_item_json['description'],
+			)
+
+		if created and DEBUG:
+			print('      adding agenda item: %s' %agendaitem_obj.order)
+
+		related_entity_json = agenda_item_json['related_entities'][0]
+		clean_bill_identifier = re.sub(' 0', ' ', related_entity_json['entity_name'])
+		related_bill = Bill.objects.filter(identifier = clean_bill_identifier).first()
+
+		if related_bill:
+			obj, created = AgendaItemBill.objects.get_or_create(
+					agenda_item = agendaitem_obj,
+					bill = related_bill,
+					note = related_entity_json['note'],
+				)
+
+			if created and DEBUG:
+				print('         adding related bill: %s' %related_bill.identifier)
+
+
+	def load_eventdocument(self, document_json, event):
 
 		doc_obj, created = Document.objects.get_or_create(
 				note=document_json['note'],
