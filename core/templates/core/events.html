@@ -3,23 +3,18 @@
 {% block content %}
 
 	{% if month_events %}
-		<h3>{{first_date | date:"F Y"}}</h3>
+		<h2>Events: {{first_date | date:"F Y"}}</h2>
+		<hr />
 
 		{% for date, event_list in month_events %}
-			<h5 class="text-default"><i class="fa fa-fw fa-calendar-o"></i> {{date | date:"D m/d/Y"}}</h5>
-			{% for event in event_list %}
-				{% include "partials/event_item.html" %}
-			{% endfor %}
+			{% include "partials/event_day.html" %}
 		{% endfor %}
 
 	{% else %}
 		{% if upcoming_events %}
-		<h3>Upcoming Events</h3>
+			<h3>Upcoming Events</h3>
 			{% for date, event_list in upcoming_events %}
-				<h5 class="text-default"><i class="fa fa-fw fa-calendar-o"></i> {{date | date:"D m/d/Y"}}</h5>
-				{% for event in event_list %}
-					{% include "partials/event_item.html" %}
-				{% endfor %}
+				{% include "partials/event_day.html" %}
 			{% endfor %}
 		{% else %}
 			<h2>No Upcoming Events</h2>
@@ -27,12 +22,9 @@
 		{% endif %}
 
 		{% if past_events %}
-		<h2>Past Events</h2>
+			<h2>Past Events</h2>
 			{% for date, event_list in past_events %}
-				<h5 class="text-default"><i class="fa fa-fw fa-calendar-o"></i> {{date | date:"D m/d/Y"}}</h5>
-				{% for event in event_list %}
-					{% include "partials/event_item.html" %}
-				{% endfor %}
+				{% include "partials/event_day.html" %}
 			{% endfor %}
 		{% endif %}
 	{% endif %}
