@@ -6,7 +6,7 @@
 		<h3>{{first_date | date:"F Y"}}</h3>
 
 		{% for date, event_list in month_events %}
-			<h5 class="text-primary">{{date | date:"D m/d/Y"}}</h5>
+			<h5 class="text-default"><i class="fa fa-fw fa-calendar-o"></i> {{date | date:"D m/d/Y"}}</h5>
 			{% for event in event_list %}
 				{% include "partials/event_item.html" %}
 			{% endfor %}
@@ -16,7 +16,7 @@
 		{% if upcoming_events %}
 		<h3>Upcoming Events</h3>
 			{% for date, event_list in upcoming_events %}
-				<h5 class="text-primary">{{date | date:"D m/d/Y"}}</h5>
+				<h5 class="text-default"><i class="fa fa-fw fa-calendar-o"></i> {{date | date:"D m/d/Y"}}</h5>
 				{% for event in event_list %}
 					{% include "partials/event_item.html" %}
 				{% endfor %}
@@ -29,7 +29,7 @@
 		{% if past_events %}
 		<h2>Past Events</h2>
 			{% for date, event_list in past_events %}
-				<h5 class="text-primary">{{date | date:"D m/d/Y"}}</h5>
+				<h5 class="text-default"><i class="fa fa-fw fa-calendar-o"></i> {{date | date:"D m/d/Y"}}</h5>
 				{% for event in event_list %}
 					{% include "partials/event_item.html" %}
 				{% endfor %}

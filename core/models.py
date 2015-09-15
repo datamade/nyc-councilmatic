@@ -222,6 +222,11 @@ class Event(models.Model):
 	source_note = models.CharField(max_length=255, blank=True)
 	slug = models.CharField(max_length=255, unique=True)
 
+	@property
+	def event_page_url(self):
+		return '/event/%s' %self.slug
+
+
 class EventParticipant(models.Model):
 	event = models.ForeignKey('Event', related_name='participants')
 	note = models.TextField()

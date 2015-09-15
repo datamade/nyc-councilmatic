@@ -1,6 +1,13 @@
-<h4>{{event.name}}</h4>
-<p class="small">{{event.description}}</p>
-<p class="small text-muted">
-	<i class="fa fa-fw fa-clock-o"></i> {{event.start_time| date:"g:i a"}}<br/>
-	<i class="fa fa-fw fa-map-marker"></i> {{event.location_name}}
-</p>
+<div class="row">
+	<div class="col-xs-3">
+		<p class="small">
+			<i class="fa fa-fw fa-clock-o"></i> {{event.start_time| date:"g:i a"}}<br/>
+		</p>
+	</div>
+	<div class="col-xs-9">
+		<p>
+			<a href="{{event.event_page_url}}">{{event.name}}</a><br/>
+			<span class="small text-muted">{{event.description}}</span>
+		</p>
+	</div>
+</div>
