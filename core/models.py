@@ -220,6 +220,7 @@ class Event(models.Model):
 	location_url = models.CharField(max_length=255, blank=True)
 	source_url = models.CharField(max_length=255)
 	source_note = models.CharField(max_length=255, blank=True)
+	slug = models.CharField(max_length=255, unique=True)
 
 class EventParticipant(models.Model):
 	event = models.ForeignKey('Event', related_name='participants')
