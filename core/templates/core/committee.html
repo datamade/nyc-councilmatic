@@ -7,7 +7,9 @@
 	<div class="row-fluid">
 		<div class="col-sm-12">
 			<h1>{{committee.name}}</h1>
-            <p><!-- committee description goes here --></p>
+            {% if committee_description %}
+                <p>{{committee_description}}</p>
+            {% endif %}
 
             <hr />
             <ul class="nav nav-pills">

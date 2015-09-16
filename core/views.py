@@ -7,7 +7,7 @@ from .models import Person, Bill, Organization, Action, Event
 from haystack.forms import FacetedSearchForm
 from datetime import date
 from itertools import groupby
-from councilmatic.city_config import LEGISLATION_TYPE_DESCRIPTIONS
+from councilmatic.city_config import LEGISLATION_TYPE_DESCRIPTIONS, COMMITTEE_DESCIPTIONS
 
 class CouncilmaticSearchForm(FacetedSearchForm):
     
@@ -89,11 +89,13 @@ def committee_detail(request, slug):
 
 	chairs = committee.memberships.filter(role="CHAIRPERSON")
 	memberships = committee.memberships.filter(role="Committee Member")
+	committee_description = COMMITTEE_DESCIPTIONS[committee.slug] if committee.slug in COMMITTEE_DESCIPTIONS else None
 
 	context = {
 		'committee': committee,
 		'chairs': chairs,
-		'memberships': memberships
+		'memberships': memberships,
+		'committee_description': committee_description,
 	}
 
 	return render(request, 'core/committee.html', context)
