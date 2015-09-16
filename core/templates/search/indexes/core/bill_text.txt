@@ -2,6 +2,7 @@
 {{ object.identifier | alternative_identifiers }}
 {{ object.friendly_name }}
 {{ object.classification }}
+{{ object.description }}
 {% for s in object.sponsorships.all %}
     {{ s.person.name }}
 {% endfor %}
