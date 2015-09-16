@@ -17,15 +17,32 @@
 
             <hr />
 
-<!--             <h3>Event Agenda</h3>
-            {% for agenda_item in event.agenda_items.all %}
-                <p>{{agenda_item.description}}</p>
-            {% endfor %} -->
+            <h3><i class="fa fa-fw fa-users"></i> Participants</h3>
+            <p>
+                <ul>
+                {% for participant in participants %}
+                    <li>{{participant.link_html | safe}}</li>
+                {% endfor %}
+                </ul>
+            </p>
 
-            <h3>Event Documents</h3>
-            {% for document in event.documents.all %}
-                <p><a href="{{document.document.url}}">{{document.document.note}}</a></p>
-            {% endfor %}
+            <h3><i class="fa fa-fw fa-list"></i> Agenda</h3>
+            <p>
+                <ol>
+                    {% for agenda_item in agenda_clean %}
+                        <li>{{agenda_item}}</li>
+                    {% endfor %}
+                </ol>
+            </p>
+
+            <h3><i class="fa fa-fw fa-paperclip"></i> Attachments</h3>
+            <p>
+                <ul>
+                {% for document in event.documents.all %}
+                    <li><a href="{{document.document.url}}">{{document.document.note}}</a></li>
+                {% endfor %}
+                </ul>
+            </p>
 
 		</div>
 	</div>

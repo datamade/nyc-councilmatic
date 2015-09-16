@@ -176,8 +176,17 @@ def events(request, year=None, month=None):
 def event_detail(request, slug):
 
 	event = Event.objects.filter(slug=slug).first()
+	agenda_items = event.agenda_items.order_by('order').all()
+	agenda_deduped = []
+	for a in agenda_items:
+		if a.description not in agenda_deduped:
+			agenda_deduped.append(a.description)
+
+	participants = [ Organization.objects.filter(name=p.entity_name).first() for p in event.participants.all()]
 	context = {
-		'event': event
+		'event': event,
+		'participants': participants,
+		'agenda_clean': agenda_deduped,
 	}
 
 	return render(request, 'core/event.html', context)
