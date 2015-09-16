@@ -21,8 +21,10 @@
     </div>
     <div class="row-fluid">
         <div class='col-sm-8'>
-  			<h3>Latest Activity</h3>
-  			{% include "partials/legislation_list.html" %}
+  			<h2>Recently Passed<br/><span class="text-muted small">Legislation signed into law over the past 30 days</span></h2>
+    			{% for legislation in recently_passed %}
+            {% include "partials/legislation_item_passed.html" %}
+          {% endfor %}
         </div>
   	</div>
 {% endblock %}

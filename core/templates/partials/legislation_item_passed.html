@@ -1,0 +1,10 @@
+{% load extras %}
+
+<h3>
+	<a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
+	<span class="pull-right text-muted small"><i class="fa fa-fw fa-calendar-o"></i> {{legislation.date_passed|date:'M d, Y'}}</span>
+</h3>
+
+<p class="small">
+	{{ legislation.description | short_blurb }}
+</p>

@@ -72,6 +72,10 @@ class Bill(models.Model):
 		return self.actions.all().order_by('-order').first() if self.actions.all() else None
 
 	@property
+	def date_passed(self):
+		return self.actions.filter(classification='executive-signature').order_by('-order').first().date if self.actions.all() else None
+
+	@property
 	def friendly_name(self):
 		nums_only = self.identifier.split(' ')[-1]
 		return self.bill_type+' '+nums_only
@@ -92,9 +96,9 @@ class Bill(models.Model):
 	@property
 	def is_passed(self):
 		if self.actions:
-			return ('Signed Into Law by Mayor' in [a.description for a in self.actions.all()])
+			return ('executive-signature' in [a.classification for a in self.actions.all()])
 		else:
-			return False
+			return False		
 
 	@property
 	def is_approved(self):

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Person, Bill, Organization, Action, Event
 from haystack.forms import FacetedSearchForm
-from datetime import date
+from datetime import date, timedelta
 from itertools import groupby
 from councilmatic.city_config import LEGISLATION_TYPE_DESCRIPTIONS, COMMITTEE_DESCIPTIONS
 
@@ -21,9 +21,14 @@ class CouncilmaticSearchForm(FacetedSearchForm):
 
 @login_required(login_url='/login/')
 def index(request):
-	recent_legislation = Bill.objects.exclude(bill_type='NO TYPE').exclude(last_action_date=None).order_by('-last_action_date')[:10]
+	#recent_legislation = Bill.objects.exclude(last_action_date=None).order_by('-last_action_date')[:10]
+	one_month_ago = date.today() + timedelta(days=-30)
+	recent_legislation = Bill.objects.exclude(last_action_date=None).filter(last_action_date__gt=one_month_ago).order_by('-last_action_date').all()
+	recently_passed = [l for l in recent_legislation if l.inferred_status == 'Passed']
+
 	context = {
-		'recent_legislation': recent_legislation
+		'recent_legislation': recent_legislation,
+		'recently_passed': recently_passed,
 	}
 
 	return render(request, 'core/index.html', context)
