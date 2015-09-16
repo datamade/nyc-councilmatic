@@ -7,7 +7,7 @@ from .models import Person, Bill, Organization, Action, Event
 from haystack.forms import FacetedSearchForm
 from datetime import date, timedelta
 from itertools import groupby
-from councilmatic.city_config import LEGISLATION_TYPE_DESCRIPTIONS, COMMITTEE_DESCIPTIONS
+import councilmatic.city_config as city_config
 
 class CouncilmaticSearchForm(FacetedSearchForm):
     
@@ -18,6 +18,15 @@ class CouncilmaticSearchForm(FacetedSearchForm):
 
     def no_query_found(self):
         return self.searchqueryset.all()
+
+def city_context(request):
+	city_context = {
+		'city_name': city_config.CITY_NAME, 
+		'city_council_name': city_config.CITY_NAME, 
+		'search_placeholder_text': city_config.SEARCH_PLACEHOLDER_TEXT,
+		'legislation_type_descriptions': city_config.LEGISLATION_TYPE_DESCRIPTIONS,
+	}
+	return city_context
 
 @login_required(login_url='/login/')
 def index(request):
@@ -34,16 +43,11 @@ def index(request):
 	return render(request, 'core/index.html', context)
 
 def about(request):
-	context = {
-		'legislation_type_descriptions': LEGISLATION_TYPE_DESCRIPTIONS,
-	}
-	return render(request, 'core/about.html', context)
+
+	return render(request, 'core/about.html')
 
 def not_found(request):
 	return render(request, 'core/404.html')
-
-def search(request):
-	return render(request, 'core/search.html')
 
 def council_members(request):
 	city_council = Organization.objects.filter(ocd_id='ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731').first()
@@ -94,7 +98,7 @@ def committee_detail(request, slug):
 
 	chairs = committee.memberships.filter(role="CHAIRPERSON")
 	memberships = committee.memberships.filter(role="Committee Member")
-	committee_description = COMMITTEE_DESCIPTIONS[committee.slug] if committee.slug in COMMITTEE_DESCIPTIONS else None
+	committee_description = city_config.COMMITTEE_DESCIPTIONS[committee.slug] if committee.slug in city_config.COMMITTEE_DESCIPTIONS else None
 
 	context = {
 		'committee': committee,

@@ -10,10 +10,10 @@
 {% endblock %}
 {% block content %}
     <div class='jumbotron'>
-        <h3>Search for New York City Legislation</h3>
+        <h3>Search {{city_name}} Legislation</h3>
         <form method="get" action=".">
             <div class="input-group">
-                <input name="q" type="text" class="input-lg form-control" placeholder="Committee on Finance, taxi, Resolution 0815-2015, etc." value="{{ request.GET.q }}">
+                <input name="q" type="text" class="input-lg form-control" placeholder="{{search_placeholder_text}}" value="{{ request.GET.q }}">
                 <div class='input-group-btn'>
                     <button type="submit" class="btn btn-lg btn-info">
                         <i class='fa fa-fw fa-search'></i>

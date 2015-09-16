@@ -1,6 +1,7 @@
 # These are all the settings specific to a city
 
 CITY_NAME = 'New York City'
+CITY_COUNCIL_NAME = 'New York City Council'
 
 
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
@@ -8,6 +9,10 @@ OCD_CITY_COUNCIL_ID = 'ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731'
 
 
 TIMEZONE = 'US/Eastern'
+
+
+SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, Land Use Application, etc."
+
 
 
 LEGISLATION_TYPE_DESCRIPTIONS = [
