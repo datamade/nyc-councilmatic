@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{% block title %}New York City Council Committees{% endblock %}
+{% block title %}{{city_council_name}} Committees{% endblock %}
 {% block content %}
 
     <div class="row-fluid">
         <div class="col-sm-12">
-            <h1>New York City Council Committees</h1>
+            <h1>{{city_council_name}} Committees</h1>
             <hr />
         </div>
     </div>
@@ -97,7 +97,7 @@
 
                 <p>Each Council Member serves on at least three of the Council's standing committees, sub- and select committees and panels. The standing committees must meet at least once a month unless the Charter mandates otherwise. Committee assignments are made by the Committee on Rules, Privileges and Elections and voted on by the entire Council.</p>
 
-                <p>New York City Council is currently composed of {{committees | length }} Committees, {{subcommittees | length }} Subcommittees and {{taskforces | length }} Task Forces.</p>
+                <p>{{city_council_name}} is currently composed of {{committees | length }} Committees, {{subcommittees | length }} Subcommittees and {{taskforces | length }} Task Forces.</p>
             </div>
         </div>
 	</div>
