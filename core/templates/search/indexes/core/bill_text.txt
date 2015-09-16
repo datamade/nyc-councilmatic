@@ -1,4 +1,5 @@
 {% load extras %}
+{{ object.identifier | alternative_identifiers }}
 {{ object.friendly_name }}
 {{ object.classification }}
 {% for s in object.sponsorships.all %}

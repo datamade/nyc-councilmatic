@@ -46,3 +46,11 @@ def short_blurb(text_blob):
 @stringfilter
 def clean_html(text):
     return strip_entities(strip_tags(text)).replace('\n','')
+
+@register.filter
+@stringfilter
+def alternative_identifiers(id_original):
+    id_1 = re.sub(" ", " 0", id_original)
+    id_2 = re.sub(" ", "", id_original)
+    id_3 = re.sub(" ", "", id_1)
+    return id_original+' '+id_1+' '+id_2+' '+id_3
