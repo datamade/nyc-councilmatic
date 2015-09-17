@@ -44,6 +44,11 @@ def short_blurb(text_blob):
 
 @register.filter
 @stringfilter
+def strip_mailto(email):
+	return re.sub('mailto:', '', email)
+
+@register.filter
+@stringfilter
 def clean_html(text):
     return strip_entities(strip_tags(text)).replace('\n','')
 

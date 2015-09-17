@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load extras %}
 {% block title %}{{ person.name }}{% endblock %}
 
 {% block content %}
 
 	<div class="row-fluid">
-		<div class="col-sm-3">
+		<div class="col-sm-4">
             <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail' />
 
             <h4>
@@ -18,9 +19,16 @@
                 {% endif %}
             </p>
 
+            <p class="small">
+                {% if person.email %}
+                    <i class='fa fa-fw fa-envelope-o'></i> 
+                    <a href="{{person.email}}">{{person.email | strip_mailto}}</a>
+                {% endif %}
+            </p>
+
             <p class='small'><a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a></p>
         </div>
-        <div class='col-sm-9'>
+        <div class='col-sm-8'>
             <h1>
                 {{person.name}} 
                 <small>

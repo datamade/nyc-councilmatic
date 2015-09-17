@@ -368,7 +368,8 @@ class Command(BaseCommand):
 			email = ''
 			for contact_detail in page_json['contact_details']:
 				if contact_detail['type'] == 'email':
-					email = contact_detail['value']
+					if contact_detail['value'] != 'mailto:':
+						email = contact_detail['value']
 
 			try:
 				person = Person.objects.create(
