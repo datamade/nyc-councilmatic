@@ -12,6 +12,8 @@ class Person(models.Model):
 	headshot = models.CharField(max_length=255, blank=True)
 	source_url = models.CharField(max_length=255)
 	source_note = models.CharField(max_length=255, blank=True)
+	website_url = models.CharField(max_length=255, blank=True)
+	email = models.CharField(max_length=255, blank=True)
 	slug = models.CharField(max_length=255, unique=True)
 
 	def __str__(self):
