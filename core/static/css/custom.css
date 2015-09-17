@@ -13,11 +13,40 @@ h1, h2, h3, h4 {
 
 .navbar-brand {
 	font-weight: 900;
+    min-width: 280px;
 }
 
 .navbar {
-    font-size: 20px;
+    font-size: 18px;
 }
+
+#nav-items {
+    float: right;
+    list-style: outside none none;
+    margin-bottom: 0px;
+    padding-left: 0px;
+}
+#nav-items > li {
+    position: relative;
+    display: block;
+    float: left;
+}
+#nav-items > li > a {
+    color: #000;
+    position: relative;
+    display: block;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 19.5px;
+    padding-bottom: 19.5px;
+    line-height: 21px;
+}
+#nav-items > li > a:hover, #nav-items > li > a:focus {
+    color: #000;
+    background-color: #EEE;
+    text-decoration: none;
+}
+
 
 .nav-pills > li > a{
     border-radius: 0px;
@@ -67,4 +96,52 @@ h1, h2, h3, h4 {
 }
 .label-active{
     background-color: #D3C226;
+}
+
+
+/* medium screens */
+@media only screen and (max-width : 767px) {
+
+    .navbar-brand {
+        width: 100%;
+        padding-top: 8px;
+        padding-bottom: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+        height: 35px;
+    }
+
+    #nav-items {
+        float: left;
+        min-width: 425;
+    }
+
+    #nav-items > li > a {
+        font-size: 16px;
+        padding-top: 4px;
+        padding-bottom: 8px;
+        line-height: 21px;
+    }
+
+}
+
+/* lil screens */
+@media only screen and (max-width : 360px) {
+
+    .container-fluid-nav{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .navbar-brand {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    #nav-items > li > a {
+        font-size: 12px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
 }
