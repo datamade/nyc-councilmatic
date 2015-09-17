@@ -78,6 +78,15 @@ h1, h2, h3, h4 {
     vertical-align: middle;
 }
 
+.jumbotron {
+    padding: 30px 30px 30px 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.jumbotron > h3 {
+    margin-top: 0px;
+}
+
 .label-large{
     font-size: 1.6em;
     font-family: "News Cycle","Arial Narrow Bold",sans-serif;
