@@ -15,6 +15,7 @@ import os.path
 import re
 
 app_timezone = pytz.timezone(TIMEZONE)
+#base_url = 'http://ocd.datamade.us'
 base_url = 'http://api.opencivicdata.org'
 
 class Command(BaseCommand):
@@ -148,7 +149,7 @@ class Command(BaseCommand):
 			Sponsorship.objects.all().delete()
 
 		# grab people associated with all existing organizations
-		orgs = Organization.objects.all()
+		orgs = Organization.objects.exclude(name='Democratic').exclude(name='Republican').all()
 		for organization in orgs:
 			url = base_url+'/'+organization.ocd_id
 			r = requests.get(url)
@@ -364,6 +365,11 @@ class Command(BaseCommand):
 				        for chunk in r.iter_content(1000):
         					f.write(chunk)
 
+			email = ''
+			for contact_detail in page_json['contact_details']:
+				if contact_detail['type'] == 'email':
+					email = contact_detail['value']
+
 			try:
 				person = Person.objects.create(
 					ocd_id=page_json['id'],
@@ -371,6 +377,8 @@ class Command(BaseCommand):
 					headshot=page_json['image'],
 					source_url=page_json['sources'][0]['url'],
 					source_note=page_json['sources'][0]['note'],
+					website_url = '',
+					email = email,
 					slug=slugify(page_json['name']),
 				)
 			except IntegrityError:
@@ -381,6 +389,8 @@ class Command(BaseCommand):
 					headshot=page_json['image'],
 					source_url=page_json['sources'][0]['url'],
 					source_note=page_json['sources'][0]['note'],
+					website_url = '',
+					email = email,
 					slug=slugify(page_json['name'])+ocd_id_part,
 				)
 
