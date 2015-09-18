@@ -1,60 +1,72 @@
 {% extends "base.html" %}
 {% block title %}Keep tabs on what your city council is doing{% endblock %}
-{% block content %}
-  	<div class="row-fluid">
-        <div class='col-sm-10 col-sm-offset-1'>
-            <br/>
-            <div class='jumbotron'>
-      			<h3>Search {{city_name}} Legislation</h3>
-                <form class="search form-search" action="/search/" method="GET">
-                    <div class="input-group">
-                        <input name="q" type="text" class="input-lg form-control" placeholder="{{search_placeholder_text}}">
-                        <div class='input-group-btn'>
-                            <button type="submit" class="btn btn-lg btn-info">
-                                <i class='fa fa-fw fa-search'></i>
-                                Search
-                            </button>
+{% block full_content %}
+    <div class="container-fluid" id="section-photo">
+      	<div class="row-fluid">
+            <div class='col-sm-10 col-sm-offset-1'>
+                <br/>
+                <div class='jumbotron'>
+                    <h2>Keep tabs on what your city council is up to</h2>
+          			<h4>Search {{city_name}} Legislation</h4>
+                    <form class="search form-search" action="/search/" method="GET">
+                        <div class="input-group">
+                            <input name="q" type="text" class="input-lg form-control" placeholder="{{search_placeholder_text}}">
+                            <div class='input-group-btn'>
+                                <button type="submit" class="btn btn-lg btn-info">
+                                    <i class='fa fa-fw fa-search'></i>
+                                    Search
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
-      		</div>
+                    </form>
+          		</div>
+            </div>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class='col-sm-10 col-sm-offset-1'>
-  			<h2>
-                Recently Passed<br/><span class="text-muted small">Legislation signed into law over the past 30 days</span>
-            </h2>
-    		{% for legislation in recently_passed %}
-                {% include "partials/legislation_item_passed.html" %}
-            {% endfor %}
-        </div>
-  	</div>
-    <div class="row-fluid">
-        <div class='col-sm-10 col-sm-offset-1'>
-            <h2>Events</h2>
-            {% if next_council_meeting %}
 
-                <div class="alert alert-info">
-                    <strong>
-                        Next City Council Meeting: 
-                        {{next_council_meeting.start_time | date:"l, N j Y"}}
-                    </strong>
-                    &nbsp;&nbsp;
-                    <a class="small" href="{{next_council_meeting.event_page_url}}">
-                        DETAILS <i class="fa fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-
-            {% endif %}
-
-            {% if upcoming_meetings %}
-                <h4>Upcoming Committee Meetings</h4>
-                {% for event in upcoming_committee_meetings %}
-                    {% include "partials/event_item.html" %}
+    <div class="container-fluid" id="section-recently-passed">
+        <div class="row-fluid">
+            <div class='col-sm-10 col-sm-offset-1'>
+      			<h2>
+                    Recently Passed<br/><span class="text-muted small">Legislation signed into law over the past 30 days</span>
+                </h2>
+        		{% for legislation in recently_passed %}
+                    {% include "partials/legislation_item_passed.html" %}
                 {% endfor %}
-            {% endif %}
+            </div>
+      	</div>
+    </div>
 
+    {% if next_council_meeting or upcoming_meetings %}
+    <div class="container-fluid" id="section-events">
+        <div class="row-fluid">
+            <div class='col-sm-10 col-sm-offset-1'>
+                <h2>Events</h2>
+                {% if next_council_meeting %}
+
+                    <div class="alert alert-info">
+                        <strong>
+                            Next City Council Meeting: 
+                            {{next_council_meeting.start_time | date:"l, N j Y"}}
+                        </strong>
+                        &nbsp;&nbsp;
+                        <a class="small" href="{{next_council_meeting.event_page_url}}">
+                            DETAILS <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                    </div>
+
+                {% endif %}
+
+                {% if upcoming_meetings %}
+                    <h4>Upcoming Committee Meetings</h4>
+                    {% for event in upcoming_committee_meetings %}
+                        {% include "partials/event_item.html" %}
+                    {% endfor %}
+                {% endif %}
+
+            </div>
         </div>
     </div>
+    {% endif %}
+
 {% endblock %}
