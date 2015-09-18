@@ -43,6 +43,7 @@ def index(request):
 
 	return render(request, 'core/index.html', context)
 
+@login_required(login_url='/login/')
 def about(request):
 
 	return render(request, 'core/about.html')
@@ -50,6 +51,7 @@ def about(request):
 def not_found(request):
 	return render(request, 'core/404.html')
 
+@login_required(login_url='/login/')
 def council_members(request):
 	city_council = Organization.objects.filter(ocd_id=city_config.OCD_CITY_COUNCIL_ID).first()
 	context = {
@@ -58,6 +60,7 @@ def council_members(request):
 
 	return render(request, 'core/council_members.html', context)
 
+@login_required(login_url='/login/')
 def bill_detail(request, slug):
 
 	legislation = Bill.objects.filter(slug=slug).first()
@@ -74,6 +77,7 @@ def bill_detail(request, slug):
 
 	return render(request, 'core/legislation.html', context)
 
+@login_required(login_url='/login/')
 def committees(request):
 
 	committees = Organization.committees().filter(name__startswith='Committee')
@@ -90,6 +94,7 @@ def committees(request):
 
 	return render(request, 'core/committees.html', context)
 
+@login_required(login_url='/login/')
 def committee_detail(request, slug):
 
 	committee = Organization.objects.filter(slug=slug).first()
@@ -110,6 +115,7 @@ def committee_detail(request, slug):
 
 	return render(request, 'core/committee.html', context)
 
+@login_required(login_url='/login/')
 def person(request, slug):
 
 	person = Person.objects.filter(slug=slug).first()
@@ -132,7 +138,7 @@ def person(request, slug):
 
 	return render(request, 'core/person.html', context)
 
-
+@login_required(login_url='/login/')
 def events(request, year=None, month=None):
 
 	if not year or not month:
@@ -174,6 +180,7 @@ def events(request, year=None, month=None):
 
 		return render(request, 'core/events.html', context)
 
+@login_required(login_url='/login/')
 def event_detail(request, slug):
 
 	event = Event.objects.filter(slug=slug).first()
