@@ -5,6 +5,7 @@ from councilmatic.city_config import TIMEZONE, OCD_CITY_COUNCIL_ID
 
 
 app_timezone = pytz.timezone(TIMEZONE)
+now = datetime.now()
 
 class Person(models.Model):
 	ocd_id = models.CharField(max_length=100, unique=True)
@@ -233,6 +234,13 @@ class Event(models.Model):
 	def event_page_url(self):
 		return '/event/%s' %self.slug
 
+	@classmethod
+	def next_city_council_meeting(cls):
+		return cls.objects.filter(name='City Council Stated Meeting ').filter(start_time__gt=now).order_by('start_time').first()
+
+	@classmethod
+	def upcoming_committee_meetings(cls):
+		return cls.objects.filter(start_time__gt=now).order_by('start_time').all()[:3]
 
 class EventParticipant(models.Model):
 	event = models.ForeignKey('Event', related_name='participants')
