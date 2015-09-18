@@ -50,7 +50,7 @@ def not_found(request):
 	return render(request, 'core/404.html')
 
 def council_members(request):
-	city_council = Organization.objects.filter(ocd_id='ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731').first()
+	city_council = Organization.objects.filter(ocd_id=city_config.OCD_CITY_COUNCIL_ID).first()
 	context = {
 		'city_council': city_council
 	}

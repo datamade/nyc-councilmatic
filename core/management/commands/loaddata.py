@@ -155,7 +155,6 @@ class Command(BaseCommand):
 			page_json = json.loads(r.text)
 
 			for membership_json in page_json['memberships']:
-
 				self.grab_person_memberships(membership_json['person']['id'])
 
 		# add sponsorships for all existing bills

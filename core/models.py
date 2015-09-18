@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import datetime
 import pytz
-from councilmatic.city_config import TIMEZONE
+from councilmatic.city_config import TIMEZONE, OCD_CITY_COUNCIL_ID
 
 
 app_timezone = pytz.timezone(TIMEZONE)
@@ -21,7 +21,7 @@ class Person(models.Model):
 
 	@property
 	def council_seat(self):
-		return self.memberships.filter(organization__ocd_id='ocd-organization/389257d3-aefe-42df-b3a2-a0d56d0ea731').first().post.label
+		return self.memberships.filter(organization__ocd_id=OCD_CITY_COUNCIL_ID).first().post.label
 
 	@property
 	def is_speaker(self):
