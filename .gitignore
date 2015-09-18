@@ -61,4 +61,5 @@ target/
 settings_local.py
 
 # Collected Static Files
-static/
+static/**
+core/static/images/ocd-person/*.jpg
