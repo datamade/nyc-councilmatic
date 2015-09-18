@@ -45,7 +45,16 @@
         <div class="row-fluid">
             <div class="col-sm-12">
 
-                <p>{{ legislation.description }} <a href='{{legislation.source_url}}' title='View the source for this page'><i class='fa fa-fw fa-external-link'></i></a></p>
+                <p>
+                    {{ legislation.description }} 
+                    <a href='{{legislation.source_url}}' title='View the source for this page'>
+                        <i class='fa fa-fw fa-external-link'></i>
+                    </a>
+                </p>
+
+                <p class="small text-muted">
+                    {{ legislation.abstract }}
+                </p>
 	            <hr />
 
                 <ul class="nav nav-pills">

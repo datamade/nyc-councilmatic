@@ -15,8 +15,7 @@ import os.path
 import re
 
 app_timezone = pytz.timezone(TIMEZONE)
-#base_url = 'http://ocd.datamade.us'
-base_url = 'http://api.opencivicdata.org'
+base_url = 'http://ocd.datamade.us'
 
 class Command(BaseCommand):
 	help = 'loads in data from the open civic data API'
@@ -239,6 +238,11 @@ class Command(BaseCommand):
 			else:
 				full_text = ''
 
+			if page_json['abstracts']:
+				abstract = page_json['abstracts'][0]['abstract']
+			else:
+				abstract = ''
+
 			try:
 				obj, created = Bill.objects.get_or_create(
 						ocd_id=bill_id,
@@ -251,6 +255,7 @@ class Command(BaseCommand):
 						source_note=page_json['sources'][0]['note'],
 						from_organization=from_org,
 						full_text=full_text,
+						abstract=abstract,
 						legislative_session=legislative_session,
 						bill_type=bill_type,
 						slug=slugify(page_json['identifier']),
@@ -268,6 +273,7 @@ class Command(BaseCommand):
 						source_note=page_json['sources'][0]['note'],
 						from_organization=from_org,
 						full_text=full_text,
+						abstract=abstract,
 						legislative_session=legislative_session,
 						bill_type=bill_type,
 						slug=slugify(page_json['identifier'])+ocd_id_part,
