@@ -1,5 +1,5 @@
 body {
-	padding-top: 70px;
+	padding-top: 60px;
     font-family: "Open Sans", sans-serif;
 }
 
@@ -79,6 +79,7 @@ h1, h2, h3, h4 {
 }
 
 .jumbotron {
+    background-color: rgba(238, 238, 238, .9);
     padding: 30px 30px 30px 30px;
     padding-left: 30px;
     padding-right: 30px;
@@ -106,6 +107,24 @@ h1, h2, h3, h4 {
 .label-active{
     background-color: #D3C226;
 }
+
+
+/* styling the home page */
+#section-photo{
+    background-image: url('../images/city_hall.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 300px;
+}
+#section-recently-passed{
+    background-color: #eee;
+}
+#section-events{
+    background-color: #eee;
+}
+
+
 
 
 /* medium screens */
