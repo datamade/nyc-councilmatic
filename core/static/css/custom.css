@@ -58,10 +58,12 @@ h1, h2, h3, h4 {
 }
 
 .footer {
-    border-top: 1px solid #ccc;
-    padding: 20px 0;
-    margin-top: 100px;
-    background-color: #fefefe;
+    padding: 10px 0px 0px 0px;
+    border-top: 1px solid #eee;
+}
+
+.pad{
+    height: 80px;
 }
 
 .nowrap { white-space:nowrap; }
@@ -119,9 +121,11 @@ h1, h2, h3, h4 {
 }
 #section-recently-passed{
     background-color: #eee;
+    padding-bottom: 30px;
 }
 #section-events{
     background-color: #eee;
+    padding-bottom: 30px;
 }
 
 
