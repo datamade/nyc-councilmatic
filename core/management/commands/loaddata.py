@@ -282,7 +282,7 @@ class Command(BaseCommand):
 				print('   adding %s' % bill_id)
 
 			action_order = 0
-			for action_json in reversed(page_json['actions']):
+			for action_json in page_json['actions']:
 				self.load_action(action_json, obj, action_order)
 				action_order+=1
 
