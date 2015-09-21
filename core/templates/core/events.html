@@ -2,26 +2,80 @@
 {% block title %}Events{% endblock %}
 {% block content %}
 
-	{% if month_events %}
-		<h2>Events: {{first_date | date:"F Y"}}</h2>
-		<hr />
+	<div class="row-fluid">
+		<div class='col-sm-6'>
 
-		{% for date, event_list in month_events %}
-			{% include "partials/event_day.html" %}
-		{% endfor %}
+			<br/>
 
-	{% else %}
-		{% if upcoming_events %}
-			<h2>Upcoming Events</h2>
-			<hr/>
-			{% for date, event_list in upcoming_events %}
-				{% include "partials/event_day.html" %}
-			{% endfor %}
-		{% else %}
-			<h2>No Upcoming Events</h2>
-			<hr/>
-		{% endif %}
+				<div class="row-fluid">
+					<div class="col-sm-6">
 
-	{% endif %}
+						<select id="month-dropdown" class="dropdown-target">
+							{% for name, num in month_options %}
+								{% if this_month = num %}
+									<option value="{{num}}" selected>{{name}}</option>
+								{% else %}
+									<option value="{{num}}">{{name}}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
 
+						<select id="year-dropdown" class="dropdown-target">
+							{% for year in year_range %}
+								{% if this_year = year %}
+									<option value="{{year}}" selected>{{year}}</option>
+								{% else %}
+									<option value="{{year}}">{{year}}</option>
+								{% endif %}
+							{% endfor %}
+						</select>
+
+					</div>
+					<div class="col-sm-6">
+						<a href="/events/{{this_year}}/{{this_month}}" id="view-events-btn" class="btn btn-info">View Events</a>
+					</div>
+				</div>
+
+
+		</div>
+		
+	</div>
+	
+	<div class="row-fluid">
+		<div class="col-sm-10">
+			{% if month_events %}
+				<h2>Events: {{first_date | date:"F Y"}}</h2>
+				<hr />
+
+				{% for date, event_list in month_events %}
+					{% include "partials/event_day.html" %}
+				{% endfor %}
+
+			{% else %}
+				{% if upcoming_events %}
+					<h2>Upcoming Events</h2>
+					<hr/>
+					{% for date, event_list in upcoming_events %}
+						{% include "partials/event_day.html" %}
+					{% endfor %}
+				{% else %}
+					<h2>No Upcoming Events</h2>
+					<hr/>
+				{% endif %}
+
+			{% endif %}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block extra_js %}
+	<script>
+		$( ".dropdown-target" ).change(function() {
+			var month = $("#month-dropdown").val()
+			var year = $("#year-dropdown").val()
+			var new_url = '/events/'+year+'/'+month
+			$("#view-events-btn").attr("href", new_url)
+		});
+	</script>
 {% endblock %}

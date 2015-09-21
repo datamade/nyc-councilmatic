@@ -141,6 +141,11 @@ def person(request, slug):
 @login_required(login_url='/login/')
 def events(request, year=None, month=None):
 
+	newest_year = Event.objects.all().order_by('-start_time').first().start_time.year
+	oldest_year = Event.objects.all().order_by('start_time').first().start_time.year
+	year_range = list(reversed(range(oldest_year, newest_year+1)))
+	month_options = [['January', 1],['Febrary',2],['March',3],['April',4],['May',5],['June',6],['July',7],['August',8],['September',9],['October',10],['November',11],['December',12]]
+
 	if not year or not month:
 		year = date.today().year
 		month = date.today().month
@@ -153,7 +158,11 @@ def events(request, year=None, month=None):
 				upcoming_events.append([d, events_on_day])
 
 		context = {
+			'this_month': month,
+			'this_year': year,
 			'upcoming_events': upcoming_events,
+			'year_range': year_range,
+			'month_options': month_options,
 		}
 
 		return render(request, 'core/events.html', context)
@@ -169,8 +178,12 @@ def events(request, year=None, month=None):
 				month_events.append([d, events_on_day])
 
 		context = {
+			'this_month': month,
+			'this_year': year,
 			'first_date': month_dates[0],
 			'month_events': month_events,
+			'year_range': year_range,
+			'month_options': month_options,
 		}
 
 		return render(request, 'core/events.html', context)
