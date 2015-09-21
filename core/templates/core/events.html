@@ -12,7 +12,8 @@
 
 	{% else %}
 		{% if upcoming_events %}
-			<h3>Upcoming Events</h3>
+			<h2>Upcoming Events</h2>
+			<hr/>
 			{% for date, event_list in upcoming_events %}
 				{% include "partials/event_day.html" %}
 			{% endfor %}
@@ -21,12 +22,6 @@
 			<hr/>
 		{% endif %}
 
-		{% if past_events %}
-			<h2>Past Events</h2>
-			{% for date, event_list in past_events %}
-				{% include "partials/event_day.html" %}
-			{% endfor %}
-		{% endif %}
 	{% endif %}
 
 {% endblock %}

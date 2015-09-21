@@ -148,18 +148,12 @@ def events(request, year=None, month=None):
 		upcoming_dates = Event.objects.filter(start_time__gt=date.today()).datetimes('start_time', 'day').order_by('start_time')[:50]
 		upcoming_events = []
 		for d in upcoming_dates:
-			events_on_day = Event.objects.filter(start_time__year=d.year).filter(start_time__month=d.month).filter(start_time__day=d.day).order_by('start_time').all()
-			upcoming_events.append([d, events_on_day])
-
-		past_dates = Event.objects.datetimes('start_time', 'day').order_by('-start_time')[:50]
-		past_events = []
-		for d in past_dates:
-			events_on_day = Event.objects.filter(start_time__year=d.year).filter(start_time__month=d.month).filter(start_time__day=d.day).order_by('start_time').all()
-			past_events.append([d, events_on_day])
+			if not (upcoming_events and d == upcoming_events[-1][0]):
+				events_on_day = Event.objects.filter(start_time__year=d.year).filter(start_time__month=d.month).filter(start_time__day=d.day).order_by('start_time').all()
+				upcoming_events.append([d, events_on_day])
 
 		context = {
 			'upcoming_events': upcoming_events,
-			'past_events': past_events,
 		}
 
 		return render(request, 'core/events.html', context)
@@ -170,8 +164,9 @@ def events(request, year=None, month=None):
 		month_dates = Event.objects.filter(start_time__year=year).filter(start_time__month=month).datetimes('start_time', 'day').order_by('start_time')
 		month_events = []
 		for d in month_dates:
-			events_on_day = Event.objects.filter(start_time__year=d.year).filter(start_time__month=d.month).filter(start_time__day=d.day).order_by('start_time').all()
-			month_events.append([d, events_on_day])
+			if not (month_events and d == month_events[-1][0]):
+				events_on_day = Event.objects.filter(start_time__year=d.year).filter(start_time__month=d.month).filter(start_time__day=d.day).order_by('start_time').all()
+				month_events.append([d, events_on_day])
 
 		context = {
 			'first_date': month_dates[0],
