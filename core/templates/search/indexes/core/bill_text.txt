@@ -3,6 +3,7 @@
 {{ object.friendly_name }}
 {{ object.classification }}
 {{ object.description }}
+{{ object.abstract }}
 {% for s in object.sponsorships.all %}
     {{ s.person.name }}
 {% endfor %}

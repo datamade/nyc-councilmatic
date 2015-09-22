@@ -15,6 +15,7 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     source_url = indexes.CharField(model_attr='source_url', indexed=False)
     source_note = indexes.CharField(model_attr='source_note')
     full_text = indexes.CharField(model_attr='full_text')
+    abstract = indexes.CharField(model_attr='abstract')
     last_action_date = indexes.DateTimeField()
 
     actions = indexes.MultiValueField()
