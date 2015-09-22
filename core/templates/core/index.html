@@ -4,22 +4,32 @@
     <div class="container-fluid" id="section-photo">
       	<div class="row-fluid">
             <div class='col-sm-10 col-sm-offset-1'>
+                <br/><br/>
+                <h2 class="site-intro">
+                    <span class="text-bg">Keep tabs on what your city council is up to</span>
+                </h2>
                 <br/>
-                <div class='jumbotron'>
-                    <h2>Keep tabs on what your city council is up to</h2>
-          			<h4>Search {{city_name}} Legislation</h4>
-                    <form class="search form-search" action="/search/" method="GET">
-                        <div class="input-group">
-                            <input name="q" type="text" class="input-lg form-control" placeholder="{{search_placeholder_text}}">
-                            <div class='input-group-btn'>
-                                <button type="submit" class="btn btn-lg btn-info">
-                                    <i class='fa fa-fw fa-search'></i>
-                                    Search
-                                </button>
-                            </div>
+      			<h4>
+                    <span class="text-bg">Search {{city_name}} Legislation</span>
+                </h4>
+                <form class="search form-search=" action="/search/" method="GET">
+                    <div class="input-group site-intro-search non-mobile-search">
+                        <input name="q" type="text" class="input-lg form-control" placeholder="{{search_placeholder_text}}">
+                        <div class='input-group-btn'>
+                            <button type="submit" class="btn btn-lg btn-success">
+                                <i class='fa fa-fw fa-search'></i>
+                            </button>
                         </div>
-                    </form>
-          		</div>
+                    </div>
+                    <div class="input-group site-intro-search mobile-search">
+                        <input name="q" type="text" class="input-sm form-control" placeholder="{{search_placeholder_text}}">
+                        <div class='input-group-btn'>
+                            <button type="submit" class="btn btn-sm btn-success">
+                                <i class='fa fa-fw fa-search'></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
