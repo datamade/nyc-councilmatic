@@ -200,6 +200,10 @@ class Post(models.Model):
 	role = models.CharField(max_length=255)
 	organization = models.ForeignKey('Organization', related_name='posts')
 
+	@property
+	def current_member(self):
+		return self.memberships.order_by('-start_date').first() if self.memberships else None
+
 class Membership(models.Model):
 	organization = models.ForeignKey('Organization', related_name='memberships')
 	person = models.ForeignKey('Person', related_name='memberships')

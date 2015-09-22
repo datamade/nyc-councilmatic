@@ -24,16 +24,16 @@
                     {% for post in city_council.posts.all %}
                         <tr>
                             <td>
-                                {% if post.memberships.first %}
-                                    <img src='{{post.memberships.first.person.headshot_url}}' alt='{{post.memberships.first.person.name}}' title='{{post.memberships.first.person.name}}' class='img-responsive img-thumbnail' />
+                                {% if post.current_member %}
+                                    <img src='{{post.current_member.person.headshot_url}}' alt='{{post.current_member.person.name}}' title='{{post.current_member.person.name}}' class='img-responsive img-thumbnail' />
                                 {% endif %}
                             </td>
                             <td>
-                                {% if post.memberships.first %}
-                                    <a href="/person/{{post.memberships.first.person.slug}}">
-                                        {{post.memberships.first.person.name}}
+                                {% if post.current_member %}
+                                    <a href="/person/{{post.current_member.person.slug}}">
+                                        {{post.current_member.person.name}}
                                     </a>
-                                    {% if post.memberships.first.person.is_speaker %}
+                                    {% if post.current_member.person.is_speaker %}
                                         <br /><span class='label label-default'>Council Speaker</span>
                                         <span class='label label-success'><i class='fa fa-fw fa-check-square-o'></i> Verified</span>
                                     {% endif %}
