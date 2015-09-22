@@ -1,8 +1,16 @@
 <div class="row">
 	<div class="col-xs-3">
-		<p class="small">
-			<i class="fa fa-fw fa-calendar-o"></i> {{event.start_time | date:"D m/d/Y"}}<br/>
-			<i class="fa fa-fw fa-clock-o"></i> {{event.start_time| date:"g:i a"}}<br/>
+		<p class="x-small">
+			<span class="non-mobile-only">
+				<i class="fa fa-fw fa-calendar-o"></i> 
+				{{event.start_time | date:"D"}} 
+			</span>
+			{{event.start_time | date:"m/d"}}<br/>
+			
+			<span class="non-mobile-only">
+				<i class="fa fa-fw fa-clock-o"></i> 
+			</span>
+			{{event.start_time| date:"g:ia"}}<br/>
 		</p>
 	</div>
 	<div class="col-xs-9">
