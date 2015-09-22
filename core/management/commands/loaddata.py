@@ -376,6 +376,12 @@ class Command(BaseCommand):
 					if contact_detail['value'] != 'mailto:':
 						email = contact_detail['value']
 
+			website_url = ''
+			for link in page_json['links']:
+				if link['note'] == "web site":
+					website_url = link['url']
+
+
 			try:
 				person = Person.objects.create(
 					ocd_id=page_json['id'],
@@ -383,7 +389,7 @@ class Command(BaseCommand):
 					headshot=page_json['image'],
 					source_url=page_json['sources'][0]['url'],
 					source_note=page_json['sources'][0]['note'],
-					website_url = '',
+					website_url = website_url,
 					email = email,
 					slug=slugify(page_json['name']),
 				)
