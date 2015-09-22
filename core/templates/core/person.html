@@ -25,6 +25,12 @@
                     <a href="{{person.email}}">{{person.email | strip_mailto}}</a>
                 {% endif %}
             </p>
+            <p class="small">
+                {% if person.website_url %}
+                    <i class='fa fa-fw fa-user'></i> 
+                    <a href="{{person.website_url}}">Website</a>
+                {% endif %}
+            </p>
 
             <p class='small'><a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a></p>
         </div>
