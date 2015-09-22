@@ -5,7 +5,7 @@ CITY_COUNCIL_NAME = 'New York City Council'
 
 
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
-OCD_CITY_COUNCIL_ID = 'ocd-organization/043549c9-6d81-4b34-9920-057c2c036f32'
+OCD_CITY_COUNCIL_ID = 'ocd-organization/1023bb9c-49ad-4cbd-93c2-1e0dbae17397'
 
 
 TIMEZONE = 'US/Eastern'
