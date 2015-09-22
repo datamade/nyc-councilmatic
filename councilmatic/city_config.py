@@ -12,6 +12,7 @@ TIMEZONE = 'US/Eastern'
 
 
 SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, Land Use Application, etc."
+SEARCH_PLACEHOLDER_TEXT_SHORT = "Taxi, Resolution 815-2015, etc."
 
 
 

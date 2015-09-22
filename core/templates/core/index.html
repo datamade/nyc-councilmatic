@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="input-group site-intro-search mobile-search">
-                        <input name="q" type="text" class="input-sm form-control" placeholder="{{search_placeholder_text}}">
+                        <input name="q" type="text" class="input-sm form-control" placeholder="{{search_placeholder_text_short}}">
                         <div class='input-group-btn'>
                             <button type="submit" class="btn btn-sm btn-success">
                                 <i class='fa fa-fw fa-search'></i>
@@ -47,7 +47,7 @@
       	</div>
     </div>
 
-    {% if next_council_meeting or upcoming_meetings %}
+    {% if next_council_meeting or upcoming_committee_meetings %}
     <div class="container-fluid" id="section-events">
         <div class="row-fluid">
             <div class='col-sm-10 col-sm-offset-1'>
@@ -67,7 +67,7 @@
 
                 {% endif %}
 
-                {% if upcoming_meetings %}
+                {% if upcoming_committee_meetings %}
                     <h4>Upcoming Committee Meetings</h4>
                     {% for event in upcoming_committee_meetings %}
                         {% include "partials/event_item.html" %}

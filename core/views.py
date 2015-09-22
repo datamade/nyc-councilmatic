@@ -24,6 +24,7 @@ def city_context(request):
 		'city_name': city_config.CITY_NAME, 
 		'city_council_name': city_config.CITY_COUNCIL_NAME, 
 		'search_placeholder_text': city_config.SEARCH_PLACEHOLDER_TEXT,
+		'search_placeholder_text_short': city_config.SEARCH_PLACEHOLDER_TEXT_SHORT,
 		'legislation_type_descriptions': city_config.LEGISLATION_TYPE_DESCRIPTIONS,
 	}
 	return city_context
@@ -38,7 +39,7 @@ def index(request):
 		'recent_legislation': recent_legislation,
 		'recently_passed': recently_passed,
 		'next_council_meeting': Event.next_city_council_meeting(),
-		'upcoming_committee_meetings': Event.upcoming_committee_meetings(),
+		'upcoming_committee_meetings': list(Event.upcoming_committee_meetings()),
 	}
 
 	return render(request, 'core/index.html', context)

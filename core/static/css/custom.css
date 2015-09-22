@@ -107,7 +107,7 @@ h1, h2, h3, h4 {
     border-radius: 0px;
 }
 .site-intro-search > input {
-    background-color: rgba(255,255,255,.8);
+    background-color: rgba(255,255,255,.85);
     border: none;
 }
 .btn-success{
@@ -155,7 +155,7 @@ h1, h2, h3, h4 {
     padding-bottom: 30px;
 }
 #section-events{
-    background-color: #eee;
+    background-color: #FFE8D7;
     padding-bottom: 30px;
 }
 
