@@ -183,6 +183,11 @@ h1, h2, h3, h4 {
 }
 
 
+.search-facet-list{
+    padding-left: 0px;
+    list-style-type: none;
+}
+
 
 
 /* medium screens */

@@ -26,21 +26,24 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-sm-4">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Filter results</h3>
+                <div class="panel-heading" data-toggle="collapse" data-target="#search-filters-mobile">
+                    <h3 class="panel-title">Filter results <i class="fa fa-fw fa-plus pull-right"></i></h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body collapse" id="search-filters-mobile">
                     {% for f_name, facet_values in facets.fields.items %}
                     <p><strong>{{ f_name | facet_name }}</strong></p>
-                    <ul>
+                    <ul class="search-facet-list">
                         {% for name, count in facet_values %}
                             {% if count %}
-                                <li>
+                                <li class="small">
                                     <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}">
                                         {{ name|title }}
-                                    </a> {% if f_name != 'sponsorships' %}({{ count }}){% endif %}
+                                    </a> 
+                                    {% if f_name != 'sponsorships' %}
+                                        <span class="badge pull-right">{{ count }}</span>
+                                    {% endif %}
                                 </li>
                             {% endif %}
                         {% endfor %}
@@ -49,7 +52,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        
+        <div class="col-sm-8">
             {% if query %}
                 <h3>{{ paginator.count }} legislation result{{ paginator.count|pluralize }} for '{{ request.GET.q }}'</h3>
             {% endif %}
