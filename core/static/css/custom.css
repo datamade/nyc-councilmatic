@@ -239,7 +239,7 @@ h1, h2, h3, h4 {
         padding-right: 5px;
     }
 
-    .col-sm-12, .col-sm-8{
+    .col-sm-12, .table-col {
         padding-left: 0px;
         padding-right: 0px;
     }

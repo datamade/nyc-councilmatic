@@ -20,6 +20,7 @@
             {% if request.GET.view != 'members' %}
                 <h3><i class='fa fa-fw fa-list-ul'></i> Committee Activity</h3>
     			{% if committee.recent_activity %}
+                <div class="table-responsive">
                     <table class='table' id='committee-actions'>
                         <thead>
                             <tr>
@@ -38,6 +39,7 @@
             				{% endfor %}
                         </tbody>
                     </table>
+                </div>
     			{% else %}
     				<p>No recent activity</p>
     			{% endif %}

@@ -11,7 +11,7 @@
     </div>
 
 	<div class="row-fluid">
-		<div class="col-sm-8">
+		<div class="col-sm-8 table-col">
 
             <div class="table-responsive">
                 <table class='table' id='committees'>
@@ -39,8 +39,10 @@
                     </tbody>
                 </table>
             </div>
+        </div>
 
-            <h2>Subcommittees</h2>
+        <h2>Subcommittees</h2>
+        <div class="table-responsive">
             <table class='table' id='subcommittees'>
                 <thead>
                     <tr>
@@ -65,8 +67,11 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
 
-            <h2>Task Forces</h2>
+        {% if taskforces %}
+        <h2>Task Forces</h2>
+        <div class="table-responsive">
             <table class='table' id='taskforces'>
                 <thead>
                     <tr>
@@ -92,6 +97,7 @@
                 </tbody>
             </table>
 		</div>
+        {% endif %}
         <div class="col-sm-4">
             <div class='well'>
                 <h4><i class='fa fa-fw fa-info-circle'></i> What do committees do?</h4>
