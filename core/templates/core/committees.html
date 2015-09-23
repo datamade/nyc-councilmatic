@@ -24,6 +24,7 @@
                     </thead>
                     <tbody>
                         {% for committee in committees %}
+                            {% if committee.memberships.all %}
                             <tr>
                                 <td>
                                     <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
@@ -35,73 +36,82 @@
                                 </td>
                                 <td>{{ committee.memberships.all | length }}</td>
                             </tr>
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
+
+            <h2>Subcommittees</h2>
+            <div class="table-responsive">
+                <table class='table' id='subcommittees'>
+                    <thead>
+                        <tr>
+                            <th>Subcommittee</th>
+                            <th>Chairperson(s)</th>
+                            <th>Members</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for committee in subcommittees %}
+                            {% if committee.memberships.all %}
+                            <tr>
+                                <td>
+                                    <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
+                                </td>
+                                <td>
+                                    {% for chair in committee.chairs.all %}
+                                        <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
+                                    {% endfor %}
+                                </td>
+                                <td>{{ committee.memberships.all | length }}</td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            {% if taskforces %}
+            <h2>Task Forces</h2>
+            <div class="table-responsive">
+                <table class='table' id='taskforces'>
+                    <thead>
+                        <tr>
+                            <th>Task Force</th>
+                            <th>Chairperson(s)</th>
+                            <th>Members</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for committee in taskforces %}
+                            {% if committee.memberships.all %}
+                            <tr>
+                                <td>
+                                    <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
+                                </td>
+                                <td>
+                                    {% for chair in committee.chairs.all %}
+                                        <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
+                                    {% endfor %}
+                                </td>
+                                <td>{{ committee.memberships.all | length }}</td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
         </div>
 
-        <h2>Subcommittees</h2>
-        <div class="table-responsive">
-            <table class='table' id='subcommittees'>
-                <thead>
-                    <tr>
-                        <th>Subcommittee</th>
-                        <th>Chairperson(s)</th>
-                        <th>Members</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for committee in subcommittees %}
-                        <tr>
-                            <td>
-                                <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
-                            </td>
-                            <td>
-                                {% for chair in committee.chairs.all %}
-                                    <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
-                                {% endfor %}
-                            </td>
-                            <td>{{ committee.memberships.all | length }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
 
-        {% if taskforces %}
-        <h2>Task Forces</h2>
-        <div class="table-responsive">
-            <table class='table' id='taskforces'>
-                <thead>
-                    <tr>
-                        <th>Task Force</th>
-                        <th>Chairperson(s)</th>
-                        <th>Members</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for committee in taskforces %}
-                        <tr>
-                            <td>
-                                <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
-                            </td>
-                            <td>
-                                {% for chair in committee.chairs.all %}
-                                    <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
-                                {% endfor %}
-                            </td>
-                            <td>{{ committee.memberships.all | length }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-		</div>
-        {% endif %}
         <div class="col-sm-4">
             <div class='well'>
                 <h4><i class='fa fa-fw fa-info-circle'></i> What do committees do?</h4>
-                <p>Most of the Council's legislative work is done in committee. It is there that proposed legislation is initially debated and the members of other government branches and the public are given a chance to comment.</p>
+                <p>Most of the Council's legislative work is done in committee. It is there that proposed slegislation is initially debated and the members of other government branches and the public are given a chance to comment.</p>
 
                 <p>Each Council Member serves on at least three of the Council's standing committees, sub- and select committees and panels. The standing committees must meet at least once a month unless the Charter mandates otherwise. Committee assignments are made by the Committee on Rules, Privileges and Elections and voted on by the entire Council.</p>
 
