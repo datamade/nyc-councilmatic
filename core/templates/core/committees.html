@@ -5,7 +5,7 @@
 
     <div class="row-fluid">
         <div class="col-sm-12">
-            <h1>{{city_council_name}} Committees</h1>
+            <h1>City Council Committees</h1>
             <hr />
         </div>
     </div>
@@ -13,30 +13,32 @@
 	<div class="row-fluid">
 		<div class="col-sm-8">
 
-            <table class='table' id='committees'>
-                <thead>
-                    <tr>
-                        <th>Committee</th>
-                        <th>Chairperson(s)</th>
-                        <th>Members</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for committee in committees %}
+            <div class="table-responsive">
+                <table class='table' id='committees'>
+                    <thead>
                         <tr>
-                            <td>
-                                <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
-                            </td>
-                            <td>
-                                {% for chair in committee.chairs.all %}
-                                    <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
-                                {% endfor %}
-                            </td>
-                            <td>{{ committee.memberships.all | length }}</td>
+                            <th>Committee</th>
+                            <th>Chairperson(s)</th>
+                            <th>Members</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for committee in committees %}
+                            <tr>
+                                <td>
+                                    <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
+                                </td>
+                                <td>
+                                    {% for chair in committee.chairs.all %}
+                                        <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
+                                    {% endfor %}
+                                </td>
+                                <td>{{ committee.memberships.all | length }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
             <h2>Subcommittees</h2>
             <table class='table' id='subcommittees'>

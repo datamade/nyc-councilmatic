@@ -91,6 +91,10 @@ h1, h2, h3, h4 {
     margin-top: 0px;
 }
 
+.table-responsive{
+    border: none;
+}
+
 .text-bg{
     color: #ddd;
 }
@@ -152,7 +156,7 @@ h1, h2, h3, h4 {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    height: 300px;
+    height: 275px;
 }
 .photo-layer {
     background-color: rgba(0, 0, 0, 0.5);
@@ -160,7 +164,7 @@ h1, h2, h3, h4 {
     top: 0;
     left: 0;
     width: 100%;
-    height: 360px;
+    height: 335px;
 }
 .photo-credit{
     color: #ccc;
@@ -235,6 +239,14 @@ h1, h2, h3, h4 {
         padding-right: 5px;
     }
 
+    .col-sm-12, .col-sm-8{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    h1, .h1 {
+        font-size: 28px;
+    }
     h2, .h2 {
         font-size: 28px;
     }

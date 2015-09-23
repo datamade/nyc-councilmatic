@@ -61,7 +61,8 @@
 
             {% if request.GET.view == 'committees' %}
                 {% if memberships %}
-                    <table class='table'>
+                <div class="table-responsive">
+                    <table class='table table-responsive'>
                         <thead>
                             <tr>
                                 <th>Member of</th>
@@ -87,6 +88,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                </div>
                 {% endif %}
             {% endif %}
 

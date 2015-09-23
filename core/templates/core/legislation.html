@@ -83,64 +83,70 @@
 			    {% if request.GET.view == 'actions' or request.GET.view == None %}
                     {% if actions %}
                         <br/>
-                        <table class='table' id='committee-actions'>
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Action</th>
-                                    <th>Legislative body</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for action in actions %}
+                        <div class="table-responsive">
+                            <table class='table table-responsive' id='committee-actions'>
+                                <thead>
                                     <tr>
-                                        <td class='nowrap text-muted small'>{{action.date|date:'M d, Y'}}</td>
-                                        <td><span class='text-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
-                                        <td>{{action.organization.link_html|safe}}</td>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                        <th>Legislative body</th>
                                     </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {% for action in actions %}
+                                        <tr>
+                                            <td class='nowrap text-muted small'>{{action.date|date:'M d, Y'}}</td>
+                                            <td><span class='text-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
+                                            <td>{{action.organization.link_html|safe}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
     				{% endif %}
                 {% endif %}
 
                 {% if request.GET.view == 'sponsors' %}
                     {% if legislation.sponsorships.all %}
                         <br/>
-                        <table class='table' id='council-members'>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Sponsor</th>
-                                    <th>District</th>
-                                    <th>Role</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for s in legislation.sponsorships.all %}
+                        <div class="table-responsive">
+                            <table class='table table-responsive' id='council-members'>
+                                <thead>
                                     <tr>
-                                        <td>
-                                            <img src='{{s.person.headshot_url}}' alt='{{s.person.name}}' title='{{s.person.name}}' class='img-responsive img-thumbnail' />
-                                        </td>
-                                        <td>
-                                            <a href="/person/{{s.person.slug}}">
-                                                {{s.person.name}}
-                                            </a>
-                                        </td>
-                                        <td>
-                                            {{s.person.council_seat}}
-                                        </td>
-                                        <td>
-                                            {% if s.is_primary %}
-                                                Primary sponsor
-                                            {% else %}
-                                                Sponsor
-                                            {% endif %}
-                                        </td>
+                                        <th></th>
+                                        <th>Sponsor</th>
+                                        <th>District</th>
+                                        <th>Role</th>
                                     </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {% for s in legislation.sponsorships.all %}
+                                        <tr>
+                                            <td>
+                                                <img src='{{s.person.headshot_url}}' alt='{{s.person.name}}' title='{{s.person.name}}' class='img-responsive img-thumbnail' />
+                                            </td>
+                                            <td>
+                                                <a href="/person/{{s.person.slug}}">
+                                                    {{s.person.name}}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {{s.person.council_seat}}
+                                            </td>
+                                            <td>
+                                                {% if s.is_primary %}
+                                                    Primary sponsor
+                                                {% else %}
+                                                    Sponsor
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
                     {% else %}
                         <h3>This legislation has no sponsors</h3>
                     {% endif %}

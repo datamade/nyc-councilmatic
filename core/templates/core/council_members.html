@@ -5,47 +5,50 @@
 
     <div class="row-fluid">
         <div class="col-sm-12">
-            <h1>{{city_council_name}} Members</h1>
+            <h1>City Council Members</h1>
             <hr />
         </div>
     </div>
 
     <div class="row-fluid">
         <div class="col-sm-8">
-            <table class='table' id='council-members'>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Council Member</th>
-                        <th>District</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for post in city_council.posts.all %}
+            <div class="table-responsive">
+                <table class='table' id='council-members'>
+                    <thead>
                         <tr>
-                            <td>
-                                {% if post.current_member %}
-                                    <img src='{{post.current_member.person.headshot_url}}' alt='{{post.current_member.person.name}}' title='{{post.current_member.person.name}}' class='img-responsive img-thumbnail' />
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if post.current_member %}
-                                    <a href="/person/{{post.current_member.person.slug}}">
-                                        {{post.current_member.person.name}}
-                                    </a>
-                                    {% if post.current_member.person.is_speaker %}
-                                        <br /><span class='label label-default'>Council Speaker</span>
-                                        <span class='label label-success'><i class='fa fa-fw fa-check-square-o'></i> Verified</span>
-                                    {% endif %}
-                                {% else %}
-                                    Vacant
-                                {% endif %}
-                            </td>
-                            <td>{{post.label}}</td>
+                            <th></th>
+                            <th>Council Member</th>
+                            <th>District</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for post in city_council.posts.all %}
+                            <tr>
+                                <td>
+                                    {% if post.current_member %}
+                                        <img src='{{post.current_member.person.headshot_url}}' alt='{{post.current_member.person.name}}' title='{{post.current_member.person.name}}' class='img-responsive img-thumbnail' />
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if post.current_member %}
+                                        <a href="/person/{{post.current_member.person.slug}}">
+                                            {{post.current_member.person.name}}
+                                        </a>
+                                        {% if post.current_member.person.is_speaker %}
+                                            <br /><span class='label label-default'>Council Speaker</span>
+                                            <span class='label label-success'><i class='fa fa-fw fa-check-square-o'></i> Verified</span>
+                                        {% endif %}
+                                    {% else %}
+                                        Vacant
+                                    {% endif %}
+                                </td>
+                                <td>{{post.label}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
         </div>
         <div class='col-sm-4'>
             <div class='well'>
