@@ -184,7 +184,12 @@ h1, h2, h3, h4 {
 .featured-bill, #section-recently-passed, #section-events{
     padding-bottom: 30px;
 }
-
+#uber-battle{
+    background-color: #F8F8F8;
+}
+#body-cameras{
+    background-color: #f0f0f0;
+}
 
 .mobile-only {
     display: none;
