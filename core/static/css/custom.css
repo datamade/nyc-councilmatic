@@ -71,6 +71,11 @@ h1, h2, h3, h4 {
     padding-bottom: 0px;
 }
 
+.badge-muted{
+    background-color: #bbb;
+    font-weight: normal;
+}
+
 .nowrap { white-space:nowrap; }
 
 #council-members img {

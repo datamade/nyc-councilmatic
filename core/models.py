@@ -89,6 +89,14 @@ class Bill(models.Model):
 		return self.sponsorships.filter(is_primary=True).first()
 
 	@property
+	def committees_involved(self):
+		if self.actions.all():
+			orgs = set([a.organization.name for a in self.actions.all() if (a.organization.name !='Mayor' and a.organization.name != 'New York City Council')])
+			return list(orgs)
+		else:
+			return None
+
+	@property
 	def is_stale(self):
 		# stale = no action for 2 months
 		if self.current_action:

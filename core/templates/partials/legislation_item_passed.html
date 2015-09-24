@@ -8,3 +8,13 @@
 <p>
 	{{ legislation.description | short_blurb }}<a href="/legislation/{{ legislation.slug }}"><i class="fa fa-fw fa-chevron-circle-right"></i></a>
 </p>
+
+<p>
+	<i class="fa fa-fw fa-tag"></i>
+	{% for c in legislation.committees_involved %}
+		<span class="badge badge-muted">
+			{{ c | committee_topic_only }}
+		</span>&nbsp;
+	{% endfor %}
+	<br/><br/>
+</p>
