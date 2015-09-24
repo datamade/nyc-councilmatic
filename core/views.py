@@ -24,7 +24,6 @@ def city_context(request):
 		'city_name': city_config.CITY_NAME, 
 		'city_council_name': city_config.CITY_COUNCIL_NAME, 
 		'search_placeholder_text': city_config.SEARCH_PLACEHOLDER_TEXT,
-		'search_placeholder_text_short': city_config.SEARCH_PLACEHOLDER_TEXT_SHORT,
 		'legislation_type_descriptions': city_config.LEGISLATION_TYPE_DESCRIPTIONS,
 	}
 	return city_context

@@ -11,9 +11,7 @@ OCD_CITY_COUNCIL_ID = 'ocd-organization/1023bb9c-49ad-4cbd-93c2-1e0dbae17397'
 TIMEZONE = 'US/Eastern'
 
 
-SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, Land Use Application, etc."
-SEARCH_PLACEHOLDER_TEXT_SHORT = "Taxi, Resolution 815-2015, etc."
-
+SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, etc."
 
 
 LEGISLATION_TYPE_DESCRIPTIONS = [
