@@ -49,6 +49,13 @@ def strip_mailto(email):
 
 @register.filter
 @stringfilter
+def committee_topic_only(committee_name):
+	clean = re.sub('Committee on', '', committee_name)
+	clean = re.sub('Subcommittee on', '', clean)
+	return clean
+
+@register.filter
+@stringfilter
 def clean_html(text):
     return strip_entities(strip_tags(text)).replace('\n','')
 

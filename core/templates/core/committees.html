@@ -1,4 +1,5 @@
 {% extends "base_with_margins.html" %}
+{% load extras %}
 {% load staticfiles %}
 {% block title %}{{city_council_name}} Committees{% endblock %}
 {% block content %}
@@ -26,10 +27,10 @@
                         {% for committee in committees %}
                             {% if committee.memberships.all %}
                             <tr>
-                                <td>
-                                    <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
+                                <td align="left">
+                                    <a href="/committee/{{committee.slug}}">{{ committee.name | committee_topic_only }}</a>
                                 </td>
-                                <td>
+                                <td align="left">
                                     {% for chair in committee.chairs.all %}
                                         <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
                                     {% endfor %}
@@ -56,10 +57,10 @@
                         {% for committee in subcommittees %}
                             {% if committee.memberships.all %}
                             <tr>
-                                <td>
-                                    <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
+                                <td align="left">
+                                    <a href="/committee/{{committee.slug}}">{{ committee.name | committee_topic_only}}</a>
                                 </td>
-                                <td>
+                                <td align="left">
                                     {% for chair in committee.chairs.all %}
                                         <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
                                     {% endfor %}
