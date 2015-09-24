@@ -1,10 +1,10 @@
 {% load extras %}
 
-<h3>
-	<a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
-	<span class="pull-right text-muted small"><i class="fa fa-fw fa-calendar-o"></i> {{legislation.date_passed|date:'m/d'}}</span>
-</h3>
+<p class="small text-muted no-pad-bottom">
+	{{ legislation.friendly_name }}
+	<span class="pull-right text-muted"><i class="fa fa-fw fa-calendar-o"></i> {{legislation.date_passed|date:'m/d'}}</span>
+</p>
 
-<p class="small">
-	{{ legislation.description | short_blurb }}
+<p>
+	{{ legislation.description | short_blurb }}<a href="/legislation/{{ legislation.slug }}"><i class="fa fa-fw fa-chevron-circle-right"></i></a>
 </p>

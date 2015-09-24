@@ -66,6 +66,10 @@ h1, h2, h3, h4 {
 .pad{
     height: 80px;
 }
+.no-pad-bottom{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
 
 .nowrap { white-space:nowrap; }
 
