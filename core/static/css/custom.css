@@ -177,10 +177,11 @@ h1, h2, h3, h4 {
 }
 #section-recently-passed{
     background-color: #F8F8F8;
-    padding-bottom: 30px;
 }
 #section-events{
     background-color: #f0f0f0;
+}
+.featured-bill, #section-recently-passed, #section-events{
     padding-bottom: 30px;
 }
 
