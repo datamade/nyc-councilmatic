@@ -38,11 +38,11 @@
                         {% for name, count in facet_values %}
                             {% if count %}
                                 <li class="small">
-                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}">
-                                        {{ name|title }}
+                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
+                                        {{ name|committee_topic_only|title|short_title }}
                                     </a> 
                                     {% if f_name != 'sponsorships' %}
-                                        <span class="badge pull-right">{{ count }}</span>
+                                        <span class="badge badge-muted pull-right">{{ count }}</span>
                                     {% endif %}
                                 </li>
                             {% endif %}

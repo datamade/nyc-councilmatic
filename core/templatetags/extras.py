@@ -44,6 +44,16 @@ def short_blurb(text_blob):
 
 @register.filter
 @stringfilter
+def short_title(text_blob):
+	if len(text_blob) > 28:
+		blurb = text_blob[:24]
+		blurb = blurb[:blurb.rfind(' ')]+' ...'
+		return blurb
+	else:
+		return text_blob
+
+@register.filter
+@stringfilter
 def strip_mailto(email):
 	return re.sub('mailto:', '', email)
 
