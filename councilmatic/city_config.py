@@ -37,11 +37,6 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
 		'desc': 'A special resolution that serves as an official home rule request from the Council to the State Senate and State Assembly to pass pending legislation in the New York State Legislature. The initial request for a SLR must come from the Legislature in Albany.',
 	},
 	{
-		'name': 'Oversight',
-		'search_term': 'Oversight',
-		'desc': 'A hearing held with respect to an oversight topic not on a specific piece of legislation.',
-	},
-	{
 		'name': 'Land Use Application',
 		'search_term': 'Land Use Application',
 		'desc': 'Land use proposals to be considered by the Council’s Land Use Committee',
@@ -50,11 +45,6 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
 		'name': 'Land Use Call-Up',
 		'search_term': 'Land Use Call-Up',
 		'desc': "Land use proposals that don't require Council approval, but have been chosen by a Council Member for discretionary Council review.",
-	},
-	{
-		'name': 'Tour',
-		'search_term': 'Tour',
-		'desc': 'A site visit taken by members of a committee, for fact-finding relevant to the committee’s decision-making. A tour is considered an official committee meeting.',
 	},
 	{
 		'name': 'Local Law 2015',
