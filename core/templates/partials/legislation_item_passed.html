@@ -6,13 +6,13 @@
 </p>
 
 <p>
-	{{ legislation.description | short_blurb }}<a href="/legislation/{{ legislation.slug }}"><i class="fa fa-fw fa-chevron-circle-right"></i></a>
+	{{ legislation.description | short_blurb }}. <a href="/legislation/{{ legislation.slug }}" class="small">DETAILS<i class="fa fa-fw fa-chevron-right"></i></a>
 </p>
 
 <p>
 	<i class="fa fa-fw fa-tag"></i>
 	{% for c in legislation.committees_involved %}
-		<span class="badge badge-muted">
+		<span class="badge badge-muted pseudo-topic-tag">
 			{{ c | committee_topic_only }}
 		</span>&nbsp;
 	{% endfor %}

@@ -72,8 +72,11 @@ h1, h2, h3, h4 {
 }
 
 .badge-muted{
-    background-color: #bbb;
+    background-color: #aaa;
     font-weight: normal;
+}
+.pseudo-topic-tag{
+    font-size: 12px;
 }
 
 .nowrap { white-space:nowrap; }
@@ -280,6 +283,9 @@ h1, h2, h3, h4 {
     }
     p.small, p > .small {
         font-size: 12px;
+    }
+    .pseudo-topic-tag{
+        font-size: 10px;
     }
 
     .site-intro-search > input {
