@@ -4,20 +4,20 @@
 
 {% block content %}
 
+    <div class="row-fluid">
+        <div class="col=sm=12">
+            <br/>
+            <h1>
+                {{person.name}} 
+                <small>
+                    {{ person.council_seat }}
+                </small>
+            </h1>
+        </div>
+    </div>
 	<div class="row-fluid">
 		<div class="col-sm-4">
-            <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail' />
-
-            <h4>
-                {{person.name}}
-            </h4>
-
-            <p>
-                {{ person.council_seat }}<br />
-                {% if person.is_speaker %}
-                    <br /><span class='label label-default'>Council Speaker</span> <span class='label label-success'><i class='fa fa-fw fa-check-square-o'></i> Verified</span>
-                {% endif %}
-            </p>
+            <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail img-padded' />
 
             <p class="small">
                 {% if person.email %}
@@ -32,17 +32,14 @@
                 {% endif %}
             </p>
 
-            <p class='small'><a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a></p>
+            <p class='small'>
+                <a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a>
+            </p>
+            <span class="mobile-only">
+                <hr/>
+            </span>
         </div>
         <div class='col-sm-8'>
-            <h1>
-                {{person.name}} 
-                <small>
-                    {{ person.council_seat }}
-                </small>
-            </h1>
-
-            <hr />
 
             <ul class="nav nav-pills">
               <li role="presentation" {% if request.GET.view == 'bills' or request.GET.view == None %}class='active' {% endif %}><a href="/person/{{person.slug}}?view=bills"><i class='fa fa-fw fa-group'></i> Sponsored Legislation ({{sponsored_legislation|length}})</a></li>

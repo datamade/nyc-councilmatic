@@ -85,6 +85,11 @@ h1, h2, h3, h4 {
     width: 50px;
 }
 
+.img-padded{
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
 #sponsors img {
     width: 50px;
 }
