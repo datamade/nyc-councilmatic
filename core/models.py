@@ -35,6 +35,10 @@ class Person(models.Model):
 		else:
 			return '/static/images/headshot_placeholder.png'
 
+	@property
+	def link_html(self):
+		return '<a href="/person/'+self.slug+'">'+self.name+'</a>'
+
 class Bill(models.Model):
 	ocd_id = models.CharField(max_length=100, unique=True)
 	description = models.TextField()

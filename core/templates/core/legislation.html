@@ -8,43 +8,36 @@
 	        <div class="col-sm-12">
 	            <h1>
                     {{ legislation.friendly_name }}
+                    <span class='label label-{{legislation.inferred_status | lower}} pull-right'>{{legislation.inferred_status}}</span>
                 </h1>
             </div>
         </div>
 
-
         <div class="row-fluid">
-            <div class="col-sm-10">
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Status</h3>
-                    </div>
-                    <div class="panel-body">
-
-                        <div class="row-fluid">
-                            <div class="col-xs-6">
-                                <span class='label label-large label-{{legislation.inferred_status | lower}}'>{{legislation.inferred_status}}</span>
-                            </div>
-                            <div class="col-xs-6">
-                                <p class="h4">Controlling Body</p>
-                                <p>
-                                    {% for org in legislation.controlling_body %}
-                                        <i class="fa fa-users"></i> {{ org.link_html|safe }}
-                                    {% endfor %}
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
+            {% if legislation.primary_sponsor %}
+            <div class="col-xs-5">
+                <p class="h4">Primary Sponsor</p>
+                <p>
+                    <i class="fa fa-user"></i>
+                    {{ legislation.primary_sponsor.person.link_html | safe }}
+                </p>
             </div>
+            {% endif %}
+            <div class="col-xs-7">
+                <p class="h4">Currently Controlled By</p>
+                <p>
+                    {% for org in legislation.controlling_body %}
+                        <i class="fa fa-users"></i> {{ org.link_html|safe }}
+                    {% endfor %}
+                </p>
+            </div>
+
         </div>
 
         <div class="row-fluid">
             <div class="col-sm-12">
-
+                <br/>
                 <p>
                     {{ legislation.description }} 
                     <a href='{{legislation.source_url}}' title='View the source for this page'>
