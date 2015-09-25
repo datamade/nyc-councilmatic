@@ -173,6 +173,24 @@ h1, h2, h3, h4 {
 }
 
 
+select {
+    margin-left: 0px;
+    margin-right: 10px;
+    padding: 3px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+}
+#month-dropdown{
+    width: 100px;
+}
+#year-dropdown{
+    width: 60px;
+}
+#event-menu{
+    display: inline-block;
+}
+
+
 /* styling the home page */
 #section-photo{
     background-image: url('../images/city_hall.jpg');
@@ -276,7 +294,7 @@ h1, h2, h3, h4 {
         padding-right: 5px;
     }
 
-    .col-sm-12, .table-col {
+    .col-sm-12, .table-col, .no-pad-mobile {
         padding-left: 0px;
         padding-right: 0px;
     }

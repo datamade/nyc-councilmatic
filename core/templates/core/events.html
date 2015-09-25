@@ -3,46 +3,38 @@
 {% block content %}
 
     <div class="row-fluid">
-        <div class='col-sm-6'>
+        <div class='col-sm-12' id="event-menu">
 
-            <br/>
+            <br/><br/>
 
-                <div class="row-fluid">
-                    <div class="col-sm-6">
+            <select id="month-dropdown" class="dropdown-target">
+                {% for name, num in month_options %}
+                    {% if this_month = num %}
+                        <option value="{{num}}" selected>{{name}}</option>
+                    {% else %}
+                        <option value="{{num}}">{{name}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
 
-                        <select id="month-dropdown" class="dropdown-target">
-                            {% for name, num in month_options %}
-                                {% if this_month = num %}
-                                    <option value="{{num}}" selected>{{name}}</option>
-                                {% else %}
-                                    <option value="{{num}}">{{name}}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
+            <select id="year-dropdown" class="dropdown-target">
+                {% for year in year_range %}
+                    {% if this_year = year %}
+                        <option value="{{year}}" selected>{{year}}</option>
+                    {% else %}
+                        <option value="{{year}}">{{year}}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
 
-                        <select id="year-dropdown" class="dropdown-target">
-                            {% for year in year_range %}
-                                {% if this_year = year %}
-                                    <option value="{{year}}" selected>{{year}}</option>
-                                {% else %}
-                                    <option value="{{year}}">{{year}}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="/events/{{this_year}}/{{this_month}}" id="view-events-btn" class="btn btn-info">View Events</a>
-                    </div>
-                </div>
-
+            <a href="/events/{{this_year}}/{{this_month}}" id="view-events-btn" class="btn btn-default btn-sm">View Events</a>
 
         </div>
         
     </div>
     
     <div class="row-fluid">
-        <div class="col-sm-10">
+        <div class="col-sm-10 no-pad-mobile">
             {% if month_events %}
                 <h2>Events: {{first_date | date:"F Y"}}</h2>
                 <hr />
@@ -77,5 +69,6 @@
             var new_url = '/events/'+year+'/'+month
             $("#view-events-btn").attr("href", new_url)
         });
+
     </script>
 {% endblock %}
