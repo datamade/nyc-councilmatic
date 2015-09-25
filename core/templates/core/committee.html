@@ -4,10 +4,10 @@
 {% block title %}{{committee.name}}{% endblock %}
 {% block content %}
 
-	<div class="row-fluid">
-		<div class="col-sm-12">
+    <div class="row-fluid">
+        <div class="col-sm-12">
             <br/>
-			<h1>{{committee.name}}</h1>
+            <h1>{{committee.name}}</h1>
             {% if committee_description %}
                 <p>{{committee_description}}</p>
             {% endif %}
@@ -20,7 +20,7 @@
 
             {% if request.GET.view != 'members' %}
                 <h3><i class='fa fa-fw fa-list-ul'></i> Committee Activity</h3>
-    			{% if committee.recent_activity %}
+                {% if committee.recent_activity %}
                 <div class="table-responsive">
                     <table class='table' id='committee-actions'>
                         <thead>
@@ -31,19 +31,19 @@
                             </tr>
                         </thead>
                         <tbody>
-            				{% for action in committee.recent_activity %}
+                            {% for action in committee.recent_activity %}
                                 <tr>
-                					<td class='nowrap text-muted small'>{{action.date|date:'M d, Y'}}</td>
+                                    <td class='nowrap text-muted small'>{{action.date|date:'M d, Y'}}</td>
                                     <td><a href="/legislation/{{action.bill.slug}}">{{action.bill.friendly_name}}</a></td>
-                					<td><span class='text-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
+                                    <td><span class='text-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
                                 </tr>
-            				{% endfor %}
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
-    			{% else %}
-    				<p>No recent activity</p>
-    			{% endif %}
+                {% else %}
+                    <p>No recent activity</p>
+                {% endif %}
             {% endif %}
 
 
@@ -94,8 +94,8 @@
                     </tbody>
                 </table>
             {% endif %}
-		</div>
-	</div>
+        </div>
+    </div>
 
 {% endblock %}
 

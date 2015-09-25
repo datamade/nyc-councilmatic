@@ -1,17 +1,17 @@
 {% load extras %}
 
 <h3>
-	<a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
-	<span class='pull-right label label-{{legislation.inferred_status | lower}}'>{{legislation.inferred_status}}</span>
+    <a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
+    <span class='pull-right label label-{{legislation.inferred_status | lower}}'>{{legislation.inferred_status}}</span>
 </h3>
 
 <p class="text-muted small">
-	<i class="fa fa-calendar-o"></i> {{legislation.last_action_date|date:'M d, Y'}} - {{legislation.current_action.description | remove_action_subj }}<br>
+    <i class="fa fa-calendar-o"></i> {{legislation.last_action_date|date:'M d, Y'}} - {{legislation.current_action.description | remove_action_subj }}<br>
 
-	{% if legislation.sponsorships.all %}
-    	<i class="fa fa-user"></i> Primary Sponsor: 
-    	{{ legislation.primary_sponsor.person.link_html | safe }}
-	{% endif %}
+    {% if legislation.sponsorships.all %}
+        <i class="fa fa-user"></i> Primary Sponsor: 
+        {{ legislation.primary_sponsor.person.link_html | safe }}
+    {% endif %}
 </p>
 
 <p class="small">{{ legislation.description | short_blurb }}</p>

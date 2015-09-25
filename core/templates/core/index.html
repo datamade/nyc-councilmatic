@@ -3,14 +3,14 @@
 {% block full_content %}
     <div class="container-fluid" id="section-photo">
         <div class="photo-layer"></div>
-      	<div class="row-fluid">
+        <div class="row-fluid">
             <div class='col-sm-10 col-sm-offset-1'>
                 <br/><br/>
                 <h2 class="site-intro">
                     <span class="text-bg">Keep tabs on what your city council is up to</span>
                 </h2>
                 <br/>
-      			<h4>
+                <h4>
                     <span class="text-bg">Search {{city_name}} Legislation</span>
                 </h4>
                 <form class="search form-search=" action="/search/" method="GET">
@@ -32,15 +32,15 @@
     <div class="container-fluid" id="section-recently-passed">
         <div class="row-fluid">
             <div class='col-sm-10 col-sm-offset-1'>
-      			<h2>
+                <h2>
                     Recently Passed<br/><span class="text-muted small">Legislation signed into law in the past 30 days</span>
                 </h2>
                 <hr/>
-        		{% for legislation in recently_passed %}
+                {% for legislation in recently_passed %}
                     {% include "partials/legislation_item_passed.html" %}
                 {% endfor %}
             </div>
-      	</div>
+        </div>
     </div>
 
     {% if next_council_meeting or upcoming_committee_meetings %}

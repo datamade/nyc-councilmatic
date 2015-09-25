@@ -3,69 +3,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>{% block title %}{% endblock %} - {{city_name}} Councilmatic</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <title>{% block title %}{% endblock %} - {{city_name}} Councilmatic</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.journal.min.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}" />
-  <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.journal.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
 
 </head>
 <body>
 
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid container-fluid-nav">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid container-fluid-nav">
 
-        <div id="nav-title">
-          <a class="navbar-brand" href="/">
-            {{city_name}} Councilmatic
-          </a>
+            <div id="nav-title">
+                <a class="navbar-brand" href="/">
+                    {{city_name}} Councilmatic
+                </a>
+            </div>
+            <ul id="nav-items">
+                <li>
+                    <a href="/search">Search</a>
+                </li>
+                <li>
+                    <a href='/council-members'>Council Members</a>
+                </li>
+                <li>
+                    <a href='/committees'>Committees</a>
+                </li>
+                <li>
+                    <a href='/events'>Events</a>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+
         </div>
-        <ul id="nav-items">
-          <li>
-            <a href="/search">Search</a>
-          </li>
-          <li>
-            <a href='/council-members'>Council Members</a>
-          </li>
-          <li>
-            <a href='/committees'>Committees</a>
-          </li>
-          <li>
-            <a href='/events'>Events</a>
-          </li>
-          <li>
-            <a href="/about">About</a>
-          </li>
-        </ul>
+    </nav>
 
+    {% block full_content %}
+    {% endblock %}
+
+    <div class="container-fluid footer">
+        <div class='col-sm-12'>
+            <div class='clearfix'>
+            </div>
+            <p class="small">
+                Brought to you by the <a href='http://www.participatorypolitics.org/'>Participatory Politics Foundation</a><br />
+                Built by <a href='http://datamade.us'>DataMade</a>
+            </p>
+        </div>
     </div>
-  </nav>
 
-  {% block full_content %}
-  {% endblock %}
-
-  <div class="container-fluid footer">
-    <div class='col-sm-12'>
-      <div class='clearfix'></div>
-        <p class="small">
-          Brought to you by the <a href='http://www.participatorypolitics.org/'>Participatory Politics Foundation</a><br />
-          Built by <a href='http://datamade.us'>DataMade</a>
-        </p>
-    </div>
-  </div>
-
-  <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
   
-  {% block extra_js %}{% endblock %}
+    {% block extra_js %}{% endblock %}
 
-  <script src="{% static 'js/analytics_lib.js' %}"></script>
+    <script src="{% static 'js/analytics_lib.js' %}"></script>
 
 </body>
 </html>

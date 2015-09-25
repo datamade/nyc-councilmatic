@@ -3,10 +3,10 @@
 {% load staticfiles %}
 {% block title %}{{ legislation.friendly_name }}{% endblock %}
 {% block content %}
-  	{% if legislation %}
-  		<div class="row-fluid">
-	        <div class="col-sm-12">
-	            <h1 class="bill-page-title">
+    {% if legislation %}
+        <div class="row-fluid">
+            <div class="col-sm-12">
+                <h1 class="bill-page-title">
                     <br/>
                     {{ legislation.friendly_name }}
                     <span class='label label-{{legislation.inferred_status | lower}} pull-right'>{{legislation.inferred_status}}</span>
@@ -60,7 +60,7 @@
                     </a>
                 </p>
 
-	            <hr />
+                <hr />
 
                 <ul class="nav nav-pills">
                   {% if actions %}
@@ -85,7 +85,7 @@
                 </ul>
 
 
-			    {% if request.GET.view == 'actions' or request.GET.view == None %}
+                {% if request.GET.view == 'actions' or request.GET.view == None %}
                     {% if actions %}
                         <br/>
                         <div class="table-responsive">
@@ -109,7 +109,7 @@
                             </table>
                         </div>
 
-    				{% endif %}
+                    {% endif %}
                 {% endif %}
 
                 {% if request.GET.view == 'sponsors' %}
@@ -196,12 +196,12 @@
                     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
                 {% endif %}
 
-			</div>
-		</div>
+            </div>
+        </div>
 
-	{% else %}
-		<h3>Legislation not found</h3>
-	{% endif %}
+    {% else %}
+        <h3>Legislation not found</h3>
+    {% endif %}
 
 
 {% endblock %}
