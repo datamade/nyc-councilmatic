@@ -239,6 +239,16 @@ h1, h2, h3, h4 {
         line-height: 21px;
     }
 
+    .bill-page-title{
+        font-size: 26px;
+    }
+    h4, .h4 {
+        font-size: 14px;
+    }
+    p {
+        font-size: 14px;
+    }
+
 }
 
 /* lil screens */
@@ -268,6 +278,9 @@ h1, h2, h3, h4 {
     h1, .h1 {
         font-size: 28px;
     }
+    .bill-page-title{
+        font-size: 22px;
+    }
     h2, .h2 {
         font-size: 28px;
     }
@@ -276,6 +289,9 @@ h1, h2, h3, h4 {
     }
     h3, .h3 {
         font-size: 20px;
+    }
+    h4, .h4 {
+        font-size: 12px;
     }
 
     p{

@@ -6,7 +6,8 @@
   	{% if legislation %}
   		<div class="row-fluid">
 	        <div class="col-sm-12">
-	            <h1>
+	            <h1 class="bill-page-title">
+                    <br/>
                     {{ legislation.friendly_name }}
                     <span class='label label-{{legislation.inferred_status | lower}} pull-right'>{{legislation.inferred_status}}</span>
                 </h1>
