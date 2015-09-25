@@ -32,7 +32,7 @@
                                 </td>
                                 <td align="left">
                                     {% for chair in committee.chairs.all %}
-                                        <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
+                                        {{ chair.person.link_html | safe }}<br />
                                     {% endfor %}
                                 </td>
                                 <td>{{ committee.memberships.all | length }}</td>
@@ -62,7 +62,7 @@
                                 </td>
                                 <td align="left">
                                     {% for chair in committee.chairs.all %}
-                                        <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
+                                        {{ chair.person.link_html | safe }}<br />
                                     {% endfor %}
                                 </td>
                                 <td>{{ committee.memberships.all | length }}</td>
@@ -94,7 +94,7 @@
                                 </td>
                                 <td>
                                     {% for chair in committee.chairs.all %}
-                                        <a href='/person/{{chair.person.slug}}'>{{ chair.person.name }}</a><br />
+                                        {{ chair.person.link_html | safe }}<br />
                                     {% endfor %}
                                 </td>
                                 <td>{{ committee.memberships.all | length }}</td>

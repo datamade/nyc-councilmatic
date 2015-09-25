@@ -10,7 +10,7 @@
 
 	{% if legislation.sponsorships.all %}
     	<i class="fa fa-user"></i> Primary Sponsor: 
-    	<a href="/person/{{ legislation.primary_sponsor.person.slug }}">{{ legislation.primary_sponsor.person.name }}</a>
+    	{{ legislation.primary_sponsor.person.link_html | safe }}
 	{% endif %}
 </p>
 

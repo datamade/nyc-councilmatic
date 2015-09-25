@@ -64,9 +64,7 @@
                                     <img src='{{membership.person.headshot_url}}' alt='{{membership.person.name}}' title='{{membership.person.name}}' class='img-responsive img-thumbnail' />
                                 </td>
                                 <td>
-                                    <a href="/person/{{membership.person.slug}}">
-                                        {{membership.person.name}}
-                                    </a>
+                                    {{ membership.person.link_html | safe }}
                                 </td>
                                 <td>
                                     {{membership.person.council_seat}}
@@ -82,9 +80,7 @@
                                     <img src='{{membership.person.headshot_url}}' alt='{{membership.person.name}}' title='{{membership.person.name}}' class='img-responsive img-thumbnail' />
                                 </td>
                                 <td>
-                                    <a href="/person/{{membership.person.slug}}">
-                                        {{membership.person.name}}
-                                    </a>
+                                    {{ membership.person.link_html | safe }}
                                 </td>
                                 <td>
                                     {{membership.person.council_seat}}
