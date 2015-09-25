@@ -123,6 +123,7 @@ h1, h2, h3, h4 {
 
 .site-intro-search > input{
     color: #333;
+    box-shadow: none;
 }
 .site-intro-search, .site-intro-search > input, .site-intro-search > .input-group-btn > .btn{
     border-radius: 0px;
@@ -132,8 +133,8 @@ h1, h2, h3, h4 {
     border: 0px;
 }
 .site-intro-search > .input-group-btn > .btn-success{
-    border-top: 1px solid #9CE06B;
-    border-bottom: 1px solid #9CE06B;
+    border-top: 1px solid #ADF674;
+    border-bottom: 1px solid #ADF674;
     border-right: 0px;
     border-left: 0px;
 }

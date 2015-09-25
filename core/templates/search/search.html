@@ -11,14 +11,15 @@
 {% block content %}
     <br/>
     <div class='jumbotron'>
-        <h3>Search {{city_name}} Legislation</h3>
+        <p class="h4">
+            Search {{city_name}} Legislation
+        </p>
         <form method="get" action=".">
-            <div class="input-group">
-                <input name="q" type="text" class="input-lg form-control" placeholder="{{search_placeholder_text}}" value="{{ request.GET.q }}">
+            <div class="input-group site-intro-search">
+                <input name="q" type="text" class="input-lg form-control" placeholder="{{search_placeholder_text}}">
                 <div class='input-group-btn'>
-                    <button type="submit" class="btn btn-lg btn-info">
+                    <button type="submit" class="btn btn-lg btn-success">
                         <i class='fa fa-fw fa-search'></i>
-                        Search
                     </button>
                 </div>
             </div>
