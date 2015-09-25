@@ -110,9 +110,18 @@ class Bill(models.Model):
 			return True
 
 	@property
-	def is_passed(self):
+	def terminal_status(self):
 		if self.actions:
-			return ('executive-signature' in [a.classification for a in self.actions.all()])
+			if self.bill_type == 'Introduction':
+				if 'executive-signature' in [a.classification for a in self.actions.all()]:
+					return 'Passed'
+				else:
+					return False
+			elif self.bill_type in ['Resolution', 'Land Use Application', 'Communication', "Mayor's Message", 'Land Use Call-Up']: 
+				if 'passage' in [a.classification for a in self.actions.all()]:
+					return 'Passed'
+				else:
+					return False
 		else:
 			return False		
 
@@ -125,15 +134,15 @@ class Bill(models.Model):
 
 	@property
 	def inferred_status(self):
-		if self.is_passed:
-			return 'Passed'
-		elif self.is_approved:
-			return 'Approved'
+		# these are the bill types for which a status doesn't make sense
+		if self.bill_type in ['SLR', 'Petition', 'Local Laws 2015']:
+			return None
+		elif self.terminal_status:
+			return self.terminal_status
 		elif self.is_stale:
 			return 'Stale'
 		else:
 			return 'Active'
-
 
 	def get_last_action_date(self):
 		return self.actions.all().order_by('-order').first().date if self.actions.all() else None
