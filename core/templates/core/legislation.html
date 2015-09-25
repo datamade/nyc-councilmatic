@@ -38,16 +38,27 @@
         <div class="row-fluid">
             <div class="col-sm-12">
                 <br/>
-                <p>
-                    {{ legislation.description }} 
+
+                {% if legislation.abstract %}
+                    <p class="small text-muted">
+                        <i>{{ legislation.description }} </i>
+                    </p>
+
+                    <p>
+                        {{ legislation.abstract }}
+                    </p>
+                {% else %}
+                    <p>
+                        {{ legislation.description }}
+                    </p>
+                {% endif %}
+
+                <p class="small">
                     <a href='{{legislation.source_url}}' title='View the source for this page'>
-                        <i class='fa fa-fw fa-external-link'></i>
+                        <i class='fa fa-fw fa-external-link'></i> View the source for this page
                     </a>
                 </p>
 
-                <p class="small text-muted">
-                    {{ legislation.abstract }}
-                </p>
 	            <hr />
 
                 <ul class="nav nav-pills">
