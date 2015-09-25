@@ -40,7 +40,7 @@
                                 <li class="small">
                                     <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
                                         {{ name|committee_topic_only|title|short_title }}
-                                    </a> 
+                                    </a>
                                     {% if f_name != 'sponsorships' %}
                                         <span class="badge badge-muted pull-right">{{ count }}</span>
                                     {% endif %}
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-sm-8">
             {% if query %}
                 <h3>{{ paginator.count }} legislation result{{ paginator.count|pluralize }} for '{{ request.GET.q }}'</h3>
@@ -66,7 +66,7 @@
             </h3>
 
             <p class="small text-muted">
-                Last Activity: 
+                Last Activity:
                 <span class='text-{{result.object.actions.first.label}}'>
                     {{result.object.current_action.description | remove_action_subj}}
                 </span>

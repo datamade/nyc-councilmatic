@@ -22,6 +22,7 @@ from core.views import CouncilmaticSearchForm
 sqs = SearchQuerySet().facet('bill_type')\
                       .facet('sponsorships', sort='index')\
                       .facet('controlling_body')\
+                      .facet('inferred_status')\
                       .order_by('-last_action_date')
 
 urlpatterns = [

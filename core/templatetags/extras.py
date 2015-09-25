@@ -16,53 +16,54 @@ def facet_name(value):
     if value == 'bill_type': return 'Legislation type'
     if value == 'sponsorships': return 'Sponsor'
     if value == 'controlling_body': return 'Controlling body'
+    if value == 'inferred_status': return 'Bill status'
 
 @register.filter
 @stringfilter
 def remove_action_subj(bill_action_desc):
-	# removes 'by X' from bill action descriptions & expands abbrevs
-	# for more readable action labels
-	clean_action = re.sub(r'\bComm\b', 'Committee', bill_action_desc)
-	clean_action = re.sub(r'\bRecved\b', 'Received', clean_action)
-	clean_action = re.sub(r'[,\s]*by\s[^\s]*', '', clean_action)
+    # removes 'by X' from bill action descriptions & expands abbrevs
+    # for more readable action labels
+    clean_action = re.sub(r'\bComm\b', 'Committee', bill_action_desc)
+    clean_action = re.sub(r'\bRecved\b', 'Received', clean_action)
+    clean_action = re.sub(r'[,\s]*by\s[^\s]*', '', clean_action)
 
-	# shorten the really long action descriptions for approval w/ modifications
-	if 'approved with modifications' in clean_action.lower():
-		clean_action = 'Approved with Modifications'
+    # shorten the really long action descriptions for approval w/ modifications
+    if 'approved with modifications' in clean_action.lower():
+        clean_action = 'Approved with Modifications'
 
-	return clean_action
+    return clean_action
 
 @register.filter
 @stringfilter
 def short_blurb(text_blob):
-	if len(text_blob) > 200:
-		blurb = text_blob[:200]
-		blurb = blurb[:blurb.rfind(' ')]+' ...'
-		return blurb
-	else:
-		return text_blob
+    if len(text_blob) > 200:
+        blurb = text_blob[:200]
+        blurb = blurb[:blurb.rfind(' ')]+' ...'
+        return blurb
+    else:
+        return text_blob
 
 @register.filter
 @stringfilter
 def short_title(text_blob):
-	if len(text_blob) > 28:
-		blurb = text_blob[:24]
-		blurb = blurb[:blurb.rfind(' ')]+' ...'
-		return blurb
-	else:
-		return text_blob
+    if len(text_blob) > 28:
+        blurb = text_blob[:24]
+        blurb = blurb[:blurb.rfind(' ')]+' ...'
+        return blurb
+    else:
+        return text_blob
 
 @register.filter
 @stringfilter
 def strip_mailto(email):
-	return re.sub('mailto:', '', email)
+    return re.sub('mailto:', '', email)
 
 @register.filter
 @stringfilter
 def committee_topic_only(committee_name):
-	clean = re.sub('Committee on', '', committee_name)
-	clean = re.sub('Subcommittee on', '', clean)
-	return clean
+    clean = re.sub('Committee on', '', committee_name)
+    clean = re.sub('Subcommittee on', '', clean)
+    return clean
 
 @register.filter
 @stringfilter

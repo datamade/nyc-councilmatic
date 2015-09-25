@@ -151,43 +151,47 @@
     <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false"/>
 
 
-    <field name="identifier" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="classification" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="controlling_body_exact" type="string" indexed="true" stored="true" multiValued="true" />
-
-    <field name="abstract" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="source_url" type="string" indexed="false" stored="true" multiValued="false" />
-
-    <field name="sponsorships" type="text_en" indexed="true" stored="true" multiValued="true" />
-
-    <field name="sponsorships_exact" type="string" indexed="true" stored="true" multiValued="true" />
-
-    <field name="full_text" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="ocd_id" type="string" indexed="false" stored="true" multiValued="false" />
 
-    <field name="slug" type="string" indexed="false" stored="true" multiValued="false" />
+    <field name="inferred_status" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="sponsorships_exact" type="string" indexed="true" stored="true" multiValued="true" />
 
-    <field name="last_action_date" type="date" indexed="true" stored="true" multiValued="false" />
+    <field name="abstract" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="friendly_name" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="sponsorships" type="text_en" indexed="true" stored="true" multiValued="true" />
 
-    <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
-
-    <field name="bill_type" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="inferred_status_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
     <field name="source_note" type="text_en" indexed="true" stored="true" multiValued="false" />
 
+    <field name="identifier" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="controlling_body_exact" type="string" indexed="true" stored="true" multiValued="true" />
+
     <field name="actions" type="text_en" indexed="true" stored="true" multiValued="true" />
 
-    <field name="bill_type_exact" type="string" indexed="true" stored="true" multiValued="false" />
-
     <field name="controlling_body" type="text_en" indexed="true" stored="true" multiValued="true" />
+
+    <field name="source_url" type="string" indexed="false" stored="true" multiValued="false" />
+
+    <field name="last_action_date" type="date" indexed="true" stored="true" multiValued="false" />
+
+    <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="slug" type="string" indexed="false" stored="true" multiValued="false" />
+
+    <field name="friendly_name" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="full_text" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="bill_type" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="classification" type="text_en" indexed="true" stored="true" multiValued="false" />
+
+    <field name="bill_type_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
   </fields>
 

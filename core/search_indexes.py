@@ -10,17 +10,24 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
     classification = indexes.CharField(model_attr='classification')
     identifier = indexes.CharField(model_attr='identifier')
     description = indexes.CharField(model_attr='description')
-    friendly_name = indexes.CharField()
-    sponsorships = indexes.MultiValueField(faceted=True)
     source_url = indexes.CharField(model_attr='source_url', indexed=False)
     source_note = indexes.CharField(model_attr='source_note')
-    full_text = indexes.CharField(model_attr='full_text')
     abstract = indexes.CharField(model_attr='abstract')
-    last_action_date = indexes.DateTimeField()
+    
+    
+    friendly_name = indexes.CharField()
+    
+    sponsorships = indexes.MultiValueField(faceted=True)
 
     actions = indexes.MultiValueField()
 
     controlling_body = indexes.MultiValueField(faceted=True)
+    
+    full_text = indexes.CharField(model_attr='full_text')
+    
+    last_action_date = indexes.DateTimeField()
+
+    inferred_status = indexes.CharField(faceted=True)
 
     def get_model(self):
         return Bill
@@ -29,7 +36,7 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
         return obj.friendly_name
 
     def prepare_sponsorships(self, obj):
-        return [sponsorship.person.name for sponsorship in obj.sponsorships.all()]
+        return [sponsorship.person for sponsorship in obj.sponsorships.all()]
 
     def prepare_actions(self, obj):
         return [action for action in obj.actions.all()]
@@ -46,3 +53,6 @@ class BillIndex(indexes.SearchIndex, indexes.Indexable):
         if not obj.last_action_date:
             return datetime.now() - timedelta(days=36500)
         return obj.last_action_date
+    
+    def prepare_inferred_status(self, obj):
+        return obj.inferred_status
