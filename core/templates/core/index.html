@@ -68,6 +68,11 @@
                     {% for event in upcoming_committee_meetings %}
                         {% include "partials/event_item.html" %}
                     {% endfor %}
+
+                    <a href="/events/" class="btn btn-sm btn-default">
+                        View All Upcoming Events
+                        <i class="fa fa-fw fa-chevron-right"></i>
+                    </a>
                 {% endif %}
 
             </div>
