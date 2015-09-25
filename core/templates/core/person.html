@@ -16,7 +16,7 @@
         </div>
     </div>
 	<div class="row-fluid">
-		<div class="col-sm-4">
+		<div class="col-sm-4 non-mobile-only">
             <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail img-padded' />
 
             <p class="small">
@@ -35,10 +35,39 @@
             <p class='small'>
                 <a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a>
             </p>
-            <span class="mobile-only">
-                <hr/>
-            </span>
         </div>
+
+        <div class="col-sm-4 mobile-only">
+            <div class="row">
+                <div class="col-xs-4">
+                    <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail' />
+                </div>
+                <div class="col-xs-8">
+                    <p class="small">
+                        {% if person.email %}
+                            <i class='fa fa-fw fa-envelope-o'></i> 
+                            <a href="{{person.email}}">{{person.email | strip_mailto}}</a>
+                        {% endif %}
+                    </p>
+                    <p class="small">
+                        {% if person.website_url %}
+                            <i class='fa fa-fw fa-user'></i> 
+                            <a href="{{person.website_url}}">Website</a>
+                        {% endif %}
+                    </p>
+
+                    <p class='small'>
+                        <a href='{{person.source_url}}'><i class='fa fa-fw fa-external-link'></i> View the source for this page</a>
+                    </p>
+                </div>
+            </div>
+
+            <hr/>
+
+        </div>
+
+
+
         <div class='col-sm-8'>
 
             <ul class="nav nav-pills">
