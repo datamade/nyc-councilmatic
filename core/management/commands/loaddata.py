@@ -84,12 +84,17 @@ class Command(BaseCommand):
 		r = requests.get(url)
 		page_json = json.loads(r.text)
 
+		source_url = ''
+		if page_json['sources']:
+			source_url = page_json['sources'][0]['url']
+
 		if parent:
 			try:
 				org_obj, created = Organization.objects.get_or_create(
 						ocd_id=organization_ocd_id,
 						name=page_json['name'],
 						classification=page_json['classification'],
+						source_url=source_url,
 						slug=slugify(page_json['name']),
 						parent=parent,
 					)
@@ -99,6 +104,7 @@ class Command(BaseCommand):
 						ocd_id=organization_ocd_id,
 						name=page_json['name'],
 						classification=page_json['classification'],
+						source_url=source_url,
 						slug=slugify(page_json['name'])+ocd_id_part,
 						parent=parent,
 					)
@@ -108,6 +114,7 @@ class Command(BaseCommand):
 						ocd_id=organization_ocd_id,
 						name=page_json['name'],
 						classification=page_json['classification'],
+						source_url=source_url,
 						slug=slugify(page_json['name']),
 					)
 			except IntegrityError:
@@ -116,6 +123,7 @@ class Command(BaseCommand):
 						ocd_id=organization_ocd_id,
 						name=page_json['name'],
 						classification=page_json['classification'],
+						source_url=source_url,
 						slug=slugify(page_json['name'])+ocd_id_part,
 					)
 
