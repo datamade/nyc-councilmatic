@@ -25,6 +25,7 @@
 
             <hr />
 
+            {% if participants %}
             <h3><i class="fa fa-fw fa-users"></i> Participants</h3>
             <p>
                 <ul>
@@ -33,7 +34,9 @@
                 {% endfor %}
                 </ul>
             </p>
+            {% endif %}
 
+            {% if agenda_clean %}
             <h3><i class="fa fa-fw fa-list"></i> Agenda</h3>
             <p>
                 <ol>
@@ -42,7 +45,9 @@
                     {% endfor %}
                 </ol>
             </p>
+            {% endif %}
 
+            {% if event.documents.all %}
             <h3><i class="fa fa-fw fa-paperclip"></i> Attachments</h3>
             <p>
                 <ul>
@@ -51,6 +56,7 @@
                 {% endfor %}
                 </ul>
             </p>
+            {% endif %}
 
         </div>
     </div>
