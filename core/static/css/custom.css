@@ -11,6 +11,13 @@ h1, h2, h3, h4 {
 	font-weight: 900;
 }
 
+#logo{
+    height: 45px;
+    float: left;
+    position: relative;
+    top: -14px;
+}
+
 .navbar-brand {
 	font-weight: 900;
     min-width: 280px;
@@ -286,6 +293,10 @@ select {
     .navbar-brand {
         padding-left: 5px;
         padding-right: 5px;
+    }
+    #logo {
+        height: 35px;
+        top: -8px;
     }
 
     #nav-items > li > a {
