@@ -1,6 +1,7 @@
 # These are all the settings specific to a city
 
 CITY_NAME = 'New York City'
+CITY_NAME_SHORT = 'NYC'
 CITY_COUNCIL_NAME = 'New York City Council'
 
 
