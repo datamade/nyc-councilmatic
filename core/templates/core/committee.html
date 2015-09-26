@@ -11,6 +11,14 @@
             {% if committee_description %}
                 <p>{{committee_description}}</p>
             {% endif %}
+            {% if committee.source_url %}
+                <p class="small">
+                    <a href='{{committee.source_url}}' title='View the source for this page' target="_blank">
+                        <i class='fa fa-fw fa-external-link'></i> 
+                        View the source for this page
+                    </a>
+                </p>
+            {% endif %}
 
             <hr />
             <ul class="nav nav-pills">
