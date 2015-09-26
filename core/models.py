@@ -224,7 +224,14 @@ class Post(models.Model):
 
     @property
     def current_member(self):
-        return self.memberships.order_by('-start_date').first() if self.memberships else None
+        if self.memberships:
+            most_recent_member = self.memberships.order_by('-start_date').first()
+            if most_recent_member.end_date:
+                return None
+            else:
+                return most_recent_member
+        else:
+            return None
 
 class Membership(models.Model):
     organization = models.ForeignKey('Organization', related_name='memberships')
