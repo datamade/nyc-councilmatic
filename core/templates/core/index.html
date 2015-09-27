@@ -29,19 +29,6 @@
 
     {% include "partials/featured_bills.html" %}
 
-    <div class="container-fluid" id="section-recently-passed">
-        <div class="row-fluid">
-            <div class='col-sm-10 col-sm-offset-1'>
-                <h2>
-                    Recently Passed<br/><span class="text-muted small">Legislation signed into law in the past 30 days</span>
-                </h2>
-                <hr/>
-                {% for legislation in recently_passed %}
-                    {% include "partials/legislation_item_passed.html" %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
 
     {% if next_council_meeting or upcoming_committee_meetings %}
     <div class="container-fluid" id="section-events">
@@ -75,6 +62,23 @@
                     </a>
                 {% endif %}
 
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if recently_passed %}
+    <div class="container-fluid" id="section-recently-passed">
+        <div class="row-fluid">
+            <div class='col-sm-10 col-sm-offset-1'>
+                <h2>
+                    Recently Passed<br/><span class="text-muted small">Legislation signed into law in the past 30 days</span>
+                </h2>
+                <hr/>
+                {% for legislation in recently_passed %}
+                    {% include "partials/legislation_item_passed.html" %}
+                {% endfor %}
             </div>
         </div>
     </div>

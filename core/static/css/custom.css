@@ -219,20 +219,29 @@ select {
     font-size: 8px;
 }
 #section-recently-passed{
-    background-color: #F8F8F8;
+    background-color: #F0F0F0;
 }
 #section-events{
-    background-color: #f0f0f0;
-}
-.featured-bill, #section-recently-passed, #section-events{
-    padding-bottom: 30px;
-}
-#uber-battle{
     background-color: #F8F8F8;
 }
-#body-cameras{
-    background-color: #f0f0f0;
+#featured-bills{
+    background-color: #F0F0F0;
+    padding-top: 30px;
 }
+#featured-bills, #section-recently-passed, #section-events{
+    padding-bottom: 30px;
+}
+
+.well-featured{
+    border: none;
+    background-color: #F8F8F8;
+
+}
+.well-featured > h3{
+    margin-top: 0px;
+}
+
+
 
 .mobile-only {
     display: none;
