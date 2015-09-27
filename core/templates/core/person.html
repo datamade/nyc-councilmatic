@@ -17,7 +17,7 @@
     </div>
     <div class="row-fluid">
         <div class="col-sm-4 non-mobile-only">
-            <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail img-padded' />
+            <img src='{{person.headshot_url}}' alt='{{person.name}}' title='{{person.name}}' class='img-responsive img-thumbnail img-padded' id="person-detail-headshot" />
 
             <p class="small">
                 {% if person.email %}
@@ -35,6 +35,7 @@
             <p class='small'>
                 <a href='{{person.source_url}}' target="_blank"><i class='fa fa-fw fa-external-link'></i> View the source for this page</a>
             </p>
+            <hr/>
         </div>
 
         <div class="col-sm-4 mobile-only">
@@ -68,11 +69,27 @@
 
 
 
-        <div class='col-sm-8'>
+        <div class='col-sm-8 no-pad-mobile'>
 
             <ul class="nav nav-pills">
-              <li role="presentation" {% if request.GET.view == 'bills' or request.GET.view == None %}class='active' {% endif %}><a href="/person/{{person.slug}}?view=bills"><i class='fa fa-fw fa-group'></i> Sponsored Legislation ({{sponsored_legislation|length}})</a></li>
-              <li role="presentation" {% if request.GET.view == 'committees' %}class='active' {% endif %}><a href="/person/{{person.slug}}?view=committees"><i class='fa fa-fw fa-group'></i> Committees ({{ person.memberships.all|length }})</a></li>
+                <li role="presentation" {% if request.GET.view == 'bills' or request.GET.view == None %}class='active' {% endif %}>
+                    <a href="/person/{{person.slug}}?view=bills">
+                        <span class="small-pill">
+                            <i class='fa fa-fw fa-files-o'></i>
+                            <span class="desktop-only">Sponsored </span>
+                            Legislation
+                            <span class="badge">{{sponsored_legislation|length}}</span>
+                        </span>
+                    </a>
+                </li>
+                <li role="presentation" {% if request.GET.view == 'committees' %}class='active' {% endif %}>    <a href="/person/{{person.slug}}?view=committees">
+                        <span class="small-pill">
+                            <i class='fa fa-fw fa-group'></i>
+                            Committees
+                            <span class="badge">{{ person.memberships.all|length }}</span>
+                        </span>
+                    </a>
+                </li>
             </ul>
 
             {% if request.GET.view == 'bills' or request.GET.view == None %}
@@ -86,6 +103,7 @@
             {% endif %}
 
             {% if request.GET.view == 'committees' %}
+                <h2>Committees</h2>
                 {% if memberships %}
                 <div class="table-responsive">
                     <table class='table table-responsive'>
