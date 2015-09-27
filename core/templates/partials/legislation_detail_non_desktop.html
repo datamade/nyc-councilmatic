@@ -1,0 +1,190 @@
+{% load extras %}
+
+<div class="col-sm-12">
+    <hr />
+
+    <ul class="nav nav-pills">
+
+        <li role="presentation" {% if request.GET.view == 'desc' or request.GET.view == None %}class='active' {% endif %}>
+            <a href="/legislation/{{legislation.slug}}?view=desc">
+                <i class='fa fa-fw fa-info'></i>
+                <span class="desktop-only">
+                    History
+                </span>
+            </a>
+        </li>
+
+        {% if actions %}
+        <li role="presentation" {% if request.GET.view == 'actions' %}class='active' {% endif %}>
+            <a href="/legislation/{{legislation.slug}}?view=actions">
+                <i class='fa fa-fw fa-list-ul'></i>
+                <span class="desktop-only">
+                    History
+                </span>
+            </a>
+        </li>
+        {% endif %}
+
+        <li role="presentation" {% if request.GET.view == 'sponsors' %}class='active' {% endif %}>
+            <a href="/legislation/{{legislation.slug}}?view=sponsors">
+                <i class='fa fa-fw fa-group'></i>
+            </a>
+        </li>
+
+        {% if legislation.full_text != "" %}
+        <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}>
+            <a href="/legislation/{{legislation.slug}}?view=text">
+                <i class='fa fa-fw fa-file-text-o'></i>
+            </a>
+        </li>
+        {% endif %}
+    
+        <li role="presentation" {% if request.GET.view == 'documents' %}class='active' {% endif %}>
+            <a href="/legislation/{{legislation.slug}}?view=documents">
+                <i class='fa fa-fw fa-paperclip'></i>
+            </a>
+        </li>
+
+        <li role="presentation" {% if request.GET.view == 'comments' %}class='active' {% endif %}>
+            <a href="/legislation/{{legislation.slug}}?view=comments">
+                <i class='fa fa-fw fa-comments-o'></i>
+            </a>
+        </li>
+    </ul>
+
+
+    {% if request.GET.view == 'desc' or request.GET.view == None %}
+        {% if legislation.abstract %}
+            <br/>
+            <p class="small text-muted">
+                <i>{{ legislation.description }} </i>
+            </p>
+
+            <p>
+                {{ legislation.abstract }}
+            </p>
+        {% else %}
+            <p>
+                {{ legislation.description }}
+            </p>
+        {% endif %}
+
+        <p class="small">
+            <a href='{{legislation.source_url}}' title='View the source for this page' target="_blank">
+                <i class='fa fa-fw fa-external-link'></i> View the source for this page
+            </a>
+        </p>
+    {% endif %}
+
+    {% if request.GET.view == 'actions' %}
+        {% if actions %}
+            <br/>
+            <div class="table-responsive">
+                <table class='table table-responsive' id='committee-actions'>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th>Legislative body</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for action in actions %}
+                            <tr>
+                                <td class='nowrap text-muted small'>{{action.date|date:'M d, Y'}}</td>
+                                <td><span class='text-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
+                                <td>{{action.organization.link_html|safe}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% endif %}
+    {% endif %}
+
+    {% if request.GET.view == 'sponsors' %}
+        {% if legislation.sponsorships.all %}
+            <br/>
+            <div class="table-responsive">
+                <table class='table table-responsive' id='council-members'>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Sponsor</th>
+                            <th>District</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in legislation.sponsorships.all %}
+                            <tr>
+                                <td>
+                                    <img src='{{s.person.headshot_url}}' alt='{{s.person.name}}' title='{{s.person.name}}' class='img-responsive img-thumbnail' />
+                                </td>
+                                <td>
+                                    {{ s.person.link_html | safe }}
+                                </td>
+                                <td>
+                                    {{s.person.council_seat}}
+                                </td>
+                                <td>
+                                    {% if s.is_primary %}
+                                        Primary sponsor
+                                    {% else %}
+                                        Sponsor
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        {% else %}
+            <h3>This legislation has no sponsors</h3>
+        {% endif %}
+    {% endif %}
+
+    {% if request.GET.view == 'documents' %}
+        {% if legislation.documents.all %}
+            <br/>
+            <ul>
+                {% for doc in legislation.documents.all %}
+                    <li>
+                        <a href="{{doc.document.url}}" target="blank">{{ doc.document.note }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>This legislation has no documents</h3>
+        {% endif %}
+    {% endif %}
+
+    {% if request.GET.view == 'text' and legislation.full_text != "" %}
+        <br/>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                {{ legislation.full_text|safe }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if request.GET.view == 'comments' %}
+        <h3><i class='fa fa-fw fa-comments-o'></i> What's your opinion?</h3>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES * * */
+            var disqus_shortname = 'nyccouncilmatic';
+            
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    {% endif %}
+
+</div>

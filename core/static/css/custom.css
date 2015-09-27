@@ -247,6 +247,9 @@ select {
 .mobile-only {
     display: none;
 }
+.non-desktop-only{
+    display: none;
+}
 
 
 .search-facet-list{
@@ -298,6 +301,9 @@ select {
 
     .desktop-only{
         display: none;
+    }
+    .non-desktop-only{
+        display: inline;
     }
 
 }
@@ -386,6 +392,9 @@ select {
     }
     .desktop-only{
         display: none;
+    }
+    .non-desktop-only{
+        display: inline;
     }
 
 }
