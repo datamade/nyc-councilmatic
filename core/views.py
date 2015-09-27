@@ -82,10 +82,13 @@ def bill_detail(request, slug):
 def committees(request):
 
     committees = Organization.committees().filter(name__startswith='Committee')
+    committees = [c for c in committees if c.memberships.all()]
 
     subcommittees = Organization.committees().filter(name__startswith='Subcommittee')
+    subcommittees = [c for c in subcommittees if c.memberships.all()]
 
     taskforces = Organization.committees().filter(name__startswith='Task Force')
+    taskforces = [c for c in taskforces if c.memberships.all()]
 
     context={
         'committees': committees,

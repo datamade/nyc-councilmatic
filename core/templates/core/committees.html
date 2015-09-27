@@ -26,7 +26,6 @@
                     </thead>
                     <tbody>
                         {% for committee in committees %}
-                            {% if committee.memberships.all %}
                             <tr>
                                 <td align="left">
                                     <a href="/committee/{{committee.slug}}">{{ committee.name | committee_topic_only }}</a>
@@ -38,7 +37,6 @@
                                 </td>
                                 <td>{{ committee.memberships.all | length }}</td>
                             </tr>
-                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -56,7 +54,6 @@
                     </thead>
                     <tbody>
                         {% for committee in subcommittees %}
-                            {% if committee.memberships.all %}
                             <tr>
                                 <td align="left">
                                     <a href="/committee/{{committee.slug}}">{{ committee.name | committee_topic_only}}</a>
@@ -68,7 +65,6 @@
                                 </td>
                                 <td>{{ committee.memberships.all | length }}</td>
                             </tr>
-                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -88,7 +84,6 @@
                     </thead>
                     <tbody>
                         {% for committee in taskforces %}
-                            {% if committee.memberships.all %}
                             <tr>
                                 <td>
                                     <a href="/committee/{{committee.slug}}">{{ committee.name }}</a>
@@ -100,7 +95,6 @@
                                 </td>
                                 <td>{{ committee.memberships.all | length }}</td>
                             </tr>
-                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
@@ -117,7 +111,11 @@
 
                 <p>Each Council Member serves on at least three of the Council's standing committees, sub- and select committees and panels. The standing committees must meet at least once a month unless the Charter mandates otherwise. Committee assignments are made by the Committee on Rules, Privileges and Elections and voted on by the entire Council.</p>
 
+                {% if taskforces %}
                 <p>{{city_council_name}} is currently composed of {{committees | length }} Committees, {{subcommittees | length }} Subcommittees and {{taskforces | length }} Task Forces.</p>
+                {% else %}
+                <p>{{city_council_name}} is currently composed of {{committees | length }} Committees and {{subcommittees | length }} Subcommittees.</p>
+                {% endif %}
             </div>
         </div>
     </div>
