@@ -55,7 +55,7 @@
 
     {% if request.GET.view == 'desc' or request.GET.view == None %}
         {% if legislation.abstract %}
-            <br/>
+            <h3>Description</h3>
             <p class="small text-muted">
                 <i>{{ legislation.description }} </i>
             </p>
@@ -78,7 +78,7 @@
 
     {% if request.GET.view == 'actions' %}
         {% if actions %}
-            <br/>
+            <h3>History</h3>
             <div class="table-responsive">
                 <table class='table table-responsive' id='committee-actions'>
                     <thead>
@@ -105,7 +105,7 @@
 
     {% if request.GET.view == 'sponsors' %}
         {% if legislation.sponsorships.all %}
-            <br/>
+            <h3>Sponsors</h3>
             <div class="table-responsive">
                 <table class='table table-responsive' id='council-members'>
                     <thead>
@@ -148,7 +148,7 @@
 
     {% if request.GET.view == 'documents' %}
         {% if legislation.documents.all %}
-            <br/>
+            <h3>Attachments</h3>
             <ul>
                 {% for doc in legislation.documents.all %}
                     <li>
@@ -162,7 +162,7 @@
     {% endif %}
 
     {% if request.GET.view == 'text' and legislation.full_text != "" %}
-        <br/>
+        <h3>Full Text</h3>
         <div class='panel panel-default'>
             <div class='panel-body'>
                 {{ legislation.full_text|safe }}
@@ -171,7 +171,7 @@
     {% endif %}
 
     {% if request.GET.view == 'comments' %}
-        <h3><i class='fa fa-fw fa-comments-o'></i> What's your opinion?</h3>
+        <h3>Comments</h3>
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             /* * * CONFIGURATION VARIABLES * * */
