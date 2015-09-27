@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="row-fluid">
+        <div class="row-fluid clearfix">
 
             {% if legislation.primary_sponsor %}
             <div class="col-xs-5">
@@ -65,22 +65,47 @@
                 <ul class="nav nav-pills">
                   {% if actions %}
                     <li role="presentation" {% if request.GET.view == 'actions' or request.GET.view == None %}class='active' {% endif %}>
-                        <a href="/legislation/{{legislation.slug}}?view=actions"><i class='fa fa-fw fa-list-ul'></i> Bill History</a>
+                        <a href="/legislation/{{legislation.slug}}?view=actions">
+                            <i class='fa fa-fw fa-list-ul'></i>
+                            <span class="desktop-only">
+                                History
+                            </span>
+                        </a>
                     </li>
                   {% endif %}
                   <li role="presentation" {% if request.GET.view == 'sponsors' %}class='active' {% endif %}>
-                    <a href="/legislation/{{legislation.slug}}?view=sponsors"><i class='fa fa-fw fa-group'></i> Sponsors ({{ legislation.sponsorships.all | length }})</a>
+                    <a href="/legislation/{{legislation.slug}}?view=sponsors">
+                        <i class='fa fa-fw fa-group'></i>
+                        <span class="desktop-only">
+                            Sponsors ({{ legislation.sponsorships.all | length }})
+                        </span>
+                    </a>
                   </li>
                   {% if legislation.full_text != "" %}
                     <li role="presentation" {% if request.GET.view == 'text' %}class='active' {% endif %}>
-                        <a href="/legislation/{{legislation.slug}}?view=text"><i class='fa fa-fw fa-file-text-o'></i> Legislation Text</a>
+                        <a href="/legislation/{{legislation.slug}}?view=text">
+                            <i class='fa fa-fw fa-file-text-o'></i>
+                            <span class="desktop-only">
+                                Full Text
+                            </span>
+                        </a>
                     </li>
                   {% endif %}
                   <li role="presentation" {% if request.GET.view == 'documents' %}class='active' {% endif %}>
-                    <a href="/legislation/{{legislation.slug}}?view=documents"><i class='fa fa-fw fa-paperclip'></i> Attachments ({{ legislation.documents.all | length }})</a>
+                    <a href="/legislation/{{legislation.slug}}?view=documents">
+                        <i class='fa fa-fw fa-paperclip'></i>
+                        <span class="desktop-only">
+                            Attachments ({{ legislation.documents.all | length }})
+                        </span>
+                    </a>
                   </li>
                   <li role="presentation" {% if request.GET.view == 'comments' %}class='active' {% endif %}>
-                    <a href="/legislation/{{legislation.slug}}?view=comments"><i class='fa fa-fw fa-comments-o'></i> Comments</a>
+                    <a href="/legislation/{{legislation.slug}}?view=comments">
+                        <i class='fa fa-fw fa-comments-o'></i>
+                        <span class="desktop-only">
+                            Comments
+                        </span>
+                    </a>
                 </li>
                 </ul>
 

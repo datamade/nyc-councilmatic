@@ -58,6 +58,7 @@ h1, h2, h3, h4 {
 
 .nav-pills > li > a{
     border-radius: 0px;
+    padding: 12px 10px 12px 10px;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
     background: none;
@@ -279,6 +280,12 @@ select {
         line-height: 21px;
     }
 
+    .nav-pills > li > a{
+        padding: 0px 10px 0px 10px;
+        font-size: 20px;
+    }
+
+
     .bill-page-title{
         font-size: 26px;
     }
@@ -287,6 +294,10 @@ select {
     }
     p {
         font-size: 14px;
+    }
+
+    .desktop-only{
+        display: none;
     }
 
 }
@@ -360,10 +371,20 @@ select {
         padding: 0px;
     }
 
+
+    .nav-pills > li > a{
+        padding: 0px 10px 0px 10px;
+        font-size: 20px;
+    }
+
+
     .mobile-only{
         display: inline;
     }
     .non-mobile-only{
+        display: none;
+    }
+    .desktop-only{
         display: none;
     }
 
