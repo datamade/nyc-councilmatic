@@ -5,6 +5,16 @@ CITY_NAME_SHORT = 'NYC'
 CITY_COUNCIL_NAME = 'New York City Council'
 
 
+SITE_META = {
+    'site_name' : 'NYC Councilmatic',
+    'site_desc' : 'New York City Council, demystified. Keep tabs on what your local representatives are up to.',
+    'site_author' : 'PPF & DataMade',
+    'site_url' : 'http://nyc.councilmatic.org',
+    'twitter_site': '@ppolitics',
+    'twitter_creator': '@DataMadeCo',
+}
+
+
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
 OCD_CITY_COUNCIL_ID = 'ocd-organization/0f63aae8-16fd-4d3c-b525-00747a482cf9'
 
