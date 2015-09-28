@@ -39,6 +39,10 @@ class Person(models.Model):
     def link_html(self):
         return '<a href="/person/'+self.slug+'">'+self.name+'</a>'
 
+    @property
+    def primary_sponsorships(self):
+        return self.sponsorships.filter(is_primary=True)
+
 class Bill(models.Model):
     ocd_id = models.CharField(max_length=100, unique=True)
     description = models.TextField()

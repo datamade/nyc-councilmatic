@@ -74,7 +74,8 @@ h1, h2, h3, h4 {
 }
 
 .footer img {
-    margin-right: 50px;
+    margin-right: 25px;
+    margin-left: 25px;
 }
 
 .pad{
@@ -178,10 +179,10 @@ h1, h2, h3, h4 {
     background-color: #22B24C;
 }
 .label-approved{
-    background-color: #A4D330;
+    background-color: #22B24C;
 }
 .label-active{
-    background-color: #D3C226;
+    background-color: #3D8A8E;
 }
 
 
