@@ -1,20 +1,30 @@
 {% load extras %}
 
-<p class="small text-muted no-pad-bottom">
-    {{ legislation.friendly_name }}
-    <span class="pull-right text-muted"><i class="fa fa-fw fa-calendar-o"></i> {{legislation.date_passed|date:'m/d'}}</span>
-</p>
+<div class='row'>
+    <div class='col-sm-10'>
+        <p class="small text-muted no-pad-bottom">
+            <span class="text-muted"><i class="fa fa-fw fa-check"></i> Passed on {{legislation.date_passed|date:'n/d'}}</span><br />
+            <a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
+        </p>
 
-<p>
-    {{ legislation.description | short_blurb }}. <a href="/legislation/{{ legislation.slug }}" class="small">DETAILS<i class="fa fa-fw fa-chevron-right"></i></a>
-</p>
+        <p>
+            {{ legislation.description | short_blurb }}.
+        </p>
 
-<p>
-    <i class="fa fa-fw fa-tag"></i>
-    {% for c in legislation.committees_involved %}
-        <span class="badge badge-muted pseudo-topic-tag">
-            {{ c | committee_topic_only }}
-        </span>&nbsp;
-    {% endfor %}
-    <br/><br/>
-</p>
+        <p>
+            <i class="fa fa-fw fa-tag"></i>
+            {% for c in legislation.committees_involved %}
+                <span class="badge badge-muted pseudo-topic-tag">
+                    {{ c | committee_topic_only }}
+                </span>&nbsp;
+            {% endfor %}
+            <br/><br/>
+        </p>
+    </div>
+    <div class='col-sm-2'>
+        <br /><br />
+        <p>
+            <a class='btn btn-primary' href='/legislation/{{ legislation.slug }}'>Details <i class="fa fa-fw fa-chevron-right"></i></a>
+        </p>
+    </div>
+</div>
