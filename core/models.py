@@ -119,7 +119,7 @@ class Bill(models.Model):
                     return False
             elif self.bill_type in ['Resolution', 'Land Use Application', 'Communication', "Mayor's Message", 'Land Use Call-Up']: 
                 if 'passage' in [a.classification for a in self.actions.all()]:
-                    return 'Passed'
+                    return 'Approved'
                 else:
                     return False
         else:
