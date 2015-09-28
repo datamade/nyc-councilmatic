@@ -241,7 +241,7 @@ class Command(BaseCommand):
 			bill_type = page_json['extras']['local_classification']
 
 			# skip bill types that will get loaded as events
-			if bill_type not in ['Town Hall Meeting', 'Oversight', 'Tour']:
+			if bill_type not in ['Town Hall Meeting', 'Oversight', 'Tour', 'Local Laws 2015']:
 
 				if 'full_text' in page_json['extras']:
 					full_text = page_json['extras']['full_text']
