@@ -2,22 +2,21 @@
 {% block title %}Home{% endblock %}
 {% block full_content %}
     <div class="container-fluid" id="section-photo">
-        <div class="photo-layer"></div>
         <div class="row-fluid">
             <div class='col-sm-10 col-sm-offset-1'>
-                <br/><br/>
-                <h2 class="site-intro">
-                    <span class="text-bg">Keep tabs on what your city council is up to</span>
+                <br/>
+                <h2>
+                    <h1>New York City Council, demystified</h1>
                 </h2>
                 <br/>
                 <p class="h3">
-                    <span class="text-bg">Search {{city_name}} Legislation</span>
+                    <span class="text-bg">Search {{city_name}} legislation</span>
                 </p>
                 <form class="search form-search=" action="/search/" method="GET">
                     <div class="input-group site-intro-search">
                         <input name="q" type="text" class="input-lg form-control" placeholder="{{search_placeholder_text}}">
                         <div class='input-group-btn'>
-                            <button type="submit" class="btn btn-lg btn-success">
+                            <button type="submit" class="btn btn-lg btn-primary">
                                 <i class='fa fa-fw fa-search'></i>
                             </button>
                         </div>
@@ -34,12 +33,10 @@
     <div class="container-fluid" id="section-events">
         <div class="row-fluid">
             <div class='col-sm-10 col-sm-offset-1'>
-                <h2>Events</h2>
                 {% if next_council_meeting %}
-
+                    <h3>Next City Council Meeting</h3>
                     <div class="alert alert-info">
                         <strong>
-                            Next City Council Meeting: 
                             {{next_council_meeting.start_time | date:"l, N j Y"}}
                         </strong>
                         &nbsp;&nbsp;
