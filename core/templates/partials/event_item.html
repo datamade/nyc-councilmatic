@@ -1,27 +1,24 @@
-<div class="panel panel-default">
-    <div class="panel-body">
-		<div class="row">
-			<div class="col-xs-3">
-				<small>
-					<span class="non-mobile-only">
-						<i class="fa fa-fw fa-calendar-o"></i> 
-						{{event.start_time | date:"D"}} 
-					</span>
-					{{event.start_time | date:"m/d"}}
-					
-					<span class="non-mobile-only">
-						<i class="fa fa-fw fa-clock-o"></i> 
-					</span>
-					{{event.start_time| date:"g:ia"}}<br/>
-					{{event.location_name}}<br />
-				</small>
-			</div>
-			<div class="col-xs-9">
-				<p>
-					<a href="{{event.event_page_url}}">{{event.name}}</a><br/>
-					<span class="small text-muted">{{event.description}}</span>
-				</p>
-			</div>
-		</div>
+
+<div class="row">
+	<div class="col-xs-3">
+		<small>
+			<span class="non-mobile-only">
+				<i class="fa fa-fw fa-calendar-o"></i> 
+				{{event.start_time | date:"D"}} 
+			</span>
+			{{event.start_time | date:"m/d"}}
+			
+			<span class="non-mobile-only">
+				<i class="fa fa-fw fa-clock-o"></i> 
+			</span>
+			{{event.start_time| date:"g:ia"}}<br/>
+			{{event.location_name}}<br />
+		</small>
+	</div>
+	<div class="col-xs-9">
+		<p>
+			<a href="{{event.event_page_url}}">{{event.name}}</a><br/>
+			<span class="small text-muted">{{event.description}}</span>
+		</p>
 	</div>
 </div>
