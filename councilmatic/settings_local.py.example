@@ -22,3 +22,12 @@ HAYSTACK_CONNECTIONS = {
         # 'URL': 'http://127.0.0.1:8983/solr/mysite',
     },
 }
+
+# Remember to run python manage.py createcachetable so this will work! 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.DatabaseCache',
+        'LOCATION': 'councilmatic_cache',
+    }
+
+}
