@@ -64,10 +64,7 @@
             </div>
 
             <hr/>
-
         </div>
-
-
 
         <div class='col-sm-8 no-pad-mobile'>
 
@@ -78,7 +75,6 @@
                             <i class='fa fa-fw fa-files-o'></i>
                             <span class="desktop-only">Sponsored </span>
                             Legislation
-                            <span class="badge">{{sponsored_legislation|length}}</span>
                         </span>
                     </a>
                 </li>
@@ -86,20 +82,26 @@
                         <span class="small-pill">
                             <i class='fa fa-fw fa-group'></i>
                             Committees
-                            <span class="badge">{{ person.memberships.all|length }}</span>
                         </span>
                     </a>
                 </li>
             </ul>
 
             {% if request.GET.view == 'bills' or request.GET.view == None %}
-                <h2>Sponsored Legislation</h2>
+                <h2>
+                    Recently sponsored legislation
+                    <small><a href='/search/?q=&selected_facets=sponsorships_exact:{{person.name}}'>View all <i class='fa fa-fw fa-chevron-right'></i></a></small>
+                </h2>
+                <p>Legislation that {{person.name}} is the primary sponsor of.</p>
 
                 {% for legislation in sponsored_legislation %}
 
                     {% include "partials/legislation_item.html" %}
 
                 {% endfor %}
+
+                <hr />
+                <p><a class='btn btn-primary' href='/search/?q=&selected_facets=sponsorships_exact:{{person.name}}'>View all legislation sponsored by {{person.name}}<i class='fa fa-fw fa-chevron-right'></i></a></p>
             {% endif %}
 
             {% if request.GET.view == 'committees' %}
@@ -145,7 +147,7 @@
     <script>
 
         // for reference purposes
-        console.log( "OCD ID: {{person.ocd_id}}" )
+        // console.log( "OCD ID: {{person.ocd_id}}" )
 
     </script>
 {% endblock %}
