@@ -78,6 +78,9 @@ h1, h2, h3, h4 {
     margin-bottom: 0px;
     padding-bottom: 0px;
 }
+.less-pad-list{
+    padding-left: 12px;
+}
 
 .badge-muted{
     background-color: #aaa;
@@ -298,7 +301,7 @@ select {
     h4, .h4 {
         font-size: 14px;
     }
-    p {
+    p, ul>li {
         font-size: 14px;
     }
 
@@ -362,9 +365,10 @@ select {
         font-size: 12px;
     }
 
-    p{
+    p, ul>li{
         font-size: 14px;
     }
+
     p.small, p > .small {
         font-size: 12px;
     }
