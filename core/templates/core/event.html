@@ -36,11 +36,11 @@
             </p>
             {% endif %}
 
-            {% if agenda_clean %}
+            {% if event.clean_agenda_items %}
             <h3><i class="fa fa-fw fa-list"></i> Agenda</h3>
             <p>
                 <ol>
-                    {% for agenda_item in agenda_clean %}
+                    {% for agenda_item in event.clean_agenda_items %}
                         <li>{{agenda_item}}</li>
                     {% endfor %}
                 </ol>

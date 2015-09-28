@@ -1,12 +1,11 @@
 {% load extras %}
-
+<hr />
+<p class="small text-muted no-pad-bottom">
+    <span class="text-muted"><i class="fa fa-fw fa-check"></i> Passed on {{legislation.date_passed|date:'n/d'}}</span><br />
+    <a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
+</p>
 <div class='row'>
     <div class='col-sm-10'>
-        <p class="small text-muted no-pad-bottom">
-            <span class="text-muted"><i class="fa fa-fw fa-check"></i> Passed on {{legislation.date_passed|date:'n/d'}}</span><br />
-            <a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
-        </p>
-
         <p>
             {{ legislation.description | short_blurb }}.
         </p>
@@ -22,9 +21,8 @@
         </p>
     </div>
     <div class='col-sm-2'>
-        <br /><br />
         <p>
-            <a class='btn btn-primary' href='/legislation/{{ legislation.slug }}'>Details <i class="fa fa-fw fa-chevron-right"></i></a>
+            <a class='btn btn-primary btn-sm' href='/legislation/{{ legislation.slug }}'>Details <i class="fa fa-fw fa-chevron-right"></i></a>
         </p>
     </div>
 </div>

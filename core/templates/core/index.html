@@ -35,14 +35,30 @@
             <div class='col-sm-10 col-sm-offset-1'>
                 {% if next_council_meeting %}
                     <h3><i class="fa fa-fw fa-institution"></i> Next City Council Meeting</h3>
-                    <div class="alert alert-info">
-                        <strong>
-                            {{next_council_meeting.start_time | date:"l, N j Y"}}
-                        </strong>
-                        &nbsp;&nbsp;
-                        <a class="small" href="{{next_council_meeting.event_page_url}}">
-                            DETAILS <i class="fa fa-arrow-circle-right"></i>
-                        </a>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class='row'>
+                                <div class='col-sm-4'>
+                                    <a href='{{next_council_meeting.event_page_url}}'><img class='img-responsive img-thumbnail' src='/static/images/city-council.jpg' /></a>
+                                </div>
+                                <div class='col-sm-8'>
+                                    <h4><a href="{{next_council_meeting.event_page_url}}">{{next_council_meeting.name}}</a></h4>
+                                    <p>{{next_council_meeting.description}}</p>
+
+                                    <p class="small text-muted">
+                                        <i class="fa fa-fw fa-calendar-o"></i> {{next_council_meeting.start_time | date:"D n/d/Y"}}<br/>
+                                        <i class="fa fa-fw fa-clock-o"></i> {{next_council_meeting.start_time | date:"g:i a"}}<br/>
+                                        <i class="fa fa-fw fa-map-marker"></i> {{next_council_meeting.location_name}}<br />
+                                        <i class="fa fa-fw"></i> City Hall Park, New York, NY 10007
+                                    </p>
+                                    <a class='btn btn-primary btn-sm' href="{{next_council_meeting.event_page_url}}">
+                                        Details
+                                        <i class="fa fa-fw fa-chevron-right"></i>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 {% endif %}
@@ -73,7 +89,6 @@
                     <i class="fa fa-fw fa-check"></i>
                     Recently Passed<br/><span class="text-muted small">Legislation signed into law in the past 30 days</span>
                 </h2>
-                <hr/>
                 {% for legislation in recently_passed %}
                     {% include "partials/legislation_item_passed.html" %}
                 {% endfor %}

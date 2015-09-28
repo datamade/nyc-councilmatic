@@ -59,11 +59,12 @@ h1, h2, h3, h4 {
 .nav-pills > li > a{
     border-radius: 0px;
     padding: 12px 10px 12px 10px;
+    color: #3D8A8E;
 }
 .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li > a:hover {
     background: none;
-    color: #EB6864;
-    border-bottom: 8px solid #EB6864;
+    color: #3D8A8E;
+    border-bottom: 8px solid #3D8A8E;
 }
 
 .footer {
@@ -144,13 +145,13 @@ h1, h2, h3, h4 {
     border: 0;
 }
 .site-intro-search > .input-group-btn > .btn-success{
-    border-top: 1px solid #ADF674;
-    border-bottom: 1px solid #ADF674;
+    border-top: 1px solid #3D8A8E;
+    border-bottom: 1px solid #3D8A8E;
     border-right: 0;
     border-left: 0;
 }
 .btn-success{
-    background-color: #ADF674;
+    background-color: #3D8A8E;
     color: #333;
 }
 .btn-success:hover, .btn-success:active{
@@ -209,7 +210,7 @@ select {
           rgba(0, 0, 0, 0.3), 
           rgba(0, 0, 0, 0.3)
         ),
-        url('../images/city_hall.jpg');
+        url('../images/nyc-hall-cropped.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

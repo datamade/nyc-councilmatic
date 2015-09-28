@@ -268,6 +268,16 @@ class Event(models.Model):
     def event_page_url(self):
         return '/event/%s' %self.slug
 
+    @property
+    def clean_agenda_items(self):
+        agenda_items = self.agenda_items.order_by('order').all()
+        agenda_deduped = []
+        for a in agenda_items:
+            if a.description not in agenda_deduped:
+                agenda_deduped.append(a.description)
+
+        return agenda_deduped
+
     @classmethod
     def next_city_council_meeting(cls):
         return cls.objects.filter(name__icontains='City Council Stated Meeting').filter(start_time__gt=now).order_by('start_time').first()
