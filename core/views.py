@@ -120,7 +120,7 @@ def person(request, slug):
     if not person:
         raise Http404("Person does not exist")
 
-    sponsorships = person.sponsorships.order_by('-bill__last_action_date')[:20]
+    sponsorships = person.sponsorships.order_by('-bill__last_action_date')[:10]
 
     chairs = person.memberships.filter(role="CHAIRPERSON")
     memberships = person.memberships.filter(role="Committee Member")

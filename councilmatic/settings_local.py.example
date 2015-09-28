@@ -24,9 +24,10 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # Remember to run python manage.py createcachetable so this will work! 
+# developers, set your BACKEND to 'django.core.cache.backends.dummy.DummyCache'
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.DatabaseCache',
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'councilmatic_cache',
     }
 

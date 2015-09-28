@@ -74,7 +74,8 @@ h1, h2, h3, h4 {
 }
 
 .footer img {
-    margin-right: 50px;
+    margin-right: 25px;
+    margin-left: 25px;
 }
 
 .pad{
