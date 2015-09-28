@@ -24,7 +24,13 @@
                                 {{leg_type.name}}
                             </a>
                         </td>
-                        <td>{{leg_type.desc}}</td>
+                        <td>
+                            {% if leg_type.html_desc %}
+                                <p>{{leg_type.desc|safe}}</p>
+                            {% else %}
+                                <p>{{leg_type.desc}}</p>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
