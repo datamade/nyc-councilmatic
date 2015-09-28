@@ -12,7 +12,9 @@
 				<i class="fa fa-fw fa-clock-o"></i> 
 			</span>
 			{{event.start_time| date:"g:ia"}}<br/>
-			{{event.location_name}}<br />
+			<span class="desktop-only">
+				{{event.location_name}}<br />
+			</span>
 		</small>
 	</div>
 	<div class="col-xs-9">
