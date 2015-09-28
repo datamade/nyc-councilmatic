@@ -19,6 +19,7 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
     {
         'name': 'Introduction',
         'search_term': 'Introduction',
+        'fa_icon': 'file-text-o',
         'html_desc': True,
         'desc': 'A proposal for a NYC local law. <br/>\
                 Ways for an introduction to become a local law: <ul><li>the Council approves & the Mayor approves,</li> \
@@ -29,6 +30,7 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
     {
         'name': 'Resolution',
         'search_term': 'Resolution',
+        'fa_icon': 'commenting-o',
         'html_desc': True,
         'desc': "An expression of the Council's opinion on public policy issues that may or may not fall under City jurisdiction. \
                 Resolutions can be used to: <ul><li>support/oppose federal or state legislation,</li>\
@@ -38,36 +40,42 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
     {
         'name': 'SLR (State Legislation Resolution)',
         'search_term': 'SLR',
+        'fa_icon': 'commenting-o',
         'html_desc': False,
         'desc': 'A special resolution that serves as an official home rule request from the Council to the State Senate and State Assembly to pass pending legislation in the New York State Legislature. The initial request for a SLR must come from the Legislature in Albany.',
     },
     {
         'name': 'Land Use Application',
         'search_term': 'Land Use Application',
+        'fa_icon': 'building-o',
         'html_desc': False,
         'desc': 'Land use proposals to be considered by the Council’s Land Use Committee',
     },
     {
         'name': 'Land Use Call-Up',
         'search_term': 'Land Use Call-Up',
+        'fa_icon': 'building-o',
         'html_desc': False,
         'desc': "Land use proposals that don't require Council approval, but have been chosen by a Council Member for discretionary Council review.",
     },
     {
         'name': 'Mayor’s Messages',
         'search_term': "Mayor's Message",
+        'fa_icon': 'bullhorn',
         'html_desc': False,
         'desc': 'Communications from the Mayor. These generally include appointments to boards and commissions, as well as veto messages.',
     },
     {
         'name': 'Communications',
         'search_term': 'Communication',
+        'fa_icon': 'bullhorn',
         'html_desc': False,
         'desc': 'Communications from the City, County or Borough offices. These usually concern appointments to boards and commissions.',
     },
     {
         'name': 'Petitions',
         'search_term': 'Petition',
+        'fa_icon': 'bullhorn',
         'html_desc': False,
         'desc': 'Communication from individuals or entities other than the Mayor, City, County or Borough Offices. These generally include communications from the City Council, and usually concern City Council appointments and resignations.',
     },
