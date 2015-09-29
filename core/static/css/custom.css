@@ -302,7 +302,7 @@ select {
     h4, .h4 {
         font-size: 14px;
     }
-    p, ul>li {
+    p, ul>li, td, th {
         font-size: 14px;
     }
 
@@ -366,13 +366,14 @@ select {
         font-size: 12px;
     }
 
-    p, ul>li{
+    p, ul>li {
         font-size: 14px;
     }
 
-    p.small, p > .small {
+    p.small, p > .small, th, td {
         font-size: 12px;
     }
+
     .pseudo-topic-tag{
         font-size: 10px;
     }
