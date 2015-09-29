@@ -6,7 +6,8 @@ from core.models import Person, Bill, Organization, Action, ActionRelatedEntity,
 						Post, Membership, Sponsorship, LegislativeSession, \
 						Document, BillDocument, Event, EventParticipant, EventDocument, \
 						EventAgendaItem, AgendaItemBill
-from councilmatic.settings import HEADSHOT_PATH, DEBUG
+from councilmatic.settings import HEADSHOT_PATH
+from councilmatic.local_settings import DEBUG
 from councilmatic.city_config import OCD_JURISDICTION_ID, OCD_CITY_COUNCIL_ID, TIMEZONE
 import requests
 import json
