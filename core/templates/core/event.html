@@ -50,7 +50,7 @@
             <h4>Attachments</h4>
             <p>
                 {% for document in event.documents.all %}
-                    <i class='fa fa-fw fa-file-text-o'></i> <a href="{{document.document.url}}">{{document.document.note}}
+                    <i class='fa fa-fw fa-file-text-o'></i> <a href="{{document.document.url}}">{{document.document.note}}</a><br />
                 {% endfor %}
             </p>
             {% endif %}
