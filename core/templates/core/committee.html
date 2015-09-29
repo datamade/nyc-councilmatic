@@ -41,7 +41,7 @@
                         <tbody>
                             {% for action in committee.recent_activity %}
                                 <tr>
-                                    <td class='nowrap text-muted small'>{{action.date|date:'M d, Y'}}</td>
+                                    <td class='nowrap text-muted small'>{{action.date|date:'n/d/Y'}}</td>
                                     <td><a href="/legislation/{{action.bill.slug}}">{{action.bill.friendly_name}}</a></td>
                                     <td><span class='text-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
                                 </tr>

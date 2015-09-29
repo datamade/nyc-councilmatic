@@ -91,7 +91,7 @@
                     <tbody>
                         {% for action in actions %}
                             <tr>
-                                <td class='nowrap text-muted small'>{{action.date|date:'M d, Y'}}</td>
+                                <td class='nowrap text-muted small'>{{action.date|date:'n/d/Y'}}</td>
                                 <td><span class='text-{{action.label}}'>{{action.description | remove_action_subj}}</span></td>
                                 <td>{{action.organization.link_html|safe}}</td>
                             </tr>

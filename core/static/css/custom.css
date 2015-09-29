@@ -305,6 +305,9 @@ select {
     p, ul>li, td, th {
         font-size: 14px;
     }
+    td.small, th.small{
+        font-size: 12px;
+    }
 
     #person-detail-headshot{
         max-height: 160px;
@@ -372,6 +375,9 @@ select {
 
     p.small, p > .small, th, td {
         font-size: 12px;
+    }
+    th.small, td.small{
+        font-size: 11px;
     }
 
     .pseudo-topic-tag{
