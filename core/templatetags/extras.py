@@ -63,6 +63,8 @@ def strip_mailto(email):
 def committee_topic_only(committee_name):
     clean = re.sub('Committee on', '', committee_name)
     clean = re.sub('Subcommittee on', '', clean)
+    if 'Mental Health, Developmental Disability' in clean:
+        clean = 'Mental Health & Disability'
     return clean
 
 @register.filter
