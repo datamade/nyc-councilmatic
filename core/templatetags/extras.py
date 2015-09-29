@@ -16,7 +16,7 @@ def facet_name(value):
     if value == 'bill_type': return 'Legislation type'
     if value == 'sponsorships': return 'Sponsor'
     if value == 'controlling_body': return 'Controlling body'
-    if value == 'inferred_status': return 'Bill status'
+    if value == 'inferred_status': return 'Legislation status'
 
 @register.filter
 @stringfilter
