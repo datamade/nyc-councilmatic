@@ -1,10 +1,16 @@
 {% extends "base_with_margins.html" %}
 {% block title %}About{% endblock %}
 {% block content %}
+    <div class="row-fluid clearfix">
+        <div class="col-sm-8 no-pad-mobile">
+            <br /><br />
+            <h1 id='about'>About</h1>
+        </div>
+    </div>
 
     <div class="row-fluid clearfix">
-        <div class="col-xs-8 no-pad-mobile">
-            <h1 id='about'>About</h1>
+        <div class="col-sm-8 no-pad-mobile">
+            
             <p><strong>NYC Councilmatic</strong> is a tool for understanding and tracking what’s happening in New York City Council.</p>
             <p>This site connects NYC residents to local city council offices, for greater online public dialogue about issues in their communities.</p>
 
@@ -17,18 +23,18 @@
                     See the schedule of public events
                 </li>
                 <li>
-                    Track issues you care about (coming soon!)
+                    Track and comment on issues you care about
                 </li>
             </ul>
 
-            <p>NYC Councilmatic is <strong>free</strong>, <strong>non-profit</strong>, and <strong>non-partisan</strong> - the first website of its kind for open access to official NYC city council information.</p>
+            <p>NYC Councilmatic is <strong>free</strong>, <strong>non-profit</strong>, and <strong>non-partisan</strong> and the easiest way access official New York City Council information.</p>
 
             <hr />
             <h3>What is New York City Council, and how does it work?</h3>
 
             <p><a href='https://en.wikipedia.org/wiki/New_York_City_Council'>New York City Council</a> is the lawmaking body of New York City.</p>
 
-            <p>The Council is made up of 51 council seats, with each representative typically serving a four year term.</p>
+            <p>The Council is made up of <a href='/council-members/'>51 council seats</a>, with each representative typically serving a four year term.</p>
 
             <p>The Council is an equal partner with the <a href='https://en.wikipedia.org/wiki/Mayor_of_New_York_City'>Mayor</a> in governing New York City. Its responsibilities include:</p>
             <ul>
@@ -86,16 +92,23 @@
                 Meetings of the entire Council, referred to as Stated Meetings, occur twice a month at City Hall. 
             </p>
 
-            <h3>Open Data, Open Source</h3>
-            <p>
-                NYC Councilmatic is built on top of <a href="http://opencivicdata.org/about/" target="_blank">Open Civic Data</a>, a project that standardizes information about people, organizations, events and bills at any level of government.
-            </p>
+            <h3 id='open-source'>We're open source!</h3>
+
             <p>
                 This website is open source and on <a href="https://github.com/datamade/nyc-councilmatic">GitHub</a> - meaning that anyone can re-use or adapt the code.
             </p>
             <p>
                 If you're interested in bringing Councilmatic to your city, <a href="mailto:info@councilmatic.org">we'd love to hear from you</a>!
             </p>
+
+            <h3 id='data'>Data</h3>
+            <p>The data from this website comes from <a href='http://legistar.council.nyc.gov/'>New York City Council's Legislative Research Center</a>, a system built by <a href='http://www.granicus.com/'>Granicus</a> using their <a href='http://www.granicus.com/solutions/legislative-management/'>Legistar Legislative Management Suite</a>.</p>
+
+            <p>This data is then collected daily using the <a href="http://opencivicdata.org/about/" target="_blank">Open Civic Data</a> standard and platform. Open Civic Data standardizes information about people, organizations, events and bills at any level of government and was built in collaboration with <a href="http://sunlightfoundation.com/">The Sunlight Foundation</a>, <a href="https://developers.google.com/civic-information/?hl=en">Google</a>, <a href="http://www.granicus.com/">Granicus</a> and <a href="http://www.opennorth.ca/">Open North</a>.
+            </p>
+
+            <p><a href='http://opencivicdata.org'><img style='height:100px;' src='/static/images/ocd.jpg' /></a></p>
+
 
             <h3>Team</h3>
 
@@ -121,7 +134,7 @@
             </ul>
             
         </div>
-        <div class="col-xs-4 no-pad-mobile">
+        <div class="col-sm-4 no-pad-mobile">
             <br/>
             <div class="well well-sm">
                 <h4>Contents</h4>
@@ -133,7 +146,10 @@
                         <a href="#about-city-council">What is New York City Council,<br />and how does it work?</a>
                     </li>
                     <li>
-                        <a href="#open-data-open-source">Open Data, Open Source</a>
+                        <a href="#open-source">We're open source!</a>
+                    </li>
+                    <li>
+                        <a href="#data">Data</a>
                     </li>
                     <li>
                         <a href="#team">Team</a>
