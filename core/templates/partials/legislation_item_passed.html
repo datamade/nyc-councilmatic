@@ -4,19 +4,18 @@
     <a href="/legislation/{{ legislation.slug }}">{{ legislation.friendly_name }}</a>
 </p>
 <div class='row'>
-    <div class='col-xs-10'>
+    <div class='col-xs-11'>
         <p>
             {{ legislation.listing_description | short_blurb }}.
         </p>
 
     </div>
-    <div class='col-xs-2'>
-        <p>
-            <a class='btn btn-primary btn-sm' href='/legislation/{{ legislation.slug }}'>
-                <span class="desktop-only">Details</span>
+    <div class='col-xs-1 no-pad-mobile'>
+        <div>
+            <a class='btn-bill-detail' href='/legislation/{{ legislation.slug }}'>
                 <i class="fa fa-fw fa-chevron-right"></i>
             </a>
-        </p>
+        </div>
     </div>
 </div>
 <p>

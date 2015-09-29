@@ -161,6 +161,19 @@ h1, h2, h3, h4 {
     color: #333;
 }
 
+.btn-bill-detail{
+    background-color: #eee;
+    padding: 24px 0px;
+    top: 24px;
+    color: #777;
+    position: relative;
+}
+.btn-bill-detail:hover, btn-bill-detail:active{
+    background-color: #EB6864;
+    color: #fff;
+}
+
+
 .x-small{
     font-size: .75em;
 }
