@@ -153,6 +153,11 @@ class Bill(models.Model):
     def get_last_action_date(self):
         return self.actions.all().order_by('-order').first().date if self.actions.all() else None
 
+    def listing_description(self):
+        if self.abstract:
+            return self.abstract
+        else:
+            return self.description
 
 class Organization(models.Model):
     ocd_id = models.CharField(max_length=100, unique=True)
