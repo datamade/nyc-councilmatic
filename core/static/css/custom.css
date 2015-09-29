@@ -118,9 +118,7 @@ h1, h2, h3, h4 {
 
 .jumbotron {
     background-color: rgba(238, 238, 238, .9);
-    padding: 30px 30px 30px 30px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 30px;
 }
 .jumbotron > h3 {
     margin-top: 0;
@@ -361,6 +359,9 @@ select {
     .col-sm-12, .table-col, .no-pad-mobile {
         padding-left: 0;
         padding-right: 0;
+    }
+    .jumbotron {
+        padding: 20px;
     }
 
     h1, .h1 {
