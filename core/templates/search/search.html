@@ -66,10 +66,9 @@
 
             <!-- Legislation result -->
 
-            <p class="small text-muted no-pad-bottom">
-                <i class="fa fa-calendar-o"></i> {{result.object.last_action_date|date:'n/d/Y'}} - {{result.object.current_action.description | remove_action_subj }}
-                <span class='label label-{{result.object.inferred_status | lower}}'>{{result.object.inferred_status}}</span><br/>
-                <a href="/legislation/{{ result.object.slug }}">{{ result.object.friendly_name }}</a>
+            <p>
+                <a class="small" href="/legislation/{{ result.object.slug }}">{{ result.object.friendly_name }}</a>
+                <span class='label label-{{result.object.inferred_status | lower}}'>{{result.object.inferred_status}}</span>
             </p>
 
 
@@ -86,19 +85,6 @@
                         </p>
                     {% endif %}
 
-
-                    <p>
-                        {% if result.object.committees_involved %}
-                            <i class="fa fa-fw fa-tag"></i>
-                            {% for c in result.object.committees_involved %}
-                                <span class="badge badge-muted pseudo-topic-tag">
-                                    {{ c | committee_topic_only }}
-                                </span>&nbsp;
-                            {% endfor %}
-                            <br/>
-                        {% endif %}
-                        <br/>
-                    </p>
                 </div>
                 <div class="col-xs-2">
                     <p>
@@ -109,6 +95,22 @@
                     </p>
                 </div>
             </div>
+            <p>
+                <span class="small text-muted">
+                    <i class="fa fa-fw fa-calendar-o"></i> {{result.object.last_action_date|date:'n/d/Y'}} - {{result.object.current_action.description | remove_action_subj }}
+                </span><br/>
+
+                {% if result.object.committees_involved %}
+                    <i class="fa fa-fw fa-tag"></i>
+                    {% for c in result.object.committees_involved %}
+                        <span class="badge badge-muted pseudo-topic-tag">
+                            {{ c | committee_topic_only }}
+                        </span>&nbsp;
+                    {% endfor %}
+                    <br/>
+                {% endif %}
+                <br/>
+            </p>
 
 
         {% empty %}
