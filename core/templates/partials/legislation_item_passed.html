@@ -9,15 +9,6 @@
             {{ legislation.description | short_blurb }}.
         </p>
 
-        <p>
-            <i class="fa fa-fw fa-tag"></i>
-            {% for c in legislation.committees_involved %}
-                <span class="badge badge-muted pseudo-topic-tag">
-                    {{ c | committee_topic_only }}
-                </span>&nbsp;
-            {% endfor %}
-            <br/><br/>
-        </p>
     </div>
     <div class='col-xs-2'>
         <p>
@@ -28,3 +19,12 @@
         </p>
     </div>
 </div>
+<p>
+    <i class="fa fa-fw fa-tag"></i>
+    {% for c in legislation.committees_involved %}
+        <span class="badge badge-muted pseudo-topic-tag">
+            {{ c | committee_topic_only }}
+        </span>&nbsp;
+    {% endfor %}
+    <br/><br/>
+</p>

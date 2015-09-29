@@ -28,7 +28,6 @@
 
     {% include "partials/featured_bills.html" %}
 
-
     {% if next_council_meeting or upcoming_committee_meetings %}
     <div class="container-fluid" id="section-events">
         <div class="row-fluid">
@@ -64,7 +63,10 @@
                 {% endif %}
 
                 {% if upcoming_committee_meetings %}
-                    <h3><i class="fa fa-fw fa-group"></i> Upcoming Committee Meetings</h3>
+                    <h3>
+                        <span class="non-mobile-only"><i class="fa fa-fw fa-group"></i> </span>
+                        Upcoming Committee Meetings
+                    </h3>
                     {% for event in upcoming_committee_meetings %}
                         {% include "partials/event_item.html" %}
                     {% endfor %}
