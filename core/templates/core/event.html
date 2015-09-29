@@ -5,14 +5,14 @@
 {% block content %}
 
     <div class="row-fluid">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
             <br/>
             <p><a href='/events'>< back to Events</a></p>
             <h1>{{event.name}}</h1>
             <p>{{event.description}}</p>
 
             <p class="small text-muted">
-                <i class="fa fa-fw fa-calendar-o"></i> {{event.start_time | date:"D m/d/Y"}}<br/>
+                <i class="fa fa-fw fa-calendar-o"></i> {{event.start_time | date:"D n/d/Y"}}<br/>
                 <i class="fa fa-fw fa-clock-o"></i> {{event.start_time | date:"g:i a"}}<br/>
                 <i class="fa fa-fw fa-map-marker"></i> {{event.location_name}}
             </p>
@@ -27,35 +27,31 @@
             <hr />
 
             {% if participants %}
-            <h3><i class="fa fa-fw fa-users"></i> Participants</h3>
+            <h4>Participants</h4>
             <p>
-                <ul>
                 {% for participant in participants %}
-                    <li>{{participant.link_html | safe}}</li>
+                   <i class="fa fa-fw fa-users"></i> {{participant.link_html | safe}}<br />
                 {% endfor %}
-                </ul>
             </p>
             {% endif %}
 
             {% if event.clean_agenda_items %}
-            <h3><i class="fa fa-fw fa-list"></i> Agenda</h3>
+            <h4>Agenda</h4>
             <p>
                 <ol>
                     {% for agenda_item in event.clean_agenda_items %}
-                        <li>{{agenda_item}}</li>
+                        {{agenda_item}}<br />
                     {% endfor %}
                 </ol>
             </p>
             {% endif %}
 
             {% if event.documents.all %}
-            <h3><i class="fa fa-fw fa-paperclip"></i> Attachments</h3>
+            <h4>Attachments</h4>
             <p>
-                <ul>
                 {% for document in event.documents.all %}
-                    <li><a href="{{document.document.url}}">{{document.document.note}}</a></li>
+                    <i class='fa fa-fw fa-file-text-o'></i> <a href="{{document.document.url}}">{{document.document.note}}
                 {% endfor %}
-                </ul>
             </p>
             {% endif %}
 

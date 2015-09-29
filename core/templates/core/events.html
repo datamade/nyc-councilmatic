@@ -7,6 +7,8 @@
 
             <br/><br/>
 
+            Browse by month:
+
             <select id="month-dropdown" class="dropdown-target">
                 {% for name, num in month_options %}
                     {% if this_month = num %}
@@ -34,7 +36,7 @@
     </div>
     
     <div class="row-fluid">
-        <div class="col-sm-10 no-pad-mobile">
+        <div class="col-sm-8 no-pad-mobile">
             {% if not show_upcoming %}
                 {% if month_events %}
                     <h2>Events: {{first_date | date:"F Y"}}</h2>
@@ -61,6 +63,20 @@
                 {% endif %}
 
             {% endif %}
+        </div>
+        <div class="col-sm-4 no-pad-mobile">
+            <div class='well'>
+                <h4><i class='fa fa-fw fa-info-circle'></i> What are these events?</h4>
+                <p>
+                    Most of the Council's legislative action happens in <a href='/committees/'>committees</a>. Each committee meets in public hearings 2-3 times per month where proposed legislation is debated. Members of other government branches, as well as the public, are able to attend and comment at these hearings.
+                </p>
+
+                <p>
+                    Meetings of the entire Council, referred to as Stated Meetings, occur twice a month at City Hall. 
+                </p>
+
+                <p><a href='/about/'>Read more about how City Council works ></a></p>
+            </div>
         </div>
     </div>
 
