@@ -36,23 +36,63 @@
                     </h3>
                 </div>
                 <div class="panel-body collapse" id="search-filters-mobile">
-                    {% for f_name, facet_values in facets.fields.items %}
-                    <p><strong>{{ f_name | facet_name }}</strong></p>
+
+                    <p><strong>Legislation status</strong></p>
                     <ul class="search-facet-list">
-                        {% for name, count in facet_values %}
+                        {% for name, count in facets.fields.inferred_status %}
                             {% if count %}
                                 <li class="small">
                                     <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
                                         {{ name|committee_topic_only|title|short_title }}
                                     </a>
-                                    {% if f_name != 'sponsorships' %}
-                                        <span class="badge badge-muted pull-right">{{ count }}</span>
-                                    {% endif %}
+                                    <span class="badge badge-muted pull-right">{{ count }}</span>
                                 </li>
                             {% endif %}
                         {% endfor %}
                     </ul>
-                    {% endfor %}
+
+                    <p><strong>Legislation type</strong></p>
+                    <ul class="search-facet-list">
+                        {% for name, count in facets.fields.bill_type %}
+                            {% if count %}
+                                <li class="small">
+                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
+                                        {{ name|committee_topic_only|title|short_title }}
+                                    </a>
+                                    <span class="badge badge-muted pull-right">{{ count }}</span>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                    <p><strong>Controlling Body</strong></p>
+                    <ul class="search-facet-list">
+                        {% for name, count in facets.fields.controlling_body %}
+                            {% if count %}
+                                <li class="small">
+                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
+                                        {{ name|committee_topic_only|title|short_title }}
+                                    </a>
+
+                                    <span class="badge badge-muted pull-right">{{ count }}</span>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
+                    <p><strong>Sponsor</strong></p>
+                    <ul class="search-facet-list">
+                        {% for name, count in facets.fields.sponsorships %}
+                            {% if count %}
+                                <li class="small">
+                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
+                                        {{ name|committee_topic_only|title|short_title }}
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+
                 </div>
             </div>
         </div>
