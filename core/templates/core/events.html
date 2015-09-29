@@ -35,13 +35,18 @@
     
     <div class="row-fluid">
         <div class="col-sm-10 no-pad-mobile">
-            {% if month_events %}
-                <h2>Events: {{first_date | date:"F Y"}}</h2>
-                <hr />
+            {% if not show_upcoming %}
+                {% if month_events %}
+                    <h2>Events: {{first_date | date:"F Y"}}</h2>
+                    <hr />
 
-                {% for date, event_list in month_events %}
-                    {% include "partials/event_day.html" %}
-                {% endfor %}
+                    {% for date, event_list in month_events %}
+                        {% include "partials/event_day.html" %}
+                    {% endfor %}
+                {% else %}
+                    <h2>No events to show</h2>
+
+                {% endif %}
 
             {% else %}
                 {% if upcoming_events %}

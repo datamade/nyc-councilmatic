@@ -155,6 +155,7 @@ def events(request, year=None, month=None):
                 upcoming_events.append([d, events_on_day])
 
         context = {
+            'show_upcoming': True,
             'this_month': month,
             'this_year': year,
             'upcoming_events': upcoming_events,
@@ -175,9 +176,10 @@ def events(request, year=None, month=None):
                 month_events.append([d, events_on_day])
 
         context = {
+            'show_upcoming': False,
             'this_month': month,
             'this_year': year,
-            'first_date': month_dates[0],
+            'first_date': month_dates[0] if month_dates else None,
             'month_events': month_events,
             'year_range': year_range,
             'month_options': month_options,
