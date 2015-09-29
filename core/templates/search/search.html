@@ -64,28 +64,57 @@
 
         {% for result in page.object_list %}
 
-            <h3>
-                <a href="/legislation/{{ result.object.slug }}">{{ result.object.friendly_name }}</a>
-                <span class='pull-right label label-{{result.object.inferred_status | lower}}'>{{result.object.inferred_status}}</span>
-            </h3>
+            <!-- Legislation result -->
 
-            <p class="small text-muted">
-                Last Activity:
-                <span class='text-{{result.object.actions.first.label}}'>
-                    {{result.object.current_action.description | remove_action_subj}}
-                </span>
-                on {{result.object.last_action_date|date:'M d, Y'}}
+            <p class="small text-muted no-pad-bottom">
+                <i class="fa fa-calendar-o"></i> {{result.object.last_action_date|date:'n/d/Y'}} - {{result.object.current_action.description | remove_action_subj }}
+                <span class='label label-{{result.object.inferred_status | lower}}'>{{result.object.inferred_status}}</span><br/>
+                <a href="/legislation/{{ result.object.slug }}">{{ result.object.friendly_name }}</a>
             </p>
 
-            {% if query %}
-                <p class="small">{% highlight result.text with query css_class "bg-info" %}</p>
-            {% else %}
-                <p class="small">{{result.object.description | short_blurb}}</p>
-            {% endif %}
-            <hr />
+
+            <div class="row">
+                <div class="col-xs-10">
+
+                    {% if query %}
+                        <p>
+                            {% highlight result.text with query css_class "bg-info" %}
+                        </p>
+                    {% else %}
+                        <p>
+                            {{result.object.description | short_blurb}}
+                        </p>
+                    {% endif %}
+
+
+                    <p>
+                        {% if result.object.committees_involved %}
+                            <i class="fa fa-fw fa-tag"></i>
+                            {% for c in result.object.committees_involved %}
+                                <span class="badge badge-muted pseudo-topic-tag">
+                                    {{ c | committee_topic_only }}
+                                </span>&nbsp;
+                            {% endfor %}
+                            <br/>
+                        {% endif %}
+                        <br/>
+                    </p>
+                </div>
+                <div class="col-xs-2">
+                    <p>
+                        <a class='btn btn-primary btn-sm' href='/legislation/{{ result.object.slug }}'>
+                            <span class="desktop-only">Details</span>
+                            <i class="fa fa-fw fa-chevron-right"></i>
+                        </a>
+                    </p>
+                </div>
+            </div>
+
+
         {% empty %}
             <p>This site has data from the current legislative session, which goes back to 2014. If you're searching for something older, you can browse the <a href="http://legistar.council.nyc.gov/Legislation.aspx" target="_blank">New York City Council Legistar site</a>.</p>
             <p>We'd be happy to help you find what you're looking for - <a href="mailto:info@councilmatic.org">contact us</a>!</p>
+
         {% endfor %}
         </div>
     </div>
