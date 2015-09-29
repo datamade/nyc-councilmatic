@@ -131,7 +131,7 @@ def person(request, slug):
         'chairs': chairs,
         'memberships': memberships,
         'sponsorships': sponsorships,
-        'sponsored_legislation': [s.bill for s in sponsorships]
+        'sponsored_legislation': [s.bill for s in sponsorships][:10]
     }
 
     return render(request, 'core/person.html', context)

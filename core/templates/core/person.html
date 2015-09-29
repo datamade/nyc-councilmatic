@@ -88,10 +88,10 @@
             </ul>
 
             {% if request.GET.view == 'bills' or request.GET.view == None %}
-                <h2>
-                    Recently sponsored legislation
+                <h3>
+                    Recently sponsored
                     <small><a href='/search/?q=&selected_facets=sponsorships_exact:{{person.name}}'>View all <i class='fa fa-fw fa-chevron-right'></i></a></small>
-                </h2>
+                </h3>
                 <p>Legislation that {{person.name}} is the primary sponsor of.</p><br/>
 
                 {% for legislation in sponsored_legislation %}
@@ -105,7 +105,7 @@
             {% endif %}
 
             {% if request.GET.view == 'committees' %}
-                <h2>Committees</h2>
+                <h3>Committees</h3>
                 {% if memberships %}
                 <div class="table-responsive">
                     <table class='table table-responsive'>
