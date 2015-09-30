@@ -42,7 +42,7 @@
                         {% for name, count in facets.fields.inferred_status %}
                             {% if count %}
                                 <li class="small">
-                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
+                                    <a href="/search/?q={{query}}&selected_facets=inferred_status_exact:{{name}}" title="{{ name|title }}">
                                         {{ name|committee_topic_only|title|short_title }}
                                     </a>
                                     <span class="badge badge-muted pull-right">{{ count }}</span>
@@ -56,7 +56,7 @@
                         {% for name, count in facets.fields.bill_type %}
                             {% if count %}
                                 <li class="small">
-                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
+                                    <a href="/search/?q={{query}}&selected_facets=bill_type_exact:{{name}}" title="{{ name|title }}">
                                         {{ name|committee_topic_only|title|short_title }}
                                     </a>
                                     <span class="badge badge-muted pull-right">{{ count }}</span>
@@ -70,7 +70,7 @@
                         {% for name, count in facets.fields.controlling_body %}
                             {% if count %}
                                 <li class="small">
-                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
+                                    <a href="/search/?q={{query}}&selected_facets=controlling_body_exact:{{name}}" title="{{ name|title }}">
                                         {{ name|committee_topic_only|title|short_title }}
                                     </a>
 
@@ -85,7 +85,7 @@
                         {% for name, count in facets.fields.sponsorships %}
                             {% if count %}
                                 <li class="small">
-                                    <a href="/search/?q={{query}}&selected_facets={{f_name}}_exact:{{name}}" title="{{ name|title }}">
+                                    <a href="/search/?q={{query}}&selected_facets=sponsorships_exact:{{name}}" title="{{ name|title }}">
                                         {{ name|committee_topic_only|title|short_title }}
                                     </a>
                                 </li>
