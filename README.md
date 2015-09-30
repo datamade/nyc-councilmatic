@@ -1,5 +1,3 @@
-![dungeon8807construction](https://cloud.githubusercontent.com/assets/1406537/9255913/f43087b0-41b1-11e5-9a8e-03617b660b70.gif)
-
 # New York City Councilmatic
 
 Keep track of what New York City Council is doing.
