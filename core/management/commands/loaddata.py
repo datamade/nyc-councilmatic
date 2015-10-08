@@ -383,7 +383,7 @@ class Command(BaseCommand):
 
             # save image to disk
             if page_json['image']:
-                print("   saving image for %s" % page_json['name'])
+                # print("   saving image for %s" % page_json['name'])
                 r = requests.get(page_json['image'])
                 if r.status_code == 200:
                     with open((HEADSHOT_PATH + page_json['id'] + ".jpg"), 'wb') as f:
@@ -476,7 +476,7 @@ class Command(BaseCommand):
             EventDocument.objects.all().delete()
             EventAgendaItem.objects.all().delete()
             AgendaItemBill.objects.all().delete()
-            print("deleted all events, participants, documents, agenda items, bills")
+            print("deleted all events, participants, documents, agenda items, agenda related bills")
 
         # this grabs a paginated listing of all events within a jurisdiction
         events_url = base_url+'/events/?jurisdiction_id='+OCD_JURISDICTION_ID
@@ -501,60 +501,52 @@ class Command(BaseCommand):
             page_json = json.loads(r.text)
 
             try:
-                if len(page_json['name']) > 255:
-                    # TEMPORARY - skip events w/ names that are too long
-                    # this will be fixed when names no longer have descriptions appended
-                    print("\n\n"+"*"*60)
-                    print("SKIPPING EVENT %s" %event_ocd_id)
-                    print("event name is too long")
-                    print("*"*60+"\n")
-
+                legistar_id = re.findall('ID=(.*)&GUID', page_json['sources'][0]['url'])
+                if legistar_id:
+                    slug = legistar_id[0]
                 else:
-                    try:
-                        legistar_id = re.findall('ID=(.*)&GUID', page_json['sources'][0]['url'])[0]
-                    except:
-                        print("\n\n"+"-"*60)
-                        print("WARNING: MISSING SOURCE %s" %event_ocd_id)
-                        print("event has no source")
-                        print("-"*60+"\n")
-                        legistar_id = event_ocd_id
+                    slug = event_ocd_id
+                    print("\n\n"+"-"*60)
+                    print("WARNING: MISSING SOURCE %s" %event_ocd_id)
+                    print("event has no source")
+                    print("-"*60+"\n")
 
-                    event_obj, created = Event.objects.get_or_create(
-                            ocd_id = event_ocd_id,
-                            name = page_json['name'],
-                            description = page_json['description'],
-                            classification = page_json['classification'],
-                            start_time = parse_datetime(page_json['start_time']),
-                            end_time = parse_datetime(page_json['end_time']) if page_json['end_time'] else None,
-                            all_day = page_json['all_day'],
-                            status = page_json['status'],
-                            location_name = page_json['location']['name'],
-                            location_url = page_json['location']['url'],
-                            source_url = page_json['sources'][0]['url'],
-                            source_note = page_json['sources'][0]['note'],
-                            slug = legistar_id,
+                event_obj, created = Event.objects.get_or_create(
+                        ocd_id = event_ocd_id,
+                        name = page_json['name'],
+                        description = page_json['description'],
+                        classification = page_json['classification'],
+                        start_time = parse_datetime(page_json['start_time']),
+                        end_time = parse_datetime(page_json['end_time']) if page_json['end_time'] else None,
+                        all_day = page_json['all_day'],
+                        status = page_json['status'],
+                        location_name = page_json['location']['name'],
+                        location_url = page_json['location']['url'],
+                        source_url = page_json['sources'][0]['url'],
+                        source_note = page_json['sources'][0]['note'],
+                        slug = slug,
+                    )
+
+                # if created and DEBUG:
+                #     print('   adding event: %s' % event_ocd_id)
+                if created and DEBUG:
+                    print('\u263A', end=' ', flush=True)
+
+                for participant_json in page_json['participants']:
+                    obj, created = EventParticipant.objects.get_or_create(
+                            event = event_obj,
+                            note = participant_json['note'],
+                            entity_name = participant_json['entity_name'],
+                            entity_type = participant_json['entity_type']
                         )
-
                     # if created and DEBUG:
-                    #     print('   adding event: %s' % event_ocd_id)
-                    if created and DEBUG:
-                        print('\u263A', end=' ', flush=True)
+                    #     print('      adding participant: %s' %obj.entity_name)
 
-                    for participant_json in page_json['participants']:
-                        obj, created = EventParticipant.objects.get_or_create(
-                                event = event_obj,
-                                note = participant_json['note'],
-                                entity_name = participant_json['entity_name'],
-                                entity_type = participant_json['entity_type']
-                            )
-                        # if created and DEBUG:
-                        #     print('      adding participant: %s' %obj.entity_name)
+                for document_json in page_json['documents']:
+                    self.load_eventdocument(document_json, event_obj)
 
-                    for document_json in page_json['documents']:
-                        self.load_eventdocument(document_json, event_obj)
-
-                    for agenda_item_json in page_json['agenda']:
-                        self.load_eventagendaitem(agenda_item_json, event_obj)
+                for agenda_item_json in page_json['agenda']:
+                    self.load_eventagendaitem(agenda_item_json, event_obj)
 
             except IntegrityError:
                 event_obj, created = Event.objects.get_or_create(
