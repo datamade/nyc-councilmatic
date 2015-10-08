@@ -14,6 +14,7 @@ import json
 import pytz
 import os.path
 import re
+import datetime
 
 app_timezone = pytz.timezone(TIMEZONE)
 base_url = 'http://ocd.datamade.us'
@@ -32,30 +33,31 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         if options['endpoint'] == 'organizations':
-            print("\nLOADING ORGANIZATIONS")
             self.grab_organizations(delete=options['delete'])
-            print("\ndone!")
+            print("\ndone!", datetime.datetime.now())
+
         elif options['endpoint'] == 'bills':
-            print("\nLOADING BILLS")
             self.grab_bills(delete=options['delete'])
-            print("\ndone!")
+            print("\ndone!", datetime.datetime.now())
+
         elif options['endpoint'] == 'people':
-            print("\nLOADING PEOPLE")
             self.grab_people(delete=options['delete'])
-            print("\ndone!")
+            print("\ndone!", datetime.datetime.now())
+
         elif options['endpoint'] == 'events':
-            print("\nLOADING EVENTS")
             self.grab_events(delete=options['delete'])
+            print("\ndone!", datetime.datetime.now())
+
         else:
-            print("\nLOADING EVERYTHING")
+            print("\n** LOADING EVERYTHING! **\n")
             self.grab_organizations(delete=options['delete'])
             self.grab_bills(delete=options['delete'])
             self.grab_people(delete=options['delete'])
             self.grab_events(delete=options['delete'])
-            print("\ndone!")
+            print("\ndone!", datetime.datetime.now())
         
     def grab_organizations(self, delete=False):
-
+        print("\nLOADING ORGANIZATIONS", datetime.datetime.now())
         if delete:
             Organization.objects.all().delete()
             Post.objects.all().delete()
@@ -130,6 +132,8 @@ class Command(BaseCommand):
 
         # if created and DEBUG:
         #     print('   adding organization: %s' % org_obj.name )
+        if created and DEBUG:
+            print('\u263A', end=' ', flush=True)
 
         for post_json in page_json['posts']:
 
@@ -150,6 +154,7 @@ class Command(BaseCommand):
     def grab_people(self, delete=False):
         # find people associated with existing organizations & bills
 
+        print("\nLOADING PEOPLE", datetime.datetime.now())
         if delete:
             Person.objects.all().delete()
             Membership.objects.all().delete()
@@ -190,7 +195,8 @@ class Command(BaseCommand):
     def grab_bills(self, delete=False):
         # this grabs all bills & associated actions, documents from city council
         # organizations need to be populated before bills & actions are populated
-        
+
+        print("\nLOADING BILLS", datetime.datetime.now())
         if delete:
             Bill.objects.all().delete()
             Action.objects.all().delete()
@@ -292,6 +298,8 @@ class Command(BaseCommand):
 
                 # if created and DEBUG:
                 #     print('   adding %s' % bill_id)
+                if created and DEBUG:
+                    print('\u263A', end=' ', flush=True)
 
                 action_order = 0
                 for action_json in page_json['actions']:
@@ -418,8 +426,10 @@ class Command(BaseCommand):
                     slug=slugify(page_json['name'])+ocd_id_part,
                 )
 
+            # if DEBUG:
+            #     print('   adding person: %s' % person.name)
             if DEBUG:
-                print('   adding person: %s' % person.name)
+                print('\u263A', end=' ', flush=True)
 
         for membership_json in page_json['memberships']:
 
@@ -459,6 +469,7 @@ class Command(BaseCommand):
 
     def grab_events(self, delete=False):
 
+        print("\nLOADING EVENTS", datetime.datetime.now())
         if delete:
             Event.objects.all().delete()
             EventParticipant.objects.all().delete()
