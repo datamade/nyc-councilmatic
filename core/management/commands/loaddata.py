@@ -32,22 +32,22 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         if options['endpoint'] == 'organizations':
-            print("\nLOADING ORGANIZATIONS\n")
+            print("\nLOADING ORGANIZATIONS")
             self.grab_organizations(delete=options['delete'])
             print("\ndone!")
         elif options['endpoint'] == 'bills':
-            print("\nLOADING BILLS\n")
+            print("\nLOADING BILLS")
             self.grab_bills(delete=options['delete'])
             print("\ndone!")
         elif options['endpoint'] == 'people':
-            print("\nLOADING PEOPLE\n")
+            print("\nLOADING PEOPLE")
             self.grab_people(delete=options['delete'])
             print("\ndone!")
         elif options['endpoint'] == 'events':
-            print("\nLOADING EVENTS\n")
+            print("\nLOADING EVENTS")
             self.grab_events(delete=options['delete'])
         else:
-            print("\nLOADING EVERYTHING\n")
+            print("\nLOADING EVERYTHING")
             self.grab_organizations(delete=options['delete'])
             self.grab_bills(delete=options['delete'])
             self.grab_people(delete=options['delete'])
@@ -57,9 +57,9 @@ class Command(BaseCommand):
     def grab_organizations(self, delete=False):
 
         if delete:
-            print("deleting all organizations and posts")
             Organization.objects.all().delete()
             Post.objects.all().delete()
+            print("deleted all organizations and posts")
 
         # first grab ny city council root
         self.grab_organization_posts(OCD_CITY_COUNCIL_ID)
@@ -128,8 +128,8 @@ class Command(BaseCommand):
                         slug=slugify(page_json['name'])+ocd_id_part,
                     )
 
-        if created and DEBUG:
-            print('   adding organization: %s' % org_obj.name )
+        # if created and DEBUG:
+        #     print('   adding organization: %s' % org_obj.name )
 
         for post_json in page_json['posts']:
 
@@ -140,8 +140,8 @@ class Command(BaseCommand):
                     organization = org_obj,
                 )
 
-            if created and DEBUG:
-                print('      adding post: %s %s' %(post_json['role'], post_json['label']))
+            # if created and DEBUG:
+            #     print('      adding post: %s %s' %(post_json['role'], post_json['label']))
 
         for child in page_json['children']:
             self.grab_organization_posts(child['id'], org_obj)
@@ -151,10 +151,10 @@ class Command(BaseCommand):
         # find people associated with existing organizations & bills
 
         if delete:
-            print("deleting all people, memberships, sponsorships")
             Person.objects.all().delete()
             Membership.objects.all().delete()
             Sponsorship.objects.all().delete()
+            print("deleted all people, memberships, sponsorships")
 
         # grab people associated with all existing organizations
         orgs = Organization.objects.exclude(name='Democratic').exclude(name='Republican').all()
@@ -183,8 +183,8 @@ class Command(BaseCommand):
                             is_primary=sponsor_json['primary'],
                         )
 
-                    if created and DEBUG:
-                        print('      adding sponsorship: %s %s' % (obj.bill, obj.person))
+                    # if created and DEBUG:
+                    #     print('      adding sponsorship: %s %s' % (obj.bill, obj.person))
     
 
     def grab_bills(self, delete=False):
@@ -192,13 +192,13 @@ class Command(BaseCommand):
         # organizations need to be populated before bills & actions are populated
         
         if delete:
-            print("deleting all bills, actions, legislative sessions")
             Bill.objects.all().delete()
             Action.objects.all().delete()
             ActionRelatedEntity.objects.all().delete()
             LegislativeSession.objects.all().delete()
             Document.objects.all().delete()
             BillDocument.objects.all().delete()
+            print("deleted all bills, actions, legislative sessions, documents")
 
         # get legislative sessions
         self.grab_legislative_sessions()
@@ -290,8 +290,8 @@ class Command(BaseCommand):
                             slug=slugify(page_json['identifier'])+ocd_id_part,
                         )
 
-                if created and DEBUG:
-                    print('   adding %s' % bill_id)
+                # if created and DEBUG:
+                #     print('   adding %s' % bill_id)
 
                 action_order = 0
                 for action_json in page_json['actions']:
@@ -308,10 +308,10 @@ class Command(BaseCommand):
 
         # if bills don't have local classification, don't load them
         else:
-            print("*"*60)
+            print("\n\n"+"*"*60)
             print("SKIPPING BILL %s" %bill_id)
             print("bill data looks incomplete")
-            print("*"*60)
+            print("*"*60+"\n")
 
 
     def load_action(self, action_json, bill, action_order):
@@ -331,8 +331,8 @@ class Command(BaseCommand):
                 order=action_order,
             )
 
-        if created and DEBUG:
-            print('      adding action: %s' %action_json['description'])
+        # if created and DEBUG:
+        #     print('      adding action: %s' %action_json['description'])
 
         for related_entity_json in action_json['related_entities']:
             obj, created = ActionRelatedEntity.objects.get_or_create(
@@ -343,8 +343,8 @@ class Command(BaseCommand):
                 person_ocd_id = related_entity_json['person_id'] if related_entity_json['person_id'] else ""
             )
 
-            if created and DEBUG:
-                print('         adding related entity: %s' %obj.entity_name)
+            # if created and DEBUG:
+            #     print('         adding related entity: %s' %obj.entity_name)
 
     def load_bill_document(self, document_json, bill):
 
@@ -358,8 +358,8 @@ class Command(BaseCommand):
                 document = doc_obj,
             )
 
-        if created:
-            print('      adding document: %s' % doc_obj.note)
+        # if created and DEBUG:
+        #     print('      adding document: %s' % doc_obj.note)
 
 
     def grab_person_memberships(self, person_id):
@@ -454,18 +454,18 @@ class Command(BaseCommand):
                     end_date = end_date
                 )
 
-            if created and DEBUG:
-                print('      adding membership: %s' % obj.role)
+            # if created and DEBUG:
+            #     print('      adding membership: %s' % obj.role)
 
     def grab_events(self, delete=False):
 
         if delete:
-            print("deleting all events")
             Event.objects.all().delete()
             EventParticipant.objects.all().delete()
             EventDocument.objects.all().delete()
             EventAgendaItem.objects.all().delete()
             AgendaItemBill.objects.all().delete()
+            print("deleted all events, participants, documents, agenda items, bills")
 
         # this grabs a paginated listing of all events within a jurisdiction
         events_url = base_url+'/events/?jurisdiction_id='+OCD_JURISDICTION_ID
@@ -493,13 +493,21 @@ class Command(BaseCommand):
                 if len(page_json['name']) > 255:
                     # TEMPORARY - skip events w/ names that are too long
                     # this will be fixed when names no longer have descriptions appended
-                    print("*"*60)
+                    print("\n\n"+"*"*60)
                     print("SKIPPING EVENT %s" %event_ocd_id)
                     print("event name is too long")
-                    print("*"*60)
+                    print("*"*60+"\n")
 
                 else:
-                    legistar_id = re.findall('ID=(.*)&GUID', page_json['sources'][0]['url'])[0]
+                    try:
+                        legistar_id = re.findall('ID=(.*)&GUID', page_json['sources'][0]['url'])[0]
+                    except:
+                        print("\n\n"+"-"*60)
+                        print("WARNING: MISSING SOURCE %s" %event_ocd_id)
+                        print("event has no source")
+                        print("-"*60+"\n")
+                        legistar_id = event_ocd_id
+
                     event_obj, created = Event.objects.get_or_create(
                             ocd_id = event_ocd_id,
                             name = page_json['name'],
@@ -516,8 +524,10 @@ class Command(BaseCommand):
                             slug = legistar_id,
                         )
 
+                    # if created and DEBUG:
+                    #     print('   adding event: %s' % event_ocd_id)
                     if created and DEBUG:
-                        print('   adding event: %s' % event_ocd_id)
+                        print('\u263A', end=' ', flush=True)
 
                     for participant_json in page_json['participants']:
                         obj, created = EventParticipant.objects.get_or_create(
@@ -526,8 +536,8 @@ class Command(BaseCommand):
                                 entity_name = participant_json['entity_name'],
                                 entity_type = participant_json['entity_type']
                             )
-                        if created and DEBUG:
-                            print('      adding participant: %s' %obj.entity_name)
+                        # if created and DEBUG:
+                        #     print('      adding participant: %s' %obj.entity_name)
 
                     for document_json in page_json['documents']:
                         self.load_eventdocument(document_json, event_obj)
@@ -551,16 +561,16 @@ class Command(BaseCommand):
                         source_note = page_json['sources'][0]['note'],
                         slug = event_ocd_id,
                     )
-                print("*"*60)
+                print("\n\n"+"-"*60)
                 print("WARNING: SLUG ALREADY EXISTS FOR %s" %event_ocd_id)
                 print("legistar id (what slug should be): %s" %legistar_id)
                 print("using ocd id as slug instead")
-                print("*"*60)
+                print("-"*60+"\n")
         else:
-            print("*"*60)
+            print("\n\n"+"*"*60)
             print("SKIPPING EVENT %s" %event_ocd_id)
             print("cannot retrieve event data")
-            print("*"*60)
+            print("*"*60+"\n")
 
     def load_eventagendaitem(self, agenda_item_json, event):
 
@@ -570,8 +580,8 @@ class Command(BaseCommand):
                 description = agenda_item_json['description'],
             )
 
-        if created and DEBUG:
-            print('      adding agenda item: %s' %agendaitem_obj.order)
+        # if created and DEBUG:
+        #     print('      adding agenda item: %s' %agendaitem_obj.order)
 
         related_entity_json = agenda_item_json['related_entities'][0]
         clean_bill_identifier = re.sub(' 0', ' ', related_entity_json['entity_name'])
@@ -584,8 +594,8 @@ class Command(BaseCommand):
                     note = related_entity_json['note'],
                 )
 
-            if created and DEBUG:
-                print('         adding related bill: %s' %related_bill.identifier)
+            # if created and DEBUG:
+            #     print('         adding related bill: %s' %related_bill.identifier)
 
 
     def load_eventdocument(self, document_json, event):
@@ -600,5 +610,5 @@ class Command(BaseCommand):
                 document = doc_obj,
             )
 
-        if created and DEBUG:
-            print('      adding document: %s' % doc_obj.note)
+        # if created and DEBUG:
+        #     print('      adding document: %s' % doc_obj.note)
