@@ -490,7 +490,52 @@ class Command(BaseCommand):
             page_json = json.loads(r.text)
 
             try:
-                legistar_id = re.findall('ID=(.*)&GUID', page_json['sources'][0]['url'])[0]
+                if len(page_json['name']) > 255:
+                    # TEMPORARY - skip events w/ names that are too long
+                    # this will be fixed when names no longer have descriptions appended
+                    print("*"*60)
+                    print("SKIPPING EVENT %s" %event_ocd_id)
+                    print("event name is too long")
+                    print("*"*60)
+
+                else:
+                    legistar_id = re.findall('ID=(.*)&GUID', page_json['sources'][0]['url'])[0]
+                    event_obj, created = Event.objects.get_or_create(
+                            ocd_id = event_ocd_id,
+                            name = page_json['name'],
+                            description = page_json['description'],
+                            classification = page_json['classification'],
+                            start_time = parse_datetime(page_json['start_time']),
+                            end_time = parse_datetime(page_json['end_time']) if page_json['end_time'] else None,
+                            all_day = page_json['all_day'],
+                            status = page_json['status'],
+                            location_name = page_json['location']['name'],
+                            location_url = page_json['location']['url'],
+                            source_url = page_json['sources'][0]['url'],
+                            source_note = page_json['sources'][0]['note'],
+                            slug = legistar_id,
+                        )
+
+                    if created and DEBUG:
+                        print('   adding event: %s' % event_ocd_id)
+
+                    for participant_json in page_json['participants']:
+                        obj, created = EventParticipant.objects.get_or_create(
+                                event = event_obj,
+                                note = participant_json['note'],
+                                entity_name = participant_json['entity_name'],
+                                entity_type = participant_json['entity_type']
+                            )
+                        if created and DEBUG:
+                            print('      adding participant: %s' %obj.entity_name)
+
+                    for document_json in page_json['documents']:
+                        self.load_eventdocument(document_json, event_obj)
+
+                    for agenda_item_json in page_json['agenda']:
+                        self.load_eventagendaitem(agenda_item_json, event_obj)
+
+            except IntegrityError:
                 event_obj, created = Event.objects.get_or_create(
                         ocd_id = event_ocd_id,
                         name = page_json['name'],
@@ -504,36 +549,13 @@ class Command(BaseCommand):
                         location_url = page_json['location']['url'],
                         source_url = page_json['sources'][0]['url'],
                         source_note = page_json['sources'][0]['note'],
-                        slug = legistar_id,
+                        slug = event_ocd_id,
                     )
-
-                if created and DEBUG:
-                    print('   adding event: %s' % event_ocd_id)
-
-                for participant_json in page_json['participants']:
-                    obj, created = EventParticipant.objects.get_or_create(
-                            event = event_obj,
-                            note = participant_json['note'],
-                            entity_name = participant_json['entity_name'],
-                            entity_type = participant_json['entity_type']
-                        )
-                    if created and DEBUG:
-                        print('      adding participant: %s' %obj.entity_name)
-
-                for document_json in page_json['documents']:
-                    self.load_eventdocument(document_json, event_obj)
-
-                for agenda_item_json in page_json['agenda']:
-                    self.load_eventagendaitem(agenda_item_json, event_obj)
-
-            # TEMPORARY - skip events w/ names that are too long
-            # this will be fixed when names no longer have descriptions appended
-            except DataError:
                 print("*"*60)
-                print("SKIPPING EVENT %s" %event_ocd_id)
-                print("error loading event data")
+                print("WARNING: SLUG ALREADY EXISTS FOR %s" %event_ocd_id)
+                print("legistar id (what slug should be): %s" %legistar_id)
+                print("using ocd id as slug instead")
                 print("*"*60)
-
         else:
             print("*"*60)
             print("SKIPPING EVENT %s" %event_ocd_id)
