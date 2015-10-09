@@ -143,7 +143,7 @@ class Bill(models.Model):
             return True
 
     # NYC CUSTOMIZATION
-    # whether or not a bill has reached it's final 'completed' status
+    # whether or not a bill has reached its final 'completed' status
     # what the final status is depends on bill type
     @property
     def terminal_status(self):
@@ -212,18 +212,26 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+    # returns a list of all the organizations that are committees
+    # (excludes city council, task forces, subcommittees, etc)
     @classmethod
     def committees(cls):
         return cls.objects.filter(classification='committee').order_by('name').all()
 
+    # gets activity in reverse chronological order
     @property
     def recent_activity(self):
         return self.actions.order_by('-date', '-bill__identifier', '-order') if self.actions.all() else None
 
+    # gets the memberships for the chairperson of the committee
     @property
     def chairs(self):
         return self.memberships.filter(role='CHAIRPERSON')
 
+    # makes html to render an organization as a link where relevant
+    # if organization is a committee, make link to committee detail page
+    # if organization is city council, make link to council member listing
+    # otherwise, no link & just the name
     @property
     def link_html(self):
         # make link to committee if committee
@@ -244,7 +252,8 @@ class Action(models.Model):
     bill = models.ForeignKey('Bill', related_name='actions', null=True)
     order = models.IntegerField()
 
-    @property 
+    # this maps action classifications onto text colors, for conditional styling
+    @property
     def label(self):
         c = self.classification
         
@@ -276,6 +285,8 @@ class Post(models.Model):
     role = models.CharField(max_length=255)
     organization = models.ForeignKey('Organization', related_name='posts')
 
+    # return the current membership filling the position, None if vacant
+    # in nyc, vacant posts correspond to memberships with an end date - this might be nyc-specific
     @property
     def current_member(self):
         if self.memberships:
@@ -317,10 +328,15 @@ class Event(models.Model):
     source_note = models.CharField(max_length=255, blank=True)
     slug = models.CharField(max_length=255, unique=True)
 
+    # TO-DO: change this to link_html for consistency
     @property
     def event_page_url(self):
         return '/event/%s' %self.slug
 
+    # de-deplicates agenda items, b/c often for past events,
+    # there are two agenda item records for each actual agenda item - one for 
+    # saying that it was scheduled and another for saying that it happened
+    # this might be nyc specific
     @property
     def clean_agenda_items(self):
         agenda_items = self.agenda_items.order_by('order').all()
@@ -331,10 +347,14 @@ class Event(models.Model):
 
         return agenda_deduped
 
+    # find the next meeting of the full city council
+    # the name of a city council meeting might be a nyc customization
     @classmethod
     def next_city_council_meeting(cls):
         return cls.objects.filter(name__icontains='City Council Stated Meeting').filter(start_time__gt=now).order_by('start_time').first()
 
+    # grab the next 3 committee meetings (non city council meetings)
+    # the name of a city council meeting might be a nyc customization
     @classmethod
     def upcoming_committee_meetings(cls):
         return cls.objects.filter(start_time__gt=now).exclude(name='City Council Stated Meeting').exclude(name='City Council Stated Meeting ').order_by('start_time').all()[:3]
