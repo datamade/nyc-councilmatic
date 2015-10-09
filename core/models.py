@@ -328,10 +328,15 @@ class Event(models.Model):
     source_note = models.CharField(max_length=255, blank=True)
     slug = models.CharField(max_length=255, unique=True)
 
-    # TO-DO: change this to link_html for consistency
+    # return a url for an event detail page
     @property
     def event_page_url(self):
         return '/event/%s' %self.slug
+
+    # makes html link for an event detail page
+    @property
+    def link_html(self):
+        return '<a href="'+self.event_page_url+'" title="View Event Details">'+self.name+'</a>'
 
     # de-deplicates agenda items, b/c often for past events,
     # there are two agenda item records for each actual agenda item - one for 

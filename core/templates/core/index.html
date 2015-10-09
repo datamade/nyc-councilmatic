@@ -41,8 +41,8 @@
                                     <a href='{{next_council_meeting.event_page_url}}'><img class='img-responsive img-thumbnail' src='/static/images/city-council.jpg' /></a>
                                 </div>
                                 <div class='col-sm-8'>
-                                    <h4><a href="{{next_council_meeting.event_page_url}}">{{next_council_meeting.name}}</a></h4>
-                                    <p>{{next_council_meeting.description}}</p>
+                                    <h4>{{ next_council_meeting.link_html | safe }}</h4>
+                                    <p>{{ next_council_meeting.description }}</p>
 
                                     <p class="small text-muted">
                                         <i class="fa fa-fw fa-calendar-o"></i> {{next_council_meeting.start_time | date:"D n/d/Y"}}<br/>

@@ -6,7 +6,7 @@
 	</div>
 	<div class="col-xs-9">
 		<p>
-			<a href="{{event.event_page_url}}">{{event.name}}</a><br/>
+			{{ event.link_html | safe }}<br/>
 			<span class="small text-muted">{{event.description}}</span>
 		</p>
 	</div>
