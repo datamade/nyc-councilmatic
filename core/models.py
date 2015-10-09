@@ -236,10 +236,10 @@ class Organization(models.Model):
     def link_html(self):
         # make link to committee if committee
         if self.classification == 'committee':
-            return '<a href="/committee/'+self.slug+'">'+self.name+'</a>'
+            return '<a href="/committee/'+self.slug+'" title="More about the '+self.name+'">'+self.name+'</a>'
         # link to the council members page if its the council
         if self.classification == 'legislature':
-            return '<a href="/council-members">'+self.name+'</a>'
+            return '<a href="/council-members" title="View '+CITY_COUNCIL_NAME+' Members">'+self.name+'</a>'
         # just return text if executive
         else:
             return self.name

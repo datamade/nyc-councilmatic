@@ -42,26 +42,26 @@
         <div class="container-fluid container-fluid-nav">
 
             <div id="nav-title">
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="/"  title="Councilmatic Home">
                     <img id="logo" src="{% static 'images/logo.png'%}"></img>
                     <span id="logo-text">{{city_name_short}} Councilmatic</span>
                 </a>
             </div>
             <ul id="nav-items">
                 <li>
-                    <a href="/search">Search</a>
+                    <a href="/search" title="Search Legislation">Search</a>
                 </li>
                 <li>
-                    <a href='/council-members'>Council Members</a>
+                    <a href='/council-members' title="View All Council Members">Council Members</a>
                 </li>
                 <li>
-                    <a href='/committees'>Committees</a>
+                    <a href='/committees' title="View All Committees">Committees</a>
                 </li>
                 <li>
-                    <a href='/events'>Events</a>
+                    <a href='/events' title="View Upcoming Events">Events</a>
                 </li>
                 <li>
-                    <a href="/about">About</a>
+                    <a href="/about" title="About {{site_meta.site_name}}">About</a>
                 </li>
             </ul>
 
@@ -75,11 +75,11 @@
         <div class='col-sm-12'>
             <div class='clearfix'></div>
 
-            <p>Part of the <a href='http://www.councilmatic.org'>Councilmatic family</a>. Proudly brought to you by</p>
+            <p>Part of the <a href='http://www.councilmatic.org' title="See Councilmatic websites for other cities!">Councilmatic family</a>. Proudly brought to you by</p>
         
-            <a href='http://www.participatorypolitics.org/'><img style='height:60px;' src='/static/images/ppf-logo.png' /></a>
-            <a href='http://www.ritaallen.org'><img style='height:60px;' src='/static/images/rita-allen-logo.png' /></a>
-            <a href='http://datamade.us'><img style='height:20px;' src='/static/images/datamade-logo.png' /></a>
+            <a href='http://www.participatorypolitics.org/' title="The Participatory Politics Foundation"><img style='height:60px;' src='/static/images/ppf-logo.png' /></a>
+            <a href='http://www.ritaallen.org' title="The Rita Allen Foundation"><img style='height:60px;' src='/static/images/rita-allen-logo.png' /></a>
+            <a href='http://datamade.us' title="DataMade"><img style='height:20px;' src='/static/images/datamade-logo.png' /></a>
         </div>
     </div>
 
