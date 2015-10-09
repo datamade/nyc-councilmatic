@@ -89,11 +89,16 @@
             <div class='col-sm-8 col-sm-offset-1'>
                 <h2>
                     <i class="fa fa-fw fa-check"></i>
-                    Recently Passed<br/><span class="text-muted small">Legislation signed into law in the past 30 days</span>
+                    Recently Passed<br/><span class="text-muted small">Legislation recently signed into law</span>
                 </h2>
+                <br/>
                 {% for legislation in recently_passed %}
                     {% include "partials/legislation_item_passed.html" %}
                 {% endfor %}
+                <a href="/search/?q=&selected_facets=inferred_status_exact:Passed" class="btn btn-sm btn-primary">
+                    View All Passed Legislation
+                    <i class="fa fa-fw fa-chevron-right"></i>
+                </a>
             </div>
         </div>
     </div>
