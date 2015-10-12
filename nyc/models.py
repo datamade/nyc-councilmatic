@@ -1,5 +1,5 @@
 from django.conf import settings
-from councilmatic_core.models import Bill
+from councilmatic_core.models import Bill, Organization
 from datetime import datetime
 import pytz
 
