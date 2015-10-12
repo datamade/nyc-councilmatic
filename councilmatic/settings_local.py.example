@@ -45,7 +45,7 @@ OCD_CITY_COUNCIL_ID = 'ocd-organization/0f63aae8-16fd-4d3c-b525-00747a482cf9'
 
 # The rest are optional
 
-LEGISTAR_URL = 'https://chicago.legistar.com/Legislation.aspx'
+LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
 
 SITE_META = {
     'site_name' : 'NYC Councilmatic',
