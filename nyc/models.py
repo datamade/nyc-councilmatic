@@ -58,18 +58,6 @@ class NYCBill(Bill):
     def primary_sponsor(self):
         return self.sponsorships.filter(is_primary=True).first()
 
-    # all committees that have been involved in the bill's history (the actions)
-    # this is used to generate pseudo-topic tags for each bill in a listing
-    @property
-    def committees_involved(self):
-        if self.actions.all():
-            orgs = set([a.organization.name for a in self.actions.all() if (a.organization.name !='Mayor' and a.organization.name != 'New York City Council')])
-            if not orgs and self.controlling_body and self.controlling_body[0].name != CITY_COUNCIL_NAME:
-                orgs = self.controlling_body
-            return list(orgs)
-        else:
-            return None
-
     # NYC CUSTOMIZATION
     # this is b/c we don't have data on bills voted against, only bills passed -
     # everything else is just left to die silently ¯\_(ツ)_/¯
