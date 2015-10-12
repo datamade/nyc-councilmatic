@@ -1,0 +1,102 @@
+{% extends "nyc_base.html" %}
+{% load staticfiles %}
+{% block title %}Home{% endblock %}
+
+{% block full_content %}
+    <div class="container-fluid" id="section-photo">
+        <div class="row-fluid">
+            <div class='col-sm-10 col-sm-offset-1'>
+                <br/>
+                <h2>
+                    <h1>{{ CITY_COUNCIL_NAME }}, demystified</h1>
+                </h2>
+                <br/>
+                <p class="h3">
+                    <span class="text-bg">Search {{CITY_NAME}} legislation</span>
+                </p>
+                <form class="search form-search=" action="/search/" method="GET">
+                    <div class="input-group site-intro-search">
+                        <input name="q" type="text" class="input-lg form-control" placeholder="{{SEARCH_PLACEHOLDER_TEXT}}">
+                        <div class='input-group-btn'>
+                            <button type="submit" class="btn btn-lg btn-primary">
+                                <i class='fa fa-fw fa-search'></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% include 'partials/featured_bills.html' %}
+    {% if next_council_meeting or upcoming_committee_meetings %}
+    <div class="container-fluid" id="section-events">
+        <div class="row-fluid">
+            <div class='col-sm-10 col-sm-offset-1'>
+                {% if next_council_meeting %}
+                    <h3><i class="fa fa-fw fa-institution"></i> Next City Council Meeting</h3>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class='row'>
+                                <div class='col-sm-4'>
+                                    <a href='{{next_council_meeting.event_page_url}}'><img class='img-responsive img-thumbnail' src='{% static 'images/city-council.jpg' %}' /></a>
+                                </div>
+                                <div class='col-sm-8'>
+                                    <h4><a href="{{next_council_meeting.event_page_url}}">{{next_council_meeting.name}}</a></h4>
+                                    <p>{{next_council_meeting.description}}</p>
+
+                                    <p class="small text-muted">
+                                        <i class="fa fa-fw fa-calendar-o"></i> {{next_council_meeting.start_time | date:"D n/d/Y"}}<br/>
+                                        <i class="fa fa-fw fa-clock-o"></i> {{next_council_meeting.start_time | date:"g:i a"}}<br/>
+                                        <i class="fa fa-fw fa-map-marker"></i> {{next_council_meeting.location_name}}<br />
+                                        <i class="fa fa-fw"></i> City Hall Park, New York, NY 10007
+                                    </p>
+                                    <a class='btn btn-primary btn-sm' href="{{next_council_meeting.event_page_url}}">
+                                        Details
+                                        <i class="fa fa-fw fa-chevron-right"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+
+                {% if upcoming_committee_meetings %}
+                    <h3>
+                        <span class="non-mobile-only"><i class="fa fa-fw fa-group"></i> </span>
+                        Upcoming Committee Meetings
+                    </h3>
+                    {% for event in upcoming_committee_meetings %}
+                        {% include "partials/event_item.html" %}
+                    {% endfor %}
+                    <br/>
+                    <a href="/events/" class="btn btn-sm btn-primary">
+                        View All Upcoming Events
+                        <i class="fa fa-fw fa-chevron-right"></i>
+                    </a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if recently_passed %}
+    <div class="container-fluid" id="section-recently-passed">
+        <div class="row-fluid">
+            <div class='col-sm-8 col-sm-offset-1'>
+                <h2>
+                    <i class="fa fa-fw fa-check"></i>
+                    Recently Passed<br/><span class="text-muted small">Legislation signed into law in the past 30 days</span>
+                </h2>
+                {% for legislation in recently_passed %}
+                    {% include "partials/legislation_item_passed.html" %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

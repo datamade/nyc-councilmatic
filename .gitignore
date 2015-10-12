@@ -62,4 +62,5 @@ settings_local.py
 
 # Collected Static Files
 static/**
-core/static/images/ocd-person/*.jpg
+core/**
+nyc/static/images/ocd-person/*.jpg

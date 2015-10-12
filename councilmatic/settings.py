@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
-    'core',
+    'councilmatic_core',
+    'nyc',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -69,7 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'core.views.city_context'
+                'councilmatic_core.views.city_context'
             ],
         },
     },
