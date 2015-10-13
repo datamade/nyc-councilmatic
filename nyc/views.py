@@ -2,10 +2,14 @@ from django.shortcuts import render
 from datetime import date, timedelta
 from nyc.models import NYCBill
 from councilmatic_core.models import Event, Organization
-from councilmatic_core.views import CommitteesView, IndexView
+from councilmatic_core.views import *
 
 class NYCIndexView(IndexView):
     template_name = 'nyc/index.html'
+    bill_model = NYCBill
+
+class NYCBillDetailView(BillDetailView):
+    model = NYCBill
 
 class NYCCommitteesView(CommitteesView):
 
