@@ -8,6 +8,9 @@ class NYCIndexView(IndexView):
     template_name = 'nyc/index.html'
     bill_model = NYCBill
 
+class NYCAboutView(AboutView):
+    template_name = 'nyc/about.html'
+
 class NYCBillDetailView(BillDetailView):
     model = NYCBill
 

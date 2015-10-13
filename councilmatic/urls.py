@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^search/', FacetedSearchView(searchqueryset=sqs, 
                                        form_class=CouncilmaticSearchForm)),
     url(r'^$', NYCIndexView.as_view(), name='index'),
+    url(r'^about/$', NYCAboutView.as_view(), name='about'),
     url(r'^legislation/(?P<slug>.*)/$', NYCBillDetailView.as_view(), name='bill_detail'),
     url(r'', include('councilmatic_core.urls')),
 ]
