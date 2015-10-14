@@ -1,6 +1,6 @@
 # New York City Councilmatic
 
-Keep track of what New York City Council is doing.
+Keep track of what New York City Council is doing. http://nyc.councilmatic.org/
 
 ## Setup
 
