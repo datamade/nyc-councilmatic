@@ -48,6 +48,7 @@ OCD_CITY_COUNCIL_ID = 'ocd-organization/0f63aae8-16fd-4d3c-b525-00747a482cf9'
 
 HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
                              '/nyc/static/images/')
+APP_NAME = 'nyc'
 
 # The rest are optional
 
