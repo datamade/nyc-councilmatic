@@ -1,5 +1,8 @@
+import os
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'replacethiswithsomethingsecret'
+TIME_ZONE = 'US/Eastern'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Set this to True while you are developing
@@ -42,6 +45,11 @@ CITY_NAME_SHORT = 'NYC'
 CITY_COUNCIL_NAME = 'New York City Council'
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
 OCD_CITY_COUNCIL_ID = 'ocd-organization/0f63aae8-16fd-4d3c-b525-00747a482cf9'
+
+HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
+                             '/nyc/static/images/')
+APP_NAME = 'nyc'
+
 
 # The rest are optional
 

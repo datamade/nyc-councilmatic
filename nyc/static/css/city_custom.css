@@ -1,0 +1,39 @@
+/* styling the home page */
+#section-photo{
+    background-image:
+        linear-gradient(
+          rgba(0, 0, 0, 0.3),
+          rgba(0, 0, 0, 0.3)
+        ),
+        url('../images/nyc-hall-cropped.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 300px;
+}
+
+.photo-credit{
+    color: #ccc;
+    font-size: 8px;
+}
+
+#section-events{
+    background-color: #F8F8F8;
+}
+#featured-bills{
+    background-color: #F0F0F0;
+    padding-top: 30px;
+}
+#featured-bills, #section-recently-passed, #section-events{
+    padding-bottom: 30px;
+}
+
+.well-featured{
+    border: none;
+    background-color: #F8F8F8;
+
+}
+.well-featured > h3{
+    margin-top: 0;
+}
+

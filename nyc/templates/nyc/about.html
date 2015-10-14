@@ -84,34 +84,8 @@
 
 
             <p>Below are the primary types of city council activity.</p>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Legislation Type</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for leg_type in legislation_type_descriptions %}
-                    <tr>
-                        <td>
-                            <i class="fa fa-fw fa-{{leg_type.fa_icon}}"></i> 
-                            <a href="/search/?q=&selected_facets=bill_type_exact:{{leg_type.search_term}}">
-                                {{leg_type.name}}
-                            </a>
-                        </td>
-                        <td>
-                            {% if leg_type.html_desc %}
-                                <p>{{leg_type.desc|safe}}</p>
-                            {% else %}
-                                <p>{{leg_type.desc}}</p>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        
+            {% include 'partials/component_bill_type_table.html' %}
 
             <p>
                 <strong>Introductions</strong> are the most interesting type of legislation because they are proposals for new laws. Once an introduction is passed, it becomes a Local Law - <a href="http://legistar.council.nyc.gov/LegislationDetail.aspx?ID=2328524&GUID=E0B4EE30-B5F7-4E90-9C97-CF96D5385E01" target="_blank">see all Local Laws for 2015</a>.

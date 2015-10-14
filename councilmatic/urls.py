@@ -18,6 +18,7 @@ from django.contrib import admin
 from haystack.query import SearchQuerySet
 from haystack.views import FacetedSearchView
 from councilmatic_core.views import CouncilmaticSearchForm
+from nyc.views import *
 
 sqs = SearchQuerySet().facet('bill_type')\
                       .facet('sponsorships', sort='index')\
@@ -27,8 +28,12 @@ sqs = SearchQuerySet().facet('bill_type')\
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
     url(r'^search/', FacetedSearchView(searchqueryset=sqs, 
                                        form_class=CouncilmaticSearchForm)),
-    url(r'^$', 'nyc.views.index', name='index'),
+
+    url(r'^$', NYCIndexView.as_view(), name='index'),
+    url(r'^about/$', NYCAboutView.as_view(), name='about'),
+    url(r'^legislation/(?P<slug>.*)/$', NYCBillDetailView.as_view(), name='bill_detail'),
     url(r'', include('councilmatic_core.urls')),
 ]
