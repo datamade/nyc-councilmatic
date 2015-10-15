@@ -26,7 +26,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ALLOWED_HOSTS = [
     'localhost', '127.0.0.1',
     '.datamade.us',
-    '.nyccouncilmatic.org'
+    '.nyccouncilmatic.org',
+    '.councilmatic.org',
 ]
 
 
