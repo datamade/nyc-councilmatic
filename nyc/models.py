@@ -76,11 +76,10 @@ class NYCBill(Bill):
     # everything else is just left to die silently ¯\_(ツ)_/¯
     # turns out that ~80% of nyc bills that get passed, are passed within 
     # 2 months of the last action, so we're using that as a threshold for labeling bills as stale
-    @property
-    def is_stale(self):
+    def _is_stale(self, last_action_date):
         # stale = no action for 2 months
-        if self.current_action:
-            timediff = datetime.now().replace(tzinfo=app_timezone) - self.current_action.date
+        if last_action_date:
+            timediff = datetime.now().replace(tzinfo=app_timezone) - last_action_date
             return (timediff.days > 60)
         else:
             return True
@@ -88,16 +87,15 @@ class NYCBill(Bill):
     # NYC CUSTOMIZATION
     # whether or not a bill has reached its final 'completed' status
     # what the final status is depends on bill type
-    @property
-    def terminal_status(self):
-        if self.actions:
-            if self.bill_type == 'Introduction':
-                if 'executive-signature' in [a.classification for a in self.actions.all()]:
+    def _terminal_status(self, history, bill_type):
+        if history:
+            if bill_type == 'Introduction':
+                if 'executive-signature' in history:
                     return 'Passed'
                 else:
                     return False
-            elif self.bill_type in ['Resolution', 'Land Use Application', 'Communication', "Mayor's Message", 'Land Use Call-Up']: 
-                if 'passage' in [a.classification for a in self.actions.all()]:
+            elif bill_type in ['Resolution', 'Land Use Application', 'Communication', "Mayor's Message", 'Land Use Call-Up']: 
+                if 'passage' in history:
                     return 'Approved'
                 else:
                     return False
@@ -109,7 +107,7 @@ class NYCBill(Bill):
     # planning on using this for a progress bar for bills to lay out all the steps to law & how far it has gotten
     # (e.g. introduced -> approved by committee -> approved by council -> approved by mayor)
     @property
-    def is_approved(self):
+    def _is_approved(self):
         if self.actions:
             return any(['Approved' in a.description for a in self.actions.all()])
         else:
@@ -120,12 +118,18 @@ class NYCBill(Bill):
     # this is used in the colored label in bill listings
     @property
     def inferred_status(self):
+
+        actions = self.actions.all().order_by('-order')
+        classification_hist = [a.classification for a in actions]
+        last_action_date = actions[0].date if actions else None
+        bill_type = self.bill_type
+
         # these are the bill types for which a status doesn't make sense
-        if self.bill_type in ['SLR', 'Petition', 'Local Laws 2015']:
+        if bill_type in ['SLR', 'Petition', 'Local Laws 2015']:
             return None
-        elif self.terminal_status:
-            return self.terminal_status
-        elif self.is_stale:
+        elif self._terminal_status(classification_hist, bill_type):
+            return self._terminal_status(classification_hist, bill_type)
+        elif self._is_stale(last_action_date):
             return 'Stale'
         else:
             return 'Active'
