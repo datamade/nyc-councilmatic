@@ -40,6 +40,7 @@ class NYCBill(Bill):
     def current_action(self):
         return self.actions.all().order_by('-order').first() if self.actions.all() else None
 
+    # NYC CUSTOMIZATION
     # the date that a bill was passed, if it has been passed
     @property
     def date_passed(self):
