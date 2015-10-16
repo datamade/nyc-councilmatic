@@ -64,6 +64,24 @@ SITE_META = {
     'twitter_creator': '@DataMadeCo',
 }
 
+FOOTER_CREDITS = [
+    {
+        'name':     'The Participatory Politics Foundation',
+        'url':      'http://www.participatorypolitics.org/',
+        'image':    'ppf-logo.png',
+    },
+    {
+        'name':     'The Rita Allen Foundation',
+        'url':      'http://www.ritaallen.org/',
+        'image':    'rita-allen-logo.png',
+    },
+    {
+        'name':     'DataMade',
+        'url':      'http://datamade.us/',
+        'image':    'datamade-logo.png',
+    },
+]
+
 SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, etc."
 
 LEGISLATION_TYPE_DESCRIPTIONS = [
