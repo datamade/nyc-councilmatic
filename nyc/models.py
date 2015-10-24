@@ -74,7 +74,7 @@ class NYCBill(Bill):
 
     # NYC CUSTOMIZATION
     # this is b/c we don't have data on bills voted against, only bills passed -
-    # everything else is just left to die silently ¯\_(ツ)_/¯
+   
     # turns out that ~80% of nyc bills that get passed, are passed within 
     # 2 months of the last action, so we're using that as a threshold for labeling bills as stale
     def _is_stale(self, last_action_date):

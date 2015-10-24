@@ -20,6 +20,7 @@ from haystack.views import FacetedSearchView
 from councilmatic_core.views import CouncilmaticSearchForm
 from nyc.views import *
 
+
 sqs = SearchQuerySet().facet('bill_type')\
                       .facet('sponsorships', sort='index')\
                       .facet('controlling_body')\
@@ -28,6 +29,7 @@ sqs = SearchQuerySet().facet('bill_type')\
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^districtmap/$', NYCMapView.as_view(), name='districtmap'),
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
     url(r'^search/', FacetedSearchView(searchqueryset=sqs, 
                                        form_class=CouncilmaticSearchForm)),
