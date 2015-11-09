@@ -39,6 +39,9 @@ CACHES = {
 
 }
 
+# Set this to allow Disqus comments to render
+DISQUS_SHORTNAME = None
+
 # These are required
 CITY_NAME = 'New York City'
 CITY_NAME_SHORT = 'NYC'
