@@ -1,4 +1,4 @@
 django==1.8.3
 psycopg2==2.6.1
 pytz==2015.4
-django-councilmatic==0.2.7
+django-councilmatic==0.2.8
