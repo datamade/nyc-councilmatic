@@ -14,32 +14,6 @@ class NYCBill(Bill):
     def __str__(self):
         return self.friendly_name
 
-    # the organization that's currently 'responsible' for a bill
-    # this is usually whatever organization performed the most recent action, EXCEPT
-    # for the case of bill referrals (when a bill is referred from city council to a committee), 
-    # in which case it's the organization the bill was referred to
-    @property
-    def controlling_body(self):
-        if self.current_action:
-            related_orgs = self.current_action.related_entities.filter(entity_type='organization').all()
-            if related_orgs:
-                controlling_bodies = [Organization.objects.all().filter(ocd_id=org.organization_ocd_id).first() for org in related_orgs]
-                return controlling_bodies
-            else:
-                return [self.current_action.organization]
-        else:
-            return None
-
-    # whatever organization performed the most recent action
-    @property
-    def last_action_org(self):
-        return self.current_action.organization if self.current_action else None
-
-    # the most recent action on a bill
-    @property
-    def current_action(self):
-        return self.actions.all().order_by('-order').first() if self.actions.all() else None
-
     # NYC CUSTOMIZATION
     # the date that a bill was passed, if it has been passed
     @property
@@ -54,23 +28,6 @@ class NYCBill(Bill):
     def friendly_name(self):
         nums_only = self.identifier.split(' ')[-1]
         return self.bill_type+' '+nums_only
-
-    # the primary sponsorship for a bill
-    @property
-    def primary_sponsor(self):
-        return self.sponsorships.filter(is_primary=True).first()
-
-    # all committees that have been involved in the bill's history (the actions)
-    # this is used to generate pseudo-topic tags for each bill in a listing
-    @property
-    def committees_involved(self):
-        if self.actions.all():
-            orgs = set([a.organization.name for a in self.actions.all() if (a.organization.name !='Mayor' and a.organization.name != 'New York City Council')])
-            if not orgs and self.controlling_body and self.controlling_body[0].name != CITY_COUNCIL_NAME:
-                orgs = self.controlling_body
-            return list(orgs)
-        else:
-            return None
 
     # NYC CUSTOMIZATION
     # this is b/c we don't have data on bills voted against, only bills passed -
@@ -136,10 +93,6 @@ class NYCBill(Bill):
             return 'Stale'
         else:
             return 'Active'
-
-    # date of most recent activity on a bill
-    def get_last_action_date(self):
-        return self.actions.all().order_by('-order').first().date if self.actions.all() else None
 
     # NYC CUSTOMIZATION
     # this is used for the text description of a bill in bill listings
