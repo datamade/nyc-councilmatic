@@ -40,7 +40,7 @@ class NYCBill(Bill):
         # stale = no action for 6 months
         if last_action_date:
             timediff = datetime.now().replace(tzinfo=app_timezone) - last_action_date
-            return (timediff.days > 180)
+            return (timediff.days > 150)
         else:
             return True
 
@@ -90,7 +90,7 @@ class NYCBill(Bill):
         elif self._terminal_status(classification_hist, bill_type):
             return self._terminal_status(classification_hist, bill_type)
         elif self._is_stale(last_action_date):
-            return 'Stale'
+            return 'Inactive'
         else:
             return 'Active'
 
