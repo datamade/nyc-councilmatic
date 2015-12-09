@@ -16,8 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from haystack.query import SearchQuerySet
-from haystack.views import FacetedSearchView
-from councilmatic_core.views import CouncilmaticSearchForm
+from councilmatic_core.views import CouncilmaticSearchForm, CouncilmaticFacetedSearchView
 from nyc.views import *
 
 sqs = SearchQuerySet().facet('bill_type')\
@@ -29,7 +28,7 @@ sqs = SearchQuerySet().facet('bill_type')\
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
-    url(r'^search/', FacetedSearchView(searchqueryset=sqs, 
+    url(r'^search/', CouncilmaticFacetedSearchView(searchqueryset=sqs, 
                                        form_class=CouncilmaticSearchForm)),
 
     url(r'^$', NYCIndexView.as_view(), name='index'),
