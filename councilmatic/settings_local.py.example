@@ -51,6 +51,7 @@ CITY_NAME_SHORT = 'NYC'
 CITY_COUNCIL_NAME = 'New York City Council'
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
 OCD_CITY_COUNCIL_ID = 'ocd-organization/0f63aae8-16fd-4d3c-b525-00747a482cf9'
+LEGISLATIVE_SESSIONS = ['2014'] # the last one in this list should be the current legislative session
 
 HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
                              '/nyc/static/images/')
