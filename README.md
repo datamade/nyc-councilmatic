@@ -160,6 +160,12 @@ cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
 
 In order for Solr to use the new schema file, you'll need to restart it.
 
+**Using Solr for more than one Councilmatic on the same server**
+
+If you intend to run more than one instance of Councilmatic on the same server,
+you'll need to take a look at [this README](solr_scripts/README.md) to make sure you're
+configuring things properly.
+
 ## Team
 
 * David Moore - project manager 
