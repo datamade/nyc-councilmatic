@@ -1,64 +1,23 @@
-import os
+# These are all the settings that are specific to a jurisdiction
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'replacethiswithsomethingsecret'
-TIME_ZONE = 'US/Eastern'
+###############################
+# These settings are required #
+###############################
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Set this to True while you are developing
-DEBUG = False
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nyc_councilmatic',
-        'USER': '',
-        'PASSWORD': '',
-    }
-}
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.solr_backend.SolrEngine',
-        #'URL': 'http://127.0.0.1:8983/solr'
-        # ...or for multicore...
-        'URL': 'http://127.0.0.1:8983/solr/nyc',
-    },
-}
-
-# Remember to run python manage.py createcachetable so this will work! 
-# developers, set your BACKEND to 'django.core.cache.backends.dummy.DummyCache'
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': 'councilmatic_cache',
-    }
-
-}
-
-# Set this to flush the cache at /flush-cache/{FLUSH_KEY}
-FLUSH_KEY = 'super secret junk'
-
-# Set this to allow Disqus comments to render
-DISQUS_SHORTNAME = None
-
-# These are required
 CITY_NAME = 'New York City'
 CITY_NAME_SHORT = 'NYC'
 CITY_COUNCIL_NAME = 'New York City Council'
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
 OCD_CITY_COUNCIL_ID = 'ocd-organization/0f63aae8-16fd-4d3c-b525-00747a482cf9'
+
 LEGISLATIVE_SESSIONS = ['2014'] # the last one in this list should be the current legislative session
 
-HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
-                             '/nyc/static/images/')
 APP_NAME = 'nyc'
 
 
-# The rest are optional
+#########################
+# The rest are optional #
+#########################
 
 LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
 
@@ -162,7 +121,7 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
 COMMITTEE_CHAIR_TITLE = 'CHAIRPERSON'
 
 # these keys should match committee slugs
-COMMITTEE_DESCIPTIONS = {
+COMMITTEE_DESCRIPTIONS = {
     "committee-on-aging" :                  "Department for the Aging and all federal, state and municipal programs pertinent to senior citizens",
     "committee-on-civil-rights" :           "Human Rights Commission, Equal Employment Practices Commission and Equal Employment Opportunity",
     "committee-on-civil-service-and-labor" : "Municipal Officers and Employees, Office of Labor Relations, Office of Collective Bargaining, Office of Labor Services, and Municipal Pension and Retirement Systems",

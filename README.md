@@ -27,10 +27,10 @@ Afterwards, whenever you want to use this virtual environment to work on nyc-cou
 **Create your settings file**
 
 ```bash
-cp councilmatic/settings_local.py.example councilmatic/settings_local.py
+cp councilmatic/settings_deployment.py.example councilmatic/settings_deployment.py
 ```
 
-Then edit `councilmatic/settings_local.py`:
+Then edit `councilmatic/settings_deployment.py`:
 - `USER` should be your username
 
 **Setup your database**

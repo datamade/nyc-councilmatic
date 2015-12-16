@@ -2,7 +2,6 @@ from django.conf import settings
 from councilmatic_core.models import Bill, Organization
 from datetime import datetime
 import pytz
-from councilmatic.settings_local import CITY_COUNCIL_NAME
 
 app_timezone = pytz.timezone(settings.TIME_ZONE)
 

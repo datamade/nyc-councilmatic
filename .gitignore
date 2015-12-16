@@ -58,7 +58,7 @@ docs/_build/
 target/
 
 # Settings
-settings_local.py
+settings_deployment.py
 
 # Collected Static Files
 static/**
