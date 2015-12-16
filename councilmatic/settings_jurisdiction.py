@@ -116,6 +116,9 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
     },
 ]
 
+# this is the name of the meetings where the entire city council meets
+CITY_COUNCIL_MEETING_NAME = 'City Council Stated Meeting'
+
 # this is the name of the role of committee chairs, e.g. 'CHAIRPERSON' or 'Chair'
 # if this is set, committees will display chairs
 COMMITTEE_CHAIR_TITLE = 'CHAIRPERSON'
