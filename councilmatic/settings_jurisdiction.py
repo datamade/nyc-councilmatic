@@ -120,6 +120,8 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
 # if this is set, committees will display chairs
 COMMITTEE_CHAIR_TITLE = 'CHAIRPERSON'
 
+COMMITTEE_MEMBER_TITLE = 'Committee Member'
+
 # these keys should match committee slugs
 COMMITTEE_DESCRIPTIONS = {
     "committee-on-aging" :                  "Department for the Aging and all federal, state and municipal programs pertinent to senior citizens",
