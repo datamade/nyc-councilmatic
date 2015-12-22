@@ -19,8 +19,7 @@ APP_NAME = 'nyc'
 # The rest are optional #
 #########################
 
-LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
-
+# this is for populating meta tags
 SITE_META = {
     'site_name' : 'NYC Councilmatic',
     'site_desc' : 'New York City Council, demystified. Keep tabs on what your local representatives are up to.',
@@ -29,6 +28,9 @@ SITE_META = {
     'twitter_site': '@ppolitics',
     'twitter_creator': '@DataMadeCo',
 }
+
+
+LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
 
 FOOTER_CREDITS = [
     {
@@ -48,8 +50,36 @@ FOOTER_CREDITS = [
     },
 ]
 
+# this is the default text in search bars
 SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, etc."
 
+
+
+# these should live in APP_NAME/static/
+IMAGES = {
+    'favicon': 'images/favicon.png',
+    'logo': 'images/logo.png',
+}
+
+
+
+# this is the name of the meetings where the entire city council meets
+# as stored in legistar
+CITY_COUNCIL_MEETING_NAME = 'City Council Stated Meeting'
+
+# this is the name of the role of committee chairs, e.g. 'CHAIRPERSON' or 'Chair'
+# as stored in legistar
+# if this is set, committees will display chairs
+COMMITTEE_CHAIR_TITLE = 'CHAIRPERSON'
+
+# this is the anme of the role of committee members,
+# as stored in legistar
+COMMITTEE_MEMBER_TITLE = 'Committee Member'
+
+
+
+# this is for convenience, & used to populate a table
+# describing legislation types on the about page template
 LEGISLATION_TYPE_DESCRIPTIONS = [
     {
         'name': 'Introduction',
@@ -115,15 +145,6 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
         'desc': 'Communication from individuals or entities other than the Mayor, City, County or Borough Offices. These generally include communications from the City Council, and usually concern City Council appointments and resignations.',
     },
 ]
-
-# this is the name of the meetings where the entire city council meets
-CITY_COUNCIL_MEETING_NAME = 'City Council Stated Meeting'
-
-# this is the name of the role of committee chairs, e.g. 'CHAIRPERSON' or 'Chair'
-# if this is set, committees will display chairs
-COMMITTEE_CHAIR_TITLE = 'CHAIRPERSON'
-
-COMMITTEE_MEMBER_TITLE = 'Committee Member'
 
 # these keys should match committee slugs
 COMMITTEE_DESCRIPTIONS = {
