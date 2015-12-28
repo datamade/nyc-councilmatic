@@ -32,6 +32,26 @@ SITE_META = {
 
 LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
 
+
+
+# this is for the boundaries of municipal districts, to add 
+# shapes to posts & ultimately display a map with the council
+# member listing. the boundary set should be the relevant
+# slug from the ocd api's boundary service
+# available boundary sets here: http://ocd.datamade.us/boundary-sets/
+BOUNDARY_SET = 'nyc-council-districts'
+
+# this is for configuring a map of council districts using data from the posts
+# set MAP_CONFIG = None to hide map
+MAP_CONFIG = {
+    'center': [40.7127, -74.0059],
+    'zoom': 11,
+    'color': "#3D8A8E"
+}
+
+
+
+
 FOOTER_CREDITS = [
     {
         'name':     'The Participatory Politics Foundation',
