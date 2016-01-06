@@ -45,7 +45,7 @@ BOUNDARY_SET = 'nyc-council-districts'
 # set MAP_CONFIG = None to hide map
 MAP_CONFIG = {
     'center': [40.7127, -74.0059],
-    'zoom': 11,
+    'zoom': 10,
     'color': "#3D8A8E"
 }
 
