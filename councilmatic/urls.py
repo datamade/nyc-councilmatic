@@ -22,8 +22,7 @@ from nyc.views import *
 sqs = SearchQuerySet().facet('bill_type')\
                       .facet('sponsorships', sort='index')\
                       .facet('controlling_body')\
-                      .facet('inferred_status')\
-                      .order_by('-last_action_date')
+                      .facet('inferred_status')
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
