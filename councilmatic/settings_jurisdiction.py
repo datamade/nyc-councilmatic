@@ -14,6 +14,15 @@ LEGISLATIVE_SESSIONS = ['2014'] # the last one in this list should be the curren
 
 APP_NAME = 'nyc'
 
+# VOCAB SETTINGS FOR FRONT-END DISPLAY
+CITY_VOCAB = {
+    'MUNICIPAL_DISTRICT': 'District',       # e.g. 'District'
+    'SOURCE': 'City Council',
+    'COUNCIL_MEMBER': 'Council Member',       # e.g. 'Council Member'
+    'COUNCIL_MEMBERS': 'Council Members',      # e.g. 'Council Members'
+    'EVENTS': 'Meetings',               # label for the events listing, e.g. 'Events'
+}
+
 
 #########################
 # The rest are optional #
@@ -46,8 +55,8 @@ BOUNDARY_SET = 'nyc-council-districts'
 MAP_CONFIG = {
     'center': [40.7127, -74.0059],
     'zoom': 10,
-    'color': "#3D8A8E",
-    'highlight_color': "#EB6864"
+    'color': "#3D8A8E", #teal
+    'highlight_color': "#EB6864", #salmon
 }
 
 
@@ -208,4 +217,12 @@ COMMITTEE_DESCRIPTIONS = {
     "committee-on-waterfronts" :            "Matters relating to the waterfront",
     "committee-on-womens-issues" :      "Issues relating to public policy concerns of women, domestic violence, Office to Combat Domestic Violence and Agency for Child Development",
     "committee-on-youth-services" :         "Youth Board, Department of Youth and Community Development, Interagency Coordinating Council on Youth, and youth related programs",
+}
+
+
+
+ABOUT_BLURBS = {
+    "COMMITTEES":       "",
+    "EVENTS":           "",
+    "COUNCIL_MEMBERS":  "",
 }
