@@ -175,6 +175,15 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
         'desc': 'Communication from individuals or entities other than the Mayor, City, County or Borough Offices. These generally include communications from the City Council, and usually concern City Council appointments and resignations.',
     },
 ]
+ABOUT_BLURBS = {
+    "COMMITTEES" : "<p>Most of the Council's legislative work is done in committee. It is there that proposed legislation is initially debated and the members of other government branches and the public are given a chance to comment.</p>\
+                    <p>Each Council Member serves on at least three of the Council's standing committees, sub- and select committees and panels. The standing committees must meet at least once a month unless the Charter mandates otherwise. Committee assignments are made by the Committee on Rules, Privileges and Elections and voted on by the entire Council.</p>\
+                    <p>New York City Council is currently composed of 38 Committees and 6 Subcommittees.</p>",
+    "EVENTS":       "<p>Most of the Council's legislative action happens in committees. Each committee meets in public hearings 2-3 times per month where proposed legislation is debated. Members of other government branches, as well as the public, are able to attend and comment at these hearings.</p>\
+                    <p>Meetings of the entire Council, referred to as Stated Meetings, occur twice a month at City Hall. </p>",
+    "COUNCIL_MEMBERS": "" 
+    
+}
 
 # these keys should match committee slugs
 COMMITTEE_DESCRIPTIONS = {
