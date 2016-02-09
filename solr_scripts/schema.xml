@@ -155,13 +155,13 @@
 
     <field name="slug" type="string" indexed="false" stored="true" multiValued="false" />
 
-    <field name="sponsorships" type="text_en" indexed="true" stored="true" multiValued="true" />
+    <field name="slug" type="string" indexed="false" stored="true" multiValued="false" />
 
-    <field name="full_text" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="identifier" type="text_en" indexed="true" stored="true" multiValued="false" />
 
     <field name="text" type="text_en" indexed="true" stored="true" multiValued="false" />
 
-    <field name="controlling_body_exact" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="ocd_id" type="string" indexed="false" stored="true" multiValued="false" />
 
     <field name="inferred_status" type="text_en" indexed="true" stored="true" multiValued="false" />
 
@@ -171,7 +171,7 @@
 
     <field name="bill_type_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
-    <field name="ocd_id" type="string" indexed="false" stored="true" multiValued="false" />
+    <field name="bill_type_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
     <field name="ocr_full_text" type="text_en" indexed="true" stored="true" multiValued="false" />
 
@@ -179,9 +179,9 @@
 
     <field name="last_action_date" type="date" indexed="true" stored="true" multiValued="false" />
 
-    <field name="description" type="text_en" indexed="true" stored="true" multiValued="false" />
+    <field name="inferred_status_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
-    <field name="sponsorships_exact" type="string" indexed="true" stored="true" multiValued="true" />
+    <field name="controlling_body" type="text_en" indexed="true" stored="true" multiValued="true" />
 
     <field name="inferred_status_exact" type="string" indexed="true" stored="true" multiValued="false" />
 
