@@ -47,5 +47,8 @@ FLUSH_KEY = 'super secret junk'
 # Set this to allow Disqus comments to render
 DISQUS_SHORTNAME = None
 
+# analytics tracking code
+ANALYTICS_TRACKING_CODE = ''
+
 HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
                              '/nyc/static/images/')
