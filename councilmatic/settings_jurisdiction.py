@@ -87,10 +87,10 @@ SEARCH_PLACEHOLDER_TEXT = "Taxi, Resolution 815-2015, etc."
 
 # these should live in APP_NAME/static/
 IMAGES = {
-    'favicon': 'images/favicon.png',
     'logo': 'images/logo.png',
 }
-
+# you can generate icons from the logo at http://www.favicomatic.com/
+# & put them in APP_NAME/static/images/icons/
 
 
 # this is the name of the meetings where the entire city council meets
