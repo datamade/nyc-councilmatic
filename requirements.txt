@@ -1,2 +1,2 @@
 psycopg2==2.6.1
--e git://github.com/datamade/django-councilmatic.git@ae9431e4a16edb3094ea19e9eec91a2024fb28a9#egg=django-councilmatic
+-e git://github.com/datamade/django-councilmatic.git@62bc51cb77309f733e6f47167ce9e291e81bd292#egg=django-councilmatic
