@@ -104,7 +104,7 @@ tar -xvf solr-4.10.4.tgz
 sudo cp -R solr-4.10.4/example /opt/solr
 
 # Copy schema.xml for this app to solr directory
-sudo cp solr_scripts/schema.xml /opt/solr/example/solr/collection1/conf/schema.xml
+sudo cp solr_scripts/schema.xml /opt/solr/solr/collection1/conf/schema.xml
 ```
 
 **Run Solr**
@@ -112,7 +112,7 @@ sudo cp solr_scripts/schema.xml /opt/solr/example/solr/collection1/conf/schema.x
 # Next, start the java application that runs solr
 # Do this in another terminal window & keep it running
 # If you see error output, somethings wrong
-cd /opt/solr/example
+cd /opt/solr
 sudo java -jar start.jar
 ```
 
