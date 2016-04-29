@@ -17,6 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from haystack.query import SearchQuerySet
 from councilmatic_core.views import CouncilmaticSearchForm, CouncilmaticFacetedSearchView
+from councilmatic_core.feeds import CouncilmaticFacetedSearchFeed
+# XXX TODO (so that we can infer bill status): from nyc.feeds import NYCCouncilmaticFacetedSearchFeed
 from nyc.views import *
 
 sqs = SearchQuerySet().facet('bill_type')\
@@ -27,9 +29,11 @@ sqs = SearchQuerySet().facet('bill_type')\
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
+    url(r'^search/rss/',
+        CouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),
     url(r'^search/', CouncilmaticFacetedSearchView(searchqueryset=sqs, 
-                                       form_class=CouncilmaticSearchForm)),
-
+                                                   form_class=CouncilmaticSearchForm),
+                     name='councilmatic_search'),
     url(r'^$', NYCIndexView.as_view(), name='index'),
     url(r'^about/$', NYCAboutView.as_view(), name='about'),
     url(r'^legislation/(?P<slug>.*)/$', NYCBillDetailView.as_view(), name='bill_detail'),
