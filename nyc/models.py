@@ -30,7 +30,7 @@ class NYCBill(Bill):
 
     # NYC CUSTOMIZATION
     # this is b/c we don't have data on bills voted against, only bills passed -
-    # everything else is just left to die silently ¯\_(ツ)_/¯
+   
     # turns out that ~80% of nyc bills that get passed, are passed within 
     # 2 months of the last action
     # using 6 months instead of 2 months for cutoff, to minimize incorrectly labeling

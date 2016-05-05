@@ -1,0 +1,222 @@
+{% extends "base_with_margins.html" %}
+{% load staticfiles %}
+{% block title %}{{CITY_COUNCIL_NAME}} Members{% endblock %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/leaflet.css' %}" />
+    <style>
+        .info {
+            background: #fff;
+            padding: 15px;
+            border-radius: 7px;
+            min-width: 260px;
+        }
+
+        .headshot {
+            height: 100px;
+        }
+
+        .info-left {
+            margin-right: 10px;
+        }
+
+        .info-left,.info-right {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .info p {
+            font-size: 10px;
+        }
+
+        /* Leaflet Geosearch CSS*/
+
+        .leaflet-center {
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
+        .leaflet-control-geosearch, .leaflet-control-geosearch ul {
+            border-radius: 7px;
+            background: #fff;;
+            margin: 10px 0 0 0;
+            padding: 5px;
+            width: 100%;
+            height: auto;
+        }
+        .leaflet-control-geosearch-msg ul {
+            list-style: none;
+            display: none;
+            height: auto;
+            background: none;
+            padding: 0;
+        }
+        .leaflet-control-geosearch ul li {
+            background: none repeat scroll 0 0 rgba(255, 255, 255, 0.75);
+            border-radius: 4px;
+            margin: 2px 0;
+            padding: 4px;
+            font: 12px arial;
+            text-indent: 4px;
+        }
+        .leaflet-container .leaflet-control-geosearch input {
+            width: 100%;
+            height: 28px;
+            padding: 0;
+            text-indent: 8px;
+            background: rgba(255, 255, 255, 0.75);          
+            border-radius: 4px;
+            border: none;
+        }
+    </style>
+
+    <div class="row-fluid">
+        <div class="col-sm-12">
+            <br/>
+            <h1>Council District map</h1>
+            <hr />
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="col-sm-8 no-pad-mobile">
+            <div id="map" style="height:500px">Hello</div>
+        </div>
+        <div class='col-sm-4'>
+            <div class='well'>
+                <h4><i class='fa fa-fw fa-info-circle'></i> What does City Council do?</h4>
+                <p>{{CITY_COUNCIL_NAME}} monitors the operation and performance of city agencies, makes land use decisions and has sole responsibility for approving the city's budget. It also legislates on a wide range of other subjects. The Council is an equal partner with the Mayor in the governing of {{ CITY_NAME }}. <a href='/about/#about-city-council'>Read more about how City Council works ></a></p>
+            </div>
+        </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block extra_js %}
+    <script src="{% static 'js/leaflet.js' %}"></script>
+    <script src="{% static 'js/l.control.geosearch.js' %}"></script>
+    <script src="{% static 'js/l.geosearch.provider.google.js' %}"></script>
+    <script>
+
+        //build an array of councilmember data
+        var posts = [];
+        {% for post in posts %}
+            var districtNumber = '{{post.label}}'
+            districtNumber = districtNumber.match(/\d+$/)[0];
+
+            posts.push({
+                'district': parseInt(districtNumber)
+                {% if post.current_member %}
+                ,'name': '{{post.current_member.person.name}}',
+                'label': '{{post.label}}',
+                'image': '{{post.current_member.person.headshot_url}}',
+                'link': '/person/{{post.current_member.person.slug}}'
+                {% endif %}
+            })             
+        {% endfor %}    
+
+        //initialize leaflet map over NYC
+        var map = L.map('map', {
+            scrollWheelZoom: false,
+            center: [40.7127837, -73.89],
+            zoom: 10
+        });
+
+        //add CartoDB darkmatter basemap
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+        }).addTo(map);
+
+        //add GeoSearch Plugin for quick address lookup
+        new L.Control.GeoSearch({
+            provider: new L.GeoSearch.Provider.Google(),
+            position: 'bottomright',
+            retainZoomLevel: true
+        }).addTo(map);
+
+        //init info div for councilmember details
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+
+        info.update = function (details) {
+            if(details && details.image) {
+                var content = '<div class="info-left"><img class="headshot" src = "' + details.image + '"></div><div class="info-right"><h4>' + details.label + '</h4> <h5>' + details.name + '</h5><p>Click for Details</p></div>';
+            //deal with vacant districts
+            } else if(details && details.label) {
+                var content = '<div class="info-right"><h4>' + details.label + '</h4> <h5>Vacant</h5></div>';
+            } else {
+               var content = '<h4>Hover over a Council District</h4>';     
+            }
+
+            this._div.innerHTML = content; 
+        };
+
+        info.addTo(map);
+
+        //load geojson for council districts
+        var districtsLayer;
+
+        $.getJSON('{% static 'data/districts.json' %}',function(districts) {
+            districts.features.forEach(function(feature) {
+                var district = feature.properties.CounDist;
+
+                for(var i=0;i<posts.length;i++) {
+                    if(posts[i].district == district) {
+                        feature.properties.details = posts[i];
+                    }
+                }
+            });
+
+            districtsLayer = L.geoJson(districts, {
+                style: {
+                    "color": "steelblue",
+                    "weight": 1,
+                    "opacity": 0.8,
+                    "fillOpacity": 0
+                },
+                onEachFeature: onEachFeature
+            }).addTo(map);
+        });
+
+        function onEachFeature(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: loadMemberPage
+            });
+        }
+
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                color: "yellow",
+                fillColor: "steelblue",
+                weight: 3,
+                fillOpacity: 0.7
+            });
+
+            info.update(layer.feature.properties.details);
+        }
+
+        function resetHighlight(e) {
+            districtsLayer.resetStyle(e.target);
+            info.update();
+        }
+
+        //redirect the browser to the member's page
+        function loadMemberPage(e) {
+            var layer = e.target;
+            if(layer.feature.properties.details.link) {
+                window.location.href = layer.feature.properties.details.link;
+            }
+        }
+
+
+    </script>
+{% endblock %}

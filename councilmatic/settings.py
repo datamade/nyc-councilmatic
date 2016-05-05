@@ -60,9 +60,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.middleware.security.SecurityMiddleware'
+    # Comment this line out when developing to make sure template changes are reflected immediately
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 )
+
 
 ROOT_URLCONF = 'councilmatic.urls'
 

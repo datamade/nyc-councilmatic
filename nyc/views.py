@@ -11,6 +11,10 @@ class NYCIndexView(IndexView):
 class NYCAboutView(AboutView):
     template_name = 'nyc/about.html'
 
+class NYCMapView(CouncilMembersView):
+    template_name = 'nyc/map.html'
+    context_object_name = 'posts'
+
 class NYCBillDetailView(BillDetailView):
     model = NYCBill
 
