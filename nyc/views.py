@@ -14,6 +14,9 @@ class NYCAboutView(AboutView):
 class NYCBillDetailView(BillDetailView):
     model = NYCBill
 
+class NYCBillWidgetView(BillWidgetView):
+    model = NYCBill
+
 class NYCCommitteesView(CommitteesView):
 
     def get_queryset(self):
