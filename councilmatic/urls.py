@@ -32,7 +32,7 @@ urlpatterns = [
 
     url(r'^$', NYCIndexView.as_view(), name='index'),
     url(r'^about/$', NYCAboutView.as_view(), name='about'),
-    url(r'^legislation/(?P<slug>.*)/$', NYCBillDetailView.as_view(), name='bill_detail'),
-    url(r'^widget/legislation/(?P<slug>.*)/$', NYCBillWidgetView.as_view(), name='bill_widget'),
+    url(r'^legislation/(?P<slug>[^/]+)/$', NYCBillDetailView.as_view(), name='bill_detail'),
+    url(r'^legislation/(?P<slug>[^/]+)/widget/$', NYCBillWidgetView.as_view(), name='bill_widget'),
     url(r'', include('councilmatic_core.urls')),
 ]
