@@ -24,7 +24,10 @@
     background-color: #F0F0F0;
     padding-top: 30px;
 }
-#featured-bills, #section-recently-passed, #section-events{
+#top-pages{
+    background-color: #F0F0F0;
+}
+#featured-bills, #top-pages, #section-recently-passed, #section-events{
     padding-bottom: 30px;
 }
 
