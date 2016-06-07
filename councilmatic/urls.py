@@ -25,7 +25,8 @@ from nyc.feeds import *
 sqs = SearchQuerySet().facet('bill_type')\
                       .facet('sponsorships', sort='index')\
                       .facet('controlling_body')\
-                      .facet('inferred_status')
+                      .facet('inferred_status')\
+                      .highlight()
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
