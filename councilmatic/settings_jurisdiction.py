@@ -235,3 +235,6 @@ ABOUT_BLURBS = {
     "EVENTS":           "",
     "COUNCIL_MEMBERS":  "",
 }
+
+
+USING_NOTIFICATIONS = True

@@ -18,9 +18,14 @@ from django.contrib import admin
 from haystack.query import SearchQuerySet
 from councilmatic_core.views import CouncilmaticSearchForm, CouncilmaticFacetedSearchView
 from councilmatic_core.feeds import CouncilmaticFacetedSearchFeed
-# XXX TODO (so that we can infer bill status): from nyc.feeds import NYCCouncilmaticFacetedSearchFeed
 from nyc.views import *
 from nyc.feeds import *
+
+import notifications
+
+from notifications.views import *
+
+import django_rq
 
 sqs = SearchQuerySet().facet('bill_type')\
                       .facet('sponsorships', sort='index')\
@@ -40,5 +45,18 @@ urlpatterns = [
     url(r'^legislation/(?P<slug>[^/]+)/$', NYCBillDetailView.as_view(), name='bill_detail'),
     url(r'^legislation/(?P<slug>[^/]+)/widget/$', NYCBillWidgetView.as_view(), name='bill_widget'),
     url(r'^legislation/(?P<slug>[^/]+)/rss/$', NYCBillDetailActionFeed(), name='bill_detail_action_feed'),
+    url(r'^login/$', notifications.views.notifications_login, name='notifications_login'),
+    url(r'^logout/$', notifications.views.notifications_logout, name='notifications_logout'),
+    url(r'^account/settings/$', notifications.views.notifications_account_settings, name='notifications_account_settings'),
+    url(r'^account/subscriptions/$', notifications.views.SubscriptionsManageView.as_view(), name='subscriptions_manage'),
+    url(r'^account/subscriptions/add$', notifications.views.subscriptions_add, name='subscriptions_add'),
+    url(r'^account/subscriptions/delete$', notifications.views.subscriptions_delete, name='subscriptions_delete'),
+    url(r'^notification_bill$', notifications.views.notification_bill, name='notifications_bill'),
+    url(r'^person/(?P<slug>[^/]+)/subscribe/$', notifications.views.person_subscribe, name='person_subscribe'),
+    url(r'^person/(?P<slug>[^/]+)/unsubscribe/$', notifications.views.person_unsubscribe, name='person_unsubscribe'),
+    url(r'^legislation/(?P<slug>[^/]+)/subscribe/$', notifications.views.bill_subscribe, name='bill_subscribe'),
+    url(r'^legislation/(?P<slug>[^/]+)/unsubscribe/$', notifications.views.bill_unsubscribe, name='bill_unsubscribe'),
     url(r'', include('councilmatic_core.urls')),
+    # django-rq: https://github.com/ui/django-rq
+    url(r'^django-rq/', include('django_rq.urls')),
 ]

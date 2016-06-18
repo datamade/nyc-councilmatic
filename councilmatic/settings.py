@@ -44,6 +44,9 @@ INSTALLED_APPS = (
     'haystack',
     'councilmatic_core',
     'nyc',
+    # notifications apps:
+    'notifications',
+    'django_rq'
 )
 
 try:
@@ -111,4 +114,38 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+#XXX mcc: why did I set this on the nyc-notifications branch?
+#BASE_HOSTNAME = '127.0.0.1:8000'
+
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
+# From https://github.com/ui/django-rq
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        #'PASSWORD': 'some-password',
+        'PASSWORD': '',
+        'DEFAULT_TIMEOUT': 360,
+    },
+    #'high': {
+    #    'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'), # If you're on Heroku
+    #    'DEFAULT_TIMEOUT': 500,
+    #},
+    #'low': {
+    #    'HOST': 'localhost',
+    #    'PORT': 6379,
+    #    'DB': 0,
+    #}
+    'notifications': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    }
+}
+
+#RQ_EXCEPTION_HANDLERS = ['path.to.my.handler'] # If you need custom exception handlers
+RQ_SHOW_ADMIN_LINK = True
