@@ -20,6 +20,7 @@ from councilmatic_core.views import CouncilmaticSearchForm, CouncilmaticFacetedS
 from councilmatic_core.feeds import CouncilmaticFacetedSearchFeed
 from nyc.views import *
 from nyc.feeds import *
+from django.views.decorators.cache import never_cache
 
 import notifications
 
@@ -56,7 +57,7 @@ if (USING_NOTIFICATIONS):
         url(r'^logout/$', notifications.views.notifications_logout, name='notifications_logout'),
         url(r'^signup/$', notifications.views.notifications_signup, name='notifications_signup'),
         url(r'^account/settings/$', notifications.views.notifications_account_settings, name='notifications_account_settings'),
-        url(r'^account/subscriptions/$', notifications.views.SubscriptionsManageView.as_view(), name='subscriptions_manage'),
+        url(r'^account/subscriptions/$', never_cache(notifications.views.SubscriptionsManageView.as_view()), name='subscriptions_manage'),
         url(r'^notification_loaddata$', notifications.views.notification_loaddata, name='notification_loaddata'),
         # list of things to subscribe/unsubscribe to:
         # - people
