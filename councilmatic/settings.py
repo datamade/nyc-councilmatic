@@ -42,8 +42,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'haystack',
-    'councilmatic_core',
     'nyc',
+    'councilmatic_core',
 )
 
 try:
