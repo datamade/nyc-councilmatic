@@ -23,6 +23,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+solr-4.10.4/**
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

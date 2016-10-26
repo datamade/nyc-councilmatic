@@ -1,0 +1,85 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %} - {{SITE_META.site_name}}</title>
+
+    {% include 'partials/seo.html' %}
+    {% include 'partials/icons.html' %}
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.journal.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/city_custom.css' %}" />
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid container-fluid-nav">
+            <div id="nav-title">
+                <a class="navbar-brand" href="/">
+                    <img id="logo" src="{% static IMAGES.logo %}"></img>
+                    <span id="logo-text">{{ CITY_NAME_SHORT }} Councilmatic</span>
+                </a>
+            </div>
+            <ul id="nav-items">
+                <li>
+                    <a href="{% url 'nyc:about' %}">About</a>
+                </li>
+                <li>
+                    <a href='{% url 'council_members' %}'>{{ CITY_VOCAB.COUNCIL_MEMBERS }}</a>
+                </li>
+                <li>
+                    <a href='{% url 'nyc:committees' %}'>Committees</a>
+                </li>
+                <li>
+                    <a href='{% url 'events' %}'>{{ CITY_VOCAB.EVENTS }}</a>
+                </li>
+                <li>
+                    <a href="{% url 'nyc:search' %}">Legislation</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    {% block full_content %}
+    {% endblock %}
+
+    <div class="container-fluid footer">
+        <div class='col-sm-12'>
+            <div class='clearfix'></div>
+
+            {% if FOOTER_CREDITS %}
+                <p>Part of the <a href='https://www.councilmatic.org'>Councilmatic family</a>. Proudly brought to you by</p>
+
+                {% for credit in FOOTER_CREDITS %}
+
+                    <a href='{{credit.url}}' title='{{credit.name}}'><img src='/static/images/{{credit.image}}' /></a>
+
+                {% endfor %}
+            {% else %}
+                <p>Part of the <a href='https://www.councilmatic.org'>Councilmatic family</a>.</p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+
+    <script>
+        var analyticsTrackingCode = '{{ANALYTICS_TRACKING_CODE}}';
+    </script>
+    <script src="{% static 'js/analytics_lib.js' %}"></script>
+
+</body>
+</html>
