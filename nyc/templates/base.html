@@ -75,7 +75,11 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
-
+    <script>
+        var alertMsg = '<div class="alert alert-info" role="alert">' +
+            '<strong>Want to subscribe?</strong> Please <a href="/login">login</a> or <a href="/signup">create</a> a user account.' +
+            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+    </script>
     <script>
         var analyticsTrackingCode = '{{ANALYTICS_TRACKING_CODE}}';
     </script>

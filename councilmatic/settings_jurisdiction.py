@@ -43,7 +43,7 @@ LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
 
 
 
-# this is for the boundaries of municipal districts, to add 
+# this is for the boundaries of municipal districts, to add
 # shapes to posts & ultimately display a map with the council
 # member listing. the boundary set should be the relevant
 # slug from the ocd api's boundary service
@@ -181,8 +181,8 @@ ABOUT_BLURBS = {
                     <p>New York City Council is currently composed of 38 Committees and 6 Subcommittees.</p>",
     "EVENTS":       "<p>Most of the Council's legislative action happens in committees. Each committee meets in public hearings 2-3 times per month where proposed legislation is debated. Members of other government branches, as well as the public, are able to attend and comment at these hearings.</p>\
                     <p>Meetings of the entire Council, referred to as Stated Meetings, occur twice a month at City Hall. </p>",
-    "COUNCIL_MEMBERS": "" 
-    
+    "COUNCIL_MEMBERS": ""
+
 }
 
 # these keys should match committee slugs
