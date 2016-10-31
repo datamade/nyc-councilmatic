@@ -1,2 +1,2 @@
-psycopg2==2.6.1
-django-councilmatic<0.7
+psycopg2==2.6.2
+django-councilmatic-notifications<0.2
