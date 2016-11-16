@@ -50,7 +50,7 @@ if (USING_NOTIFICATIONS):
         url(r'^activation/(?P<activation_key>[^/]+)/$', notifications.views.notifications_activation, name='notifications_activation'),
         url(r'^account/settings/$', notifications.views.notifications_account_settings, name='notifications_account_settings'),
         url(r'^account/subscriptions/$', never_cache(notifications.views.SubscriptionsManageView.as_view()), name='subscriptions_manage'),
-        url(r'^notification_loaddata$', notifications.views.notification_loaddata, name='notification_loaddata'),
+        # url(r'^notification_loaddata$', notifications.views.notification_loaddata, name='notification_loaddata'),
         # list of things to subscribe/unsubscribe to:
         # - people
         # - committee actions
