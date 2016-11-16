@@ -23,7 +23,6 @@ sqs = SearchQuerySet().facet('bill_type')\
                       .highlight()
 
 patterns = ([
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
     url(r'^search/rss/',
         NYCCouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),
@@ -39,6 +38,7 @@ patterns = ([
 
 urlpatterns = [
     url(r'', include(patterns)),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'', include('councilmatic_core.urls')),
 ]
 
@@ -47,6 +47,7 @@ if (USING_NOTIFICATIONS):
         url(r'^login/$', notifications.views.notifications_login, name='notifications_login'),
         url(r'^logout/$', notifications.views.notifications_logout, name='notifications_logout'),
         url(r'^signup/$', notifications.views.notifications_signup, name='notifications_signup'),
+        url(r'^activation/(?P<activation_key>[^/]+)/$', notifications.views.notifications_activation, name='notifications_activation'),
         url(r'^account/settings/$', notifications.views.notifications_account_settings, name='notifications_account_settings'),
         url(r'^account/subscriptions/$', never_cache(notifications.views.SubscriptionsManageView.as_view()), name='subscriptions_manage'),
         url(r'^notification_loaddata$', notifications.views.notification_loaddata, name='notification_loaddata'),

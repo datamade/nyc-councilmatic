@@ -82,6 +82,16 @@
         </div>
     </nav>
 
+    {% if messages %}
+        <div class="row">
+            {% for message in messages %}
+            <div {% if message.tags %}class="alert alert-info {{ message.tags }}"{% endif %} role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% block full_content %}
     {% endblock %}
 
@@ -106,13 +116,15 @@
 
     <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% if USING_NOTIFICATIONS %}
+        <script>
+            var alertMsg = '<div class="alert alert-info" role="alert">' +
+            '<strong>Want to subscribe?</strong> Please <a href="{% url 'notifications_login' %}?next={{ request.get_full_path }}">login</a> or <a href="{% url 'notifications_signup' %}?next={{ request.get_full_path }}">create</a> a user account.' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+        </script>
+    {% endif %}
 
     {% block extra_js %}{% endblock %}
-    <script>
-        var alertMsg = '<div class="alert alert-info" role="alert">' +
-            '<strong>Want to subscribe?</strong> Please <a href="/login">login</a> or <a href="/signup">create</a> a user account.' +
-            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
-    </script>
     <script>
         var analyticsTrackingCode = '{{ANALYTICS_TRACKING_CODE}}';
     </script>
