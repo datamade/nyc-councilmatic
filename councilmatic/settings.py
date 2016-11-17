@@ -122,25 +122,3 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # From https://github.com/ui/django-rq
 
-RQ_QUEUES = {
-    'default': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-        'PASSWORD': '',
-        'DEFAULT_TIMEOUT': 360,
-    },
-    'notifications': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-    },
-    'notification_emails': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-    }
-}
-
-#RQ_EXCEPTION_HANDLERS = ['path.to.my.handler'] # If you need custom exception handlers
-RQ_SHOW_ADMIN_LINK = True
