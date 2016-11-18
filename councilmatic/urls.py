@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
-from haystack.query import SearchQuerySet
+from haystack.query import SearchQuerySet, EmptySearchQuerySet
 from councilmatic_core.views import CouncilmaticSearchForm, CouncilmaticFacetedSearchView
 from councilmatic_core.feeds import CouncilmaticFacetedSearchFeed
 from nyc.views import *
@@ -10,17 +10,17 @@ from django.views.decorators.cache import never_cache
 
 from councilmatic.settings import *
 
-sqs = SearchQuerySet().facet('bill_type')\
-                      .facet('sponsorships', sort='index')\
-                      .facet('controlling_body')\
-                      .facet('inferred_status')\
-                      .highlight()
+# sqs = SearchQuerySet().facet('bill_type')\
+#                       .facet('sponsorships', sort='index')\
+#                       .facet('controlling_body')\
+#                       .facet('inferred_status')\
+#                       .highlight()
 
 patterns = ([
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
     url(r'^search/rss/',
         NYCCouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),
-    url(r'^search/', CouncilmaticFacetedSearchView(searchqueryset=sqs,
+    url(r'^search/', CouncilmaticFacetedSearchView(searchqueryset=EmptySearchQuerySet,
                                                    form_class=CouncilmaticSearchForm),
                      name='search'),
     url(r'^$', NYCIndexView.as_view(), name='index'),
