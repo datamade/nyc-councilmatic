@@ -120,5 +120,3 @@ BASE_HOSTNAME = '127.0.0.1:8000'
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 
-# From https://github.com/ui/django-rq
-

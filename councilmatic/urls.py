@@ -10,19 +10,21 @@ from django.views.decorators.cache import never_cache
 
 from councilmatic.settings import *
 
-# sqs = SearchQuerySet().facet('bill_type')\
-#                       .facet('sponsorships', sort='index')\
-#                       .facet('controlling_body')\
-#                       .facet('inferred_status')\
-#                       .highlight()
+sqs = SearchQuerySet().facet('bill_type')\
+                      .facet('sponsorships', sort='index')\
+                      .facet('controlling_body')\
+                      .facet('inferred_status')\
+                      .highlight()
 
 patterns = ([
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
     url(r'^search/rss/',
         NYCCouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),
-    url(r'^search/', CouncilmaticFacetedSearchView(searchqueryset=EmptySearchQuerySet,
-                                                   form_class=CouncilmaticSearchForm),
-                     name='search'),
+    url(r'^search/', NYCCouncilmaticFacetedSearchView(searchqueryset=EmptySearchQuerySet,
+                                       form_class=CouncilmaticSearchForm), name='search'),
+    # url(r'^search/', CouncilmaticFacetedSearchView(searchqueryset=sqs,
+                                                   # form_class=CouncilmaticSearchForm),
+                     # name='search'),
     url(r'^$', NYCIndexView.as_view(), name='index'),
     url(r'^about/$', NYCAboutView.as_view(), name='about'),
     url(r'^legislation/(?P<slug>[^/]+)/$', NYCBillDetailView.as_view(), name='bill_detail'),
