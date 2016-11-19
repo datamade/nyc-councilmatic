@@ -102,35 +102,3 @@ class NYCBill(Bill):
             return self.abstract
         else:
             return self.description
-
-
-    # def get_last_action_date(self):
-    #     """
-    #     grabs date of most recent activity on a bill
-    #     """
-    #     print("helllooo")
-    #     # print(self.actions.all().order_by('-order').first().date)
-    #     actions = Action.objects.filter(_bill_id=self.ocd_id).order_by('-order').first().date
-    #     print(actions)
-    #     # return self.actions.all().order_by('-order').first().date if self.actions.all() else None
-    #     return actions
-    # @property
-    # def last_action_date(self):
-    #     actions = Action.objects.filter(_bill_id=self.ocd_id)
-
-    #     try:
-    #       action = actions.reverse()[0].date
-    #     except:
-    #       action = ''
-
-    #     return action
-
-    # def get_last_action_date(self):
-    #     actions = Action.objects.filter(_bill_id=self.ocd_id)
-
-    #     try:
-    #       action = actions.reverse()[0].date
-    #     except:
-    #       action = ''
-
-    #     return action
