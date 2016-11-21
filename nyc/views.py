@@ -73,9 +73,17 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                 for el in dataDict['sort_by']:
                     # Do this, because sometimes the 'el' may include a '?' from the URL
                     if 'date' in el:
-                        kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
+                        try:
+                            dataDict['ascending']
+                            kwargs['searchqueryset'] = sqs.order_by('last_action_date')
+                        except:
+                            kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
                     if 'title' in el:
-                        kwargs['searchqueryset'] = sqs.order_by('bill_type')
+                        try:
+                            dataDict['descending']
+                            kwargs['searchqueryset'] = sqs.order_by('-bill_type')
+                        except:
+                            kwargs['searchqueryset'] = sqs.order_by('bill_type')
                     if 'relevance' in el:
                         kwargs['searchqueryset'] = sqs
 
