@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from nyc.models import NYCBill
 from councilmatic_core.models import Event, Organization
 from councilmatic_core.views import *
+from haystack.query import SearchQuerySet
 
 class NYCIndexView(IndexView):
     template_name = 'nyc/index.html'
