@@ -82,9 +82,9 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                     if 'title' in el:
                         try:
                             dataDict['descending']
-                            kwargs['searchqueryset'] = sqs.order_by('-bill_type')
+                            kwargs['searchqueryset'] = sqs.order_by('-friendly_name')
                         except:
-                            kwargs['searchqueryset'] = sqs.order_by('bill_type')
+                            kwargs['searchqueryset'] = sqs.order_by('friendly_name')
                     if 'relevance' in el:
                         kwargs['searchqueryset'] = sqs
 
