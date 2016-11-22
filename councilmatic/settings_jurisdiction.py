@@ -48,7 +48,7 @@ LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
 # member listing. the boundary set should be the relevant
 # slug from the ocd api's boundary service
 # available boundary sets here: http://ocd.datamade.us/boundary-sets/
-BOUNDARY_SET = 'nyc-council-districts'
+BOUNDARY_SET = ['nyc-council-districts']
 
 # this is for configuring a map of council districts using data from the posts
 # set MAP_CONFIG = None to hide map
