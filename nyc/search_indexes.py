@@ -30,7 +30,6 @@ class NYCBillIndex(BillIndex, indexes.Indexable):
             if index_actions:
                 index_actions = max(index_actions)
 
-            print(index_actions)
             return index_actions
 
         return obj.last_action_date
