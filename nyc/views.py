@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from datetime import date, timedelta
 from nyc.models import NYCBill
+from haystack.query import SearchQuerySet
 from councilmatic_core.models import Event, Organization
 from councilmatic_core.views import *
 
