@@ -43,7 +43,7 @@ LEGISTAR_URL = 'http://legistar.council.nyc.gov/Legislation.aspx'
 
 
 
-# this is for the boundaries of municipal districts, to add 
+# this is for the boundaries of municipal districts, to add
 # shapes to posts & ultimately display a map with the council
 # member listing. the boundary set should be the relevant
 # slug from the ocd api's boundary service
@@ -113,7 +113,7 @@ COMMITTEE_MEMBER_TITLE = 'Committee Member'
 LEGISLATION_TYPE_DESCRIPTIONS = [
     {
         'name': 'Introduction',
-        'search_term': 'Introduction',
+        'search_term': 'introduction',
         'fa_icon': 'file-text-o',
         'html_desc': True,
         'desc': 'A proposal for a NYC local law. <br/>\
@@ -124,7 +124,7 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
     },
     {
         'name': 'Resolution',
-        'search_term': 'Resolution',
+        'search_term': 'resolution',
         'fa_icon': 'commenting-o',
         'html_desc': True,
         'desc': "An expression of the Council's opinion on public policy issues that may or may not fall under City jurisdiction. \
@@ -134,42 +134,42 @@ LEGISLATION_TYPE_DESCRIPTIONS = [
     },
     {
         'name': 'SLR (State Legislation Resolution)',
-        'search_term': 'SLR',
+        'search_term': 'slr',
         'fa_icon': 'commenting-o',
         'html_desc': False,
         'desc': 'A special resolution that serves as an official home rule request from the Council to the State Senate and State Assembly to pass pending legislation in the New York State Legislature. The initial request for a SLR must come from the Legislature in Albany.',
     },
     {
         'name': 'Land Use Application',
-        'search_term': 'Land Use Application',
+        'search_term': 'land use application',
         'fa_icon': 'building-o',
         'html_desc': False,
         'desc': 'Land use proposals to be considered by the Council’s Land Use Committee',
     },
     {
         'name': 'Land Use Call-Up',
-        'search_term': 'Land Use Call-Up',
+        'search_term': 'land use call-up',
         'fa_icon': 'building-o',
         'html_desc': False,
         'desc': "Land use proposals that don't require Council approval, but have been chosen by a Council Member for discretionary Council review.",
     },
     {
         'name': 'Mayor’s Messages',
-        'search_term': "Mayor's Message",
+        'search_term': "mayor's message",
         'fa_icon': 'bullhorn',
         'html_desc': False,
         'desc': 'Communications from the Mayor. These generally include appointments to boards and commissions, as well as veto messages.',
     },
     {
         'name': 'Communications',
-        'search_term': 'Communication',
+        'search_term': 'communication',
         'fa_icon': 'bullhorn',
         'html_desc': False,
         'desc': 'Communications from the City, County or Borough offices. These usually concern appointments to boards and commissions.',
     },
     {
         'name': 'Petitions',
-        'search_term': 'Petition',
+        'search_term': 'petition',
         'fa_icon': 'bullhorn',
         'html_desc': False,
         'desc': 'Communication from individuals or entities other than the Mayor, City, County or Borough Offices. These generally include communications from the City Council, and usually concern City Council appointments and resignations.',
@@ -181,8 +181,8 @@ ABOUT_BLURBS = {
                     <p>New York City Council is currently composed of 38 Committees and 6 Subcommittees.</p>",
     "EVENTS":       "<p>Most of the Council's legislative action happens in committees. Each committee meets in public hearings 2-3 times per month where proposed legislation is debated. Members of other government branches, as well as the public, are able to attend and comment at these hearings.</p>\
                     <p>Meetings of the entire Council, referred to as Stated Meetings, occur twice a month at City Hall. </p>",
-    "COUNCIL_MEMBERS": "" 
-    
+    "COUNCIL_MEMBERS": ""
+
 }
 
 # these keys should match committee slugs
