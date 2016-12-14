@@ -87,8 +87,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     {% for message in messages %}
-                    <div {% if message.tags %}class="alert alert-info {{ message.tags }}"{% endif %} role="alert">
-                            {{ message }}
+                        <div {% if message.tags %}class="alert-signup alert alert-info {{ message.tags }}"{% endif %} role="alert">
+                                {{ message }}
                         </div>
                     {% endfor %}
                 </div>
