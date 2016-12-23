@@ -1,6 +1,22 @@
 # New York City Councilmatic
 
-Keep track of what New York City Council is doing. http://nyc.councilmatic.org/
+![New York City Councilmatic](https://raw.githubusercontent.com/datamade/nyc-councilmatic/master/nyc/static/images/logo.png)
+
+NYC Councilmatic is a tool for understanding and tracking what’s happening in New York City Council.
+
+This site connects NYC residents to local city council offices, for greater online public dialogue about issues in their communities.
+
+Councilmatic helps you:
+
+* Keep up with what your local representatives is up to
+* See the schedule of public events
+* Track and comment on issues you care about
+
+NYC Councilmatic is free, non-profit, and non-partisan and the easiest way to access official New York City Council information.
+
+Part of the [Councilmatic family](https://www.councilmatic.org/).
+
+
 
 ## Setup
 
