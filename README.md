@@ -1,6 +1,6 @@
 # New York City Councilmatic
 
-![New York City Councilmatic](https://datamade.us/images/our-work/nyc-councilmatic.png)
+![New York City Councilmatic](https://www.councilmatic.org/images/nyc.jpg)
 
 NYC Councilmatic is a tool for understanding and tracking what’s happening in New York City Council.
 
