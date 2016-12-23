@@ -188,11 +188,12 @@ configuring things properly.
 
 ## Team
 
-* David Moore - project manager 
-* Forest Gregg - Open Civic Data (OCD) and Legistar scraping
-* Cathy Deng - data models and loading
-* Derek Eder - front end
-* Eric van Zanten - search and dev ops
+* David Moore, Participatory Politics Foundation - project manager 
+* Forest Gregg, DataMade - Open Civic Data (OCD) and Legistar scraping
+* Cathy Deng, DataMade - data models, front end
+* Derek Eder, DataMade - front end
+* Eric van Zanten, DataMade - search and dev ops
+* Regina Compton, DataMade - developer
 
 ## Errors / Bugs
 
