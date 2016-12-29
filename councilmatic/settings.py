@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'councilmatic_core',
     'notifications',
     'django_rq',
+    'password_reset'
 )
 
 try:
