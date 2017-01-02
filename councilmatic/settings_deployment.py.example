@@ -7,8 +7,8 @@ SECRET_KEY = 'replacethiswithsomethingsecret'
 TIME_ZONE = 'US/Eastern'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# Set this to True while you are developing
-DEBUG = False
+# Set this to False while you are in production
+DEBUG = True
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases

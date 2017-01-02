@@ -32,7 +32,7 @@ We recommend using [virtualenv](http://virtualenv.readthedocs.org/en/latest/virt
 Once you have virtualenvwrapper set up,
 
 ```bash
-mkvirtualenv nyc-councilmatic
+mkvirtualenv nyc-councilmatic --python=`which python3`
 git clone https://github.com/datamade/nyc-councilmatic.git
 cd nyc-councilmatic
 pip install -r requirements.txt
@@ -84,6 +84,8 @@ The loaddata command has some more nuance than the description above, for the di
 ## Running NYC Councilmatic locally
 
 ``` bash
+python manage.py createcachetable
+python manage.py collectstatic
 python manage.py runserver
 ```
 
