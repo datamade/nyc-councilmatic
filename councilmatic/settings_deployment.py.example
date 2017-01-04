@@ -31,7 +31,7 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-# Remember to run python manage.py createcachetable so this will work! 
+# Remember to run python manage.py createcachetable so this will work!
 # developers, set your BACKEND to 'django.core.cache.backends.dummy.DummyCache'
 CACHES = {
     'default': {
@@ -59,3 +59,4 @@ EMAIL_PORT=587
 EMAIL_USE_TLS=True
 EMAIL_HOST_USER=''
 EMAIL_HOST_PASSWORD=''
+DEFAULT_FROM_EMAIL='Custom sender name <email@email.org>'
