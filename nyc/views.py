@@ -89,6 +89,6 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                         kwargs['searchqueryset'] = sqs
 
             except:
-                kwargs['searchqueryset'] = sqs
+                kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
 
         return self.form_class(data, **kwargs)
