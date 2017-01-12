@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from datetime import date, timedelta
 from nyc.models import NYCBill
-from councilmatic_core.models import Event, Organization
+from councilmatic_core.models import Event, Organization, Bill
 from councilmatic_core.views import *
 from haystack.query import SearchQuerySet
+
+from django.http import Http404
 
 class NYCIndexView(IndexView):
     template_name = 'nyc/index.html'
@@ -14,6 +16,32 @@ class NYCAboutView(AboutView):
 
 class NYCBillDetailView(BillDetailView):
     model = NYCBill
+
+    def get_object(self):
+        slug = self.kwargs['slug']
+
+        print(slug)
+
+        try:
+            bill = self.model.objects.get(slug=slug)
+        except NYCBill.DoesNotExist:
+            bill = None
+
+        if bill is None:
+            identifier_title, identifier_number = slug.split('-', 1)
+            if identifier_title == 'lu':
+                identifier_title = 'LU'
+            else:
+                identifier_title = identifier_title.title()
+
+            full_identifier = ' '.join([identifier_title, identifier_number])
+            try:
+                bill = self.model.objects.get(identifier=full_identifier)
+            except:
+                raise Http404()
+
+        return bill
+
 
 class NYCBillWidgetView(BillWidgetView):
     model = NYCBill
