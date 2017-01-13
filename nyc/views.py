@@ -74,7 +74,7 @@ class NYCPersonDetailView(PersonDetailView):
 
     def dispatch(self, request, *args, **kwargs):
         slug = self.kwargs['slug']
-        print(slug)
+
         try:
             person = self.model.objects.get(slug=slug)
             response = super().dispatch(request, *args, **kwargs)
@@ -82,14 +82,10 @@ class NYCPersonDetailView(PersonDetailView):
             person = None
 
         if person is None:
-            if re.match(r'\w+[\s.-]\w+[\s.-]\w+', slug) is not None:
-                # For people with middle initial, add a period.
-                # person_name =
-
-            person_name = slug.replace('-', ' ').replace('.', '')
-
             try:
-                person = self.model.objects.get(name__iexact=person_name)
+                slug = slug.replace(',', '')
+                person = self.model.objects.get(slug__startswith=slug)
+
                 response = HttpResponsePermanentRedirect(reverse('person', args=[person.slug]))
             except Person.DoesNotExist:
                 response = HttpResponseNotFound()

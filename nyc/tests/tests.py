@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 
-from councilmatic_core.models import Organization
+from councilmatic_core.models import Organization, Person
 from nyc.models import NYCBill
 
 class BillDetailViewTests(TestCase):
@@ -20,13 +20,6 @@ class BillDetailViewTests(TestCase):
             response = self.client.get(reverse('bill_detail', args=[old_slug]))
 
             self.assertEqual(response.status_code, 301)
-        # self.assertTrue(True)
-        # response = self.client.get(reverse('bill_detail', args=[old_slug]))
-        # response = self.client.get(reverse('bill_detail', args=['t-2017-5413-85adb6086065']))
-        # response = self.client.get('/legislation/t-2017-5413-85adb6086065/')
-        # response = self.client.get('/')
-        # response = self.client.get(reverse('bill_detail', args=['t-2017-5413']))
-        # self.assertEqual(response.status_code, 301)
 
 class CommitteeDetailViewTests(TestCase):
     fixtures = ['orgs.json']
@@ -40,3 +33,17 @@ class CommitteeDetailViewTests(TestCase):
             response = self.client.get(reverse('committee_detail', args=[old_slug]))
 
             self.assertEqual(response.status_code, 301)
+
+class PersonDetailViewTests(TestCase):
+    fixtures = ['person.json']
+
+    def test_do_redirect(self):
+        people = Person.objects.all()
+
+        for person in people:
+            old_slug = person.name.lower().replace(' ', '-').replace('.', '')
+            print(old_slug)
+            response = self.client.get(reverse('person', args=[old_slug]))
+
+            self.assertEqual(response.status_code, 301)
+
