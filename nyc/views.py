@@ -45,7 +45,6 @@ class NYCBillDetailView(BillDetailView):
 
         return response
 
-
 class NYCCommitteeDetailView(CommitteeDetailView):
     model = Organization
 
