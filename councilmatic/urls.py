@@ -10,14 +10,10 @@ from django.views.decorators.cache import never_cache
 
 from councilmatic.settings import *
 
-sqs = SearchQuerySet().facet('bill_type')\
-                      .facet('sponsorships', sort='index')\
-                      .facet('controlling_body')\
-                      .facet('inferred_status')\
-                      .highlight()
-
 patterns = ([
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
+    url(r'^committee/(?P<slug>[^/]+)/$',
+        never_cache(NYCCommitteeDetailView.as_view()), name='committee_detail'),
     url(r'^search/rss/',
         NYCCouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),
     url(r'^search/', NYCCouncilmaticFacetedSearchView(searchqueryset=EmptySearchQuerySet,

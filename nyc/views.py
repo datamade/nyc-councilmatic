@@ -1,12 +1,14 @@
 from django.shortcuts import render
+from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound
+from django.core.urlresolvers import reverse
+
 from datetime import date, timedelta
+
 from nyc.models import NYCBill
 from councilmatic_core.models import Event, Organization, Bill
 from councilmatic_core.views import *
 from haystack.query import SearchQuerySet
 
-from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound
-from django.core.urlresolvers import reverse
 
 class NYCIndexView(IndexView):
     template_name = 'nyc/index.html'
@@ -43,6 +45,29 @@ class NYCBillDetailView(BillDetailView):
 
         return response
 
+
+class NYCCommitteeDetailView(CommitteeDetailView):
+    model = Organization
+
+    def dispatch(self, request, *args, **kwargs):
+        slug = self.kwargs['slug']
+
+        try:
+            committee = self.model.objects.get(slug=slug)
+            response = super().dispatch(request, *args, **kwargs)
+        except Organization.DoesNotExist:
+            committee = None
+
+        if committee is None:
+            committee_name = slug.replace('-', ' ')
+
+            try:
+                committee = self.model.objects.get(name__iexact=committee_name)
+                response = HttpResponsePermanentRedirect(reverse('committee_detail', args=[committee.slug]))
+            except Organization.DoesNotExist:
+                response = HttpResponseNotFound()
+
+        return response
 
 class NYCBillWidgetView(BillWidgetView):
     model = NYCBill
