@@ -3,6 +3,7 @@ from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound
 from django.core.urlresolvers import reverse
 
 from datetime import date, timedelta
+import re
 
 from nyc.models import NYCBill
 from councilmatic_core.models import Event, Organization, Bill
@@ -64,6 +65,33 @@ class NYCCommitteeDetailView(CommitteeDetailView):
                 committee = self.model.objects.get(name__iexact=committee_name)
                 response = HttpResponsePermanentRedirect(reverse('committee_detail', args=[committee.slug]))
             except Organization.DoesNotExist:
+                response = HttpResponseNotFound()
+
+        return response
+
+class NYCPersonDetailView(PersonDetailView):
+    model = Person
+
+    def dispatch(self, request, *args, **kwargs):
+        slug = self.kwargs['slug']
+        print(slug)
+        try:
+            person = self.model.objects.get(slug=slug)
+            response = super().dispatch(request, *args, **kwargs)
+        except Person.DoesNotExist:
+            person = None
+
+        if person is None:
+            if re.match(r'\w+[\s.-]\w+[\s.-]\w+', slug) is not None:
+                # For people with middle initial, add a period.
+                # person_name =
+
+            person_name = slug.replace('-', ' ').replace('.', '')
+
+            try:
+                person = self.model.objects.get(name__iexact=person_name)
+                response = HttpResponsePermanentRedirect(reverse('person', args=[person.slug]))
+            except Person.DoesNotExist:
                 response = HttpResponseNotFound()
 
         return response
