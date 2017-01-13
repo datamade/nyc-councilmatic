@@ -5,7 +5,8 @@ from councilmatic_core.models import Event, Organization, Bill
 from councilmatic_core.views import *
 from haystack.query import SearchQuerySet
 
-from django.http import Http404
+from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound
+from django.core.urlresolvers import reverse
 
 class NYCIndexView(IndexView):
     template_name = 'nyc/index.html'
@@ -17,13 +18,12 @@ class NYCAboutView(AboutView):
 class NYCBillDetailView(BillDetailView):
     model = NYCBill
 
-    def get_object(self):
+    def dispatch(self, request, *args, **kwargs):
         slug = self.kwargs['slug']
-
-        print(slug)
 
         try:
             bill = self.model.objects.get(slug=slug)
+            response = super().dispatch(request, *args, **kwargs)
         except NYCBill.DoesNotExist:
             bill = None
 
@@ -37,10 +37,11 @@ class NYCBillDetailView(BillDetailView):
             full_identifier = ' '.join([identifier_title, identifier_number])
             try:
                 bill = self.model.objects.get(identifier=full_identifier)
-            except:
-                raise Http404()
+                response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
+            except NYCBill.DoesNotExist:
+                response = HttpResponseNotFound()
 
-        return bill
+        return response
 
 
 class NYCBillWidgetView(BillWidgetView):
