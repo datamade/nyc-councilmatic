@@ -5,7 +5,7 @@ from councilmatic_core.models import Organization, Person
 from nyc.models import NYCBill
 
 class BillDetailViewTests(TestCase):
-    fixtures = ['sessions.json', 'orgs.json', 'bills.json']
+    fixtures = ['nyc_sessions.json', 'nyc_orgs.json', 'nyc_bills.json']
     def test_do_redirect(self):
         bills = NYCBill.objects.all()
 
@@ -16,33 +16,33 @@ class BillDetailViewTests(TestCase):
             identifier_title = identifier_title.lower()
 
             old_slug = '-'.join([identifier_title, identifier_number])
-            print(old_slug)
+
             response = self.client.get(reverse('bill_detail', args=[old_slug]))
 
             self.assertEqual(response.status_code, 301)
 
 class CommitteeDetailViewTests(TestCase):
-    fixtures = ['orgs.json']
+    fixtures = ['nyc_orgs.json']
 
     def test_do_redirect(self):
         organizations = Organization.objects.all()
 
         for org in organizations:
             old_slug = org.name.lower().replace(' ', '-')
-            print(old_slug)
+
             response = self.client.get(reverse('committee_detail', args=[old_slug]))
 
             self.assertEqual(response.status_code, 301)
 
 class PersonDetailViewTests(TestCase):
-    fixtures = ['person.json']
+    fixtures = ['nyc_person.json']
 
     def test_do_redirect(self):
         people = Person.objects.all()
 
         for person in people:
             old_slug = person.name.lower().replace(' ', '-').replace('.', '')
-            print(old_slug)
+
             response = self.client.get(reverse('person', args=[old_slug]))
 
             self.assertEqual(response.status_code, 301)

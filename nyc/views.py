@@ -31,15 +31,7 @@ class NYCBillDetailView(BillDetailView):
             bill = None
 
         if bill is None:
-            identifier_title, identifier_number = slug.split('-', 1)
-            if identifier_title == 'lu':
-                identifier_title = 'LU'
-            else:
-                identifier_title = identifier_title.title()
-
-            full_identifier = ' '.join([identifier_title, identifier_number])
             try:
-                # bill = self.model.objects.get(identifier=full_identifier)
                 bill = self.model.objects.get(slug__startswith=slug)
                 response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
             except NYCBill.DoesNotExist:
