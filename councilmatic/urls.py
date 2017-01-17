@@ -4,11 +4,10 @@ from django.conf import settings
 from haystack.query import SearchQuerySet, EmptySearchQuerySet
 from councilmatic_core.views import CouncilmaticSearchForm, CouncilmaticFacetedSearchView
 from councilmatic_core.feeds import CouncilmaticFacetedSearchFeed
+from councilmatic.settings import *
 from nyc.views import *
 from nyc.feeds import *
 from django.views.decorators.cache import never_cache
-
-from councilmatic.settings import *
 
 patterns = ([
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),

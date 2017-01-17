@@ -6,6 +6,7 @@ from datetime import date, timedelta
 import re
 
 from nyc.models import NYCBill
+
 from councilmatic_core.models import Event, Organization, Bill
 from councilmatic_core.views import *
 from haystack.query import SearchQuerySet
@@ -169,3 +170,4 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                 kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
 
         return self.form_class(data, **kwargs)
+
