@@ -1,9 +1,16 @@
 from django.shortcuts import render
+from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound
+from django.core.urlresolvers import reverse
+
 from datetime import date, timedelta
+import re
+
 from nyc.models import NYCBill
-from haystack.query import SearchQuerySet
-from councilmatic_core.models import Event, Organization
+
+from councilmatic_core.models import Event, Organization, Bill
 from councilmatic_core.views import *
+from haystack.query import SearchQuerySet
+
 
 class NYCIndexView(IndexView):
     template_name = 'nyc/index.html'
@@ -14,6 +21,77 @@ class NYCAboutView(AboutView):
 
 class NYCBillDetailView(BillDetailView):
     model = NYCBill
+
+    def dispatch(self, request, *args, **kwargs):
+        slug = self.kwargs['slug']
+
+        try:
+            bill = self.model.objects.get(slug=slug)
+            response = super().dispatch(request, *args, **kwargs)
+        except NYCBill.DoesNotExist:
+            bill = None
+
+        if bill is None:
+            try:
+                bill = self.model.objects.get(slug__startswith=slug)
+                response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
+            except NYCBill.DoesNotExist:
+                response = HttpResponseNotFound()
+
+        return response
+
+class NYCCommitteeDetailView(CommitteeDetailView):
+    model = Organization
+
+    def dispatch(self, request, *args, **kwargs):
+        slug = self.kwargs['slug']
+
+        try:
+            committee = self.model.objects.get(slug=slug)
+            response = super().dispatch(request, *args, **kwargs)
+        except Organization.DoesNotExist:
+            committee = None
+
+        if committee is None:
+            try:
+                slug = slug.replace(',', '').replace('\'', '')
+                committee = self.model.objects.get(slug__startswith=slug)
+                response = HttpResponsePermanentRedirect(reverse('committee_detail', args=[committee.slug]))
+            except Organization.DoesNotExist:
+                response = HttpResponseNotFound()
+
+        return response
+
+class NYCPersonDetailView(PersonDetailView):
+    model = Person
+
+    def dispatch(self, request, *args, **kwargs):
+        slug = self.kwargs['slug']
+
+        try:
+            person = self.model.objects.get(slug=slug)
+            response = super().dispatch(request, *args, **kwargs)
+        except Person.DoesNotExist:
+            person = None
+
+        if person is None:
+            person_name = slug.replace('-', ' ')
+            try:
+                slug = slug.replace(',', '').replace('\'', '').replace('--', '-')
+                person = self.model.objects.get(slug__startswith=slug)
+                response = HttpResponsePermanentRedirect(reverse('person', args=[person.slug]))
+
+            except Person.MultipleObjectsReturned:
+                person_name = slug.replace('-', ' ').replace('.', '')
+                # If duplicate person has middle initial.
+                if re.match(r'\w+[\s.-]\w+[\s.-]\w+', slug) is not None:
+                    person_name = re.sub(r'(\w+\s\w+)(\s\w+)', r'\1.\2', person_name)
+                person = self.model.objects.get(name__iexact=person_name)
+                response = HttpResponsePermanentRedirect(reverse('person', args=[person.slug]))
+            except Person.DoesNotExist:
+                response = HttpResponseNotFound()
+
+        return response
 
 class NYCBillWidgetView(BillWidgetView):
     model = NYCBill
@@ -36,7 +114,6 @@ class NYCCommitteesView(CommitteesView):
         context['taskforces'] = [c for c in taskforces if c.memberships.all()]
 
         return context
-
 
 class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
 
@@ -90,6 +167,7 @@ class NYCCouncilmaticFacetedSearchView(CouncilmaticFacetedSearchView):
                         kwargs['searchqueryset'] = sqs
 
             except:
-                kwargs['searchqueryset'] = sqs
+                kwargs['searchqueryset'] = sqs.order_by('-last_action_date')
 
         return self.form_class(data, **kwargs)
+

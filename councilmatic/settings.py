@@ -44,6 +44,9 @@ INSTALLED_APPS = (
     'haystack',
     'nyc',
     'councilmatic_core',
+    'notifications',
+    'django_rq',
+    'password_reset'
 )
 
 try:
@@ -70,7 +73,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        #'APP_DIRS': True,
+        # XXX mcc: setting this so templates reload locally
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -79,12 +83,12 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'councilmatic_core.views.city_context'
             ],
-            'loaders': [
-                ('django.template.loaders.cached.Loader', [
-                    'django.template.loaders.filesystem.Loader',
-                    'django.template.loaders.app_directories.Loader',
-                ]),
-            ],
+            #'loaders': [
+            #    ('django.template.loaders.cached.Loader', [
+            #        'django.template.loaders.filesystem.Loader',
+            #        'django.template.loaders.app_directories.Loader',
+            #    ]),
+            #],
         },
     },
 ]
@@ -111,4 +115,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+#XXX mcc: why did I set this on the nyc-notifications branch?
+BASE_HOSTNAME = '127.0.0.1:8000'
+
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+

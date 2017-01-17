@@ -1,5 +1,5 @@
 from django.conf import settings
-from councilmatic_core.models import Bill, Organization
+from councilmatic_core.models import Bill, Organization, Action
 from datetime import datetime
 import pytz
 
@@ -31,7 +31,7 @@ class NYCBill(Bill):
     # NYC CUSTOMIZATION
     # this is b/c we don't have data on bills voted against, only bills passed -
     # everything else is just left to die silently ¯\_(ツ)_/¯
-    # turns out that ~80% of nyc bills that get passed, are passed within 
+    # turns out that ~80% of nyc bills that get passed, are passed within
     # 2 months of the last action
     # using 6 months instead of 2 months for cutoff, to minimize incorrectly labeling
     # in-progress legislation as stale
@@ -53,13 +53,13 @@ class NYCBill(Bill):
                     return 'Passed'
                 else:
                     return False
-            elif bill_type in ['Resolution', 'Land Use Application', 'Communication', "Mayor's Message", 'Land Use Call-Up']: 
+            elif bill_type in ['Resolution', 'Land Use Application', 'Communication', "Mayor's Message", 'Land Use Call-Up']:
                 if 'passage' in history:
                     return 'Approved'
                 else:
                     return False
         else:
-            return False        
+            return False
 
     # NYC CUSTOMIZATION
     # whether or not something has an approval among any of this actions

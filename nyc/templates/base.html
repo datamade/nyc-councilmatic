@@ -44,10 +44,57 @@
                 <li>
                     <a href="{% url 'nyc:search' %}">Legislation</a>
                 </li>
+                {% if USING_NOTIFICATIONS and request.user.is_authenticated %}
+                <li>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" title="Account">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="non-link text-muted small">{{request.user.email}}</li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/account/subscriptions">
+                                    <i class="fa fa-bullhorn fa-fw" aria-hidden="true"></i>
+                                    Manage Alerts
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/logout/">
+                                    <i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>
+                                    Sign out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                {% endif %}
+                {% if USING_NOTIFICATIONS and not request.user.is_authenticated %}
+                <li>
+                    <a href="/login/" title="Sign in">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
 
         </div>
     </nav>
+
+    {% if messages %}
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    {% for message in messages %}
+                        <div {% if message.tags %}class="alert-signup alert alert-info {{ message.tags }}"{% endif %} role="alert">
+                                {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 
     {% block full_content %}
     {% endblock %}
@@ -73,13 +120,55 @@
 
     <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {% if USING_NOTIFICATIONS %}
+        <script>
+            var alertMsg = '<div class="alert alert-info" role="alert">' +
+            '<strong>Want to subscribe?</strong> Please <a href="{% url 'notifications_login' %}?next={{ request.get_full_path }}">login</a> or <a href="{% url 'notifications_signup' %}?next={{ request.get_full_path }}">create</a> a user account.' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>'
+        </script>
+    {% endif %}
+
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    </script>
 
     {% block extra_js %}{% endblock %}
-
     <script>
         var analyticsTrackingCode = '{{ANALYTICS_TRACKING_CODE}}';
     </script>
     <script src="{% static 'js/analytics_lib.js' %}"></script>
+
+    <script>
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
 
 </body>
 </html>

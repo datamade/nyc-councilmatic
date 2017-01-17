@@ -4,26 +4,20 @@ from django.conf import settings
 from haystack.query import SearchQuerySet, EmptySearchQuerySet
 from councilmatic_core.views import CouncilmaticSearchForm, CouncilmaticFacetedSearchView
 from councilmatic_core.feeds import CouncilmaticFacetedSearchFeed
-# XXX TODO (so that we can infer bill status): from nyc.feeds import NYCCouncilmaticFacetedSearchFeed
+from councilmatic.settings import *
 from nyc.views import *
 from nyc.feeds import *
-
-# sqs = SearchQuerySet().facet('bill_type')\
-#                       .facet('sponsorships', sort='index')\
-#                       .facet('controlling_body')\
-#                       .facet('inferred_status')\
-#                       .highlight()
+from django.views.decorators.cache import never_cache
 
 patterns = ([
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
+    url(r'^committee/(?P<slug>[^/]+)/$',
+        never_cache(NYCCommitteeDetailView.as_view()), name='committee_detail'),
+    url(r'^person/(?P<slug>[^/]+)/$', never_cache(NYCPersonDetailView.as_view()), name='person'),
     url(r'^search/rss/',
         NYCCouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),
     url(r'^search/', NYCCouncilmaticFacetedSearchView(searchqueryset=EmptySearchQuerySet,
                                        form_class=CouncilmaticSearchForm), name='search'),
-    # url(r'^search/', CouncilmaticFacetedSearchView(searchqueryset=sqs,
-                                                   # form_class=CouncilmaticSearchForm),
-                     # name='search'),
     url(r'^$', NYCIndexView.as_view(), name='index'),
     url(r'^about/$', NYCAboutView.as_view(), name='about'),
     url(r'^legislation/(?P<slug>[^/]+)/$', NYCBillDetailView.as_view(), name='bill_detail'),
@@ -33,5 +27,11 @@ patterns = ([
 
 urlpatterns = [
     url(r'', include(patterns)),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'', include('councilmatic_core.urls')),
 ]
+
+if (USING_NOTIFICATIONS):
+    urlpatterns.extend([
+        url(r'', include('notifications.urls')),
+    ])
