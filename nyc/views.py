@@ -39,7 +39,8 @@ class NYCBillDetailView(BillDetailView):
 
             full_identifier = ' '.join([identifier_title, identifier_number])
             try:
-                bill = self.model.objects.get(identifier=full_identifier)
+                # bill = self.model.objects.get(identifier=full_identifier)
+                bill = self.model.objects.get(slug__startswith=slug)
                 response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
             except NYCBill.DoesNotExist:
                 response = HttpResponseNotFound()
@@ -59,10 +60,9 @@ class NYCCommitteeDetailView(CommitteeDetailView):
             committee = None
 
         if committee is None:
-            committee_name = slug.replace('-', ' ')
-
             try:
-                committee = self.model.objects.get(name__iexact=committee_name)
+                slug = slug.replace(',', '').replace('\'', '')
+                committee = self.model.objects.get(slug__startswith=slug)
                 response = HttpResponsePermanentRedirect(reverse('committee_detail', args=[committee.slug]))
             except Organization.DoesNotExist:
                 response = HttpResponseNotFound()
@@ -82,10 +82,18 @@ class NYCPersonDetailView(PersonDetailView):
             person = None
 
         if person is None:
+            person_name = slug.replace('-', ' ')
             try:
-                slug = slug.replace(',', '')
+                slug = slug.replace(',', '').replace('\'', '').replace('--', '-')
                 person = self.model.objects.get(slug__startswith=slug)
+                response = HttpResponsePermanentRedirect(reverse('person', args=[person.slug]))
 
+            except Person.MultipleObjectsReturned:
+                person_name = slug.replace('-', ' ').replace('.', '')
+                # If duplicate person has middle initial.
+                if re.match(r'\w+[\s.-]\w+[\s.-]\w+', slug) is not None:
+                    person_name = re.sub(r'(\w+\s\w+)(\s\w+)', r'\1.\2', person_name)
+                person = self.model.objects.get(name__iexact=person_name)
                 response = HttpResponsePermanentRedirect(reverse('person', args=[person.slug]))
             except Person.DoesNotExist:
                 response = HttpResponseNotFound()
