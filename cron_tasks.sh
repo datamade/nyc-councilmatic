@@ -1,0 +1,2 @@
+cd /home/datamade/nyc-councilmatic && /home/datamade/.virtualenvs/nyc/bin/python manage.py import_data >> /tmp/nyc-loaddata.log 2>&1
+cd /home/datamade/nyc-councilmatic && /home/datamade/.virtualenvs/nyc/bin/python manage.py update_index --age=24 --batch-size=100
