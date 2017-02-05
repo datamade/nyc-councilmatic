@@ -30,8 +30,3 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('councilmatic_core.urls')),
 ]
-
-if (USING_NOTIFICATIONS):
-    urlpatterns.extend([
-        url(r'', include('notifications.urls')),
-    ])
