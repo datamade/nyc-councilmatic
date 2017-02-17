@@ -48,8 +48,6 @@ INSTALLED_APPS = (
     'django_rq',
     'password_reset',
     'adv_cache_tag',
-    # 'debug_toolbar',
-
 )
 
 try:
@@ -58,8 +56,6 @@ except NameError:
     pass
 
 MIDDLEWARE_CLASSES = (
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -68,7 +64,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'councilmatic.urls'
@@ -124,6 +119,4 @@ BASE_HOSTNAME = '127.0.0.1:8000'
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-# INTERNAL_IPS = [
-#     '127.0.0.1',
-# ]
+ADV_CACHE_INCLUDE_PK = True

@@ -1,13 +1,16 @@
 {% extends "base_with_margins.html" %}
+{% load adv_cache %}
 {% block title %}About{% endblock %}
 {% block content %}
+
+{% cache 600 about_wrapper 'about' %}
 
     <div class="row-fluid clearfix">
         <div class="col-sm-8 no-pad-mobile">
             <br />
             <h1 id='about'>About</h1>
-            
-            <p><strong>NYC Councilmatic</strong> is a tool for understanding and tracking what’s happening in New York City Council.</p>
+
+            <p><strong>NYC Councilmatic</strong> is a tool for understanding and tracking what’s happening in New York City Council:</p>
             <p>This site connects NYC residents to local city council offices, for greater online public dialogue about issues in their communities.</p>
 
             <p>Councilmatic helps you:</p>
@@ -84,7 +87,7 @@
 
 
             <p>Below are the primary types of city council activity.</p>
-        
+
             {% include 'partials/component_bill_type_table.html' %}
 
             <p>
@@ -96,7 +99,7 @@
             </p>
 
             <p>
-                Meetings of the entire Council, referred to as Stated Meetings, occur twice a month at City Hall. 
+                Meetings of the entire Council, referred to as Stated Meetings, occur twice a month at City Hall.
             </p>
         </div>
     </div>
@@ -156,8 +159,8 @@
             <p>You can also follow us <a href='https://twitter.com/councilmatic'><i class='fa fa-fw fa-twitter'></i> Twitter</a> and <a href='https://www.facebook.com/councilmatic?ref=hl'><i class='fa fa-fw fa-facebook'></i> Facebook</a>.</p>
 
             <p>Developer people: if you notice a bug, file an issue on our <a href='https://github.com/datamade/nyc-councilmatic/'>issue tracker</a>!</p>
-            
-            
+
+
         </div>
     </div>
 
@@ -172,7 +175,7 @@
             <p>
                 If you're interested in bringing Councilmatic to your city, sent us an email at <a href="mailto:info@councilmatic.org">info@councilmatic.org</a>!
             </p>
-            
+
         </div>
     </div>
 
@@ -189,9 +192,10 @@
                 <li>Photo: <a href="https://commons.wikimedia.org/wiki/File:New_York_City_Hall.jpg">New York City Hall</a> by Momos, <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank">CC BY-SA 3.0</a></li>
                 <li>Photo: <a href='http://www.nydailynews.com/new-york/city-council-members-put-body-cameras-article-1.2180212'>Police body cameras</a> by AP/Jeff Chiu</li>
             </ul>
-            
+
         </div>
     </div>
 
+{% endcache %}
 
 {% endblock %}

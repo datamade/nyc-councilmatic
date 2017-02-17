@@ -1,3 +1,4 @@
 psycopg2==2.6.2
 django-councilmatic-notifications<0.2
 django-password-reset==0.9
+django-adv-cache-tag==1.1.0

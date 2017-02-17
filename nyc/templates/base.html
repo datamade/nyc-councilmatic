@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load cache %}
 {% load adv_cache %}
 
 <!DOCTYPE html>
@@ -21,6 +20,8 @@
 
 </head>
 <body>
+
+    {% cache 600 nav_wrapper 'nav' %}
 
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid container-fluid-nav">
@@ -47,14 +48,7 @@
                     <a href="{% url 'nyc:search' %}">Legislation</a>
                 </li>
 
-<!--                 {{ request.user.username }} -->
-
-
-                <!-- {# cache 300 navbar request.user.username %} -->
-                {% cache 0 everything %}
                 {% nocache %}
-                                {{request.user.username}}
-
                 {% if USING_NOTIFICATIONS and request.user.is_authenticated %}
                 <li>
                     <div class="dropdown">
@@ -89,13 +83,15 @@
                     </a>
                 </li>
                 {% endif %}
-                <!-- {# endcache %} -->
                 {% endnocache %}
+
 
             </ul>
 
         </div>
     </nav>
+
+    {% endcache %}
 
     {% if messages %}
         <div class="container">
@@ -111,10 +107,8 @@
         </div>
     {% endif %}
 
-    <!-- {# cache 300 block %} -->
     {% block full_content %}
     {% endblock %}
-    <!-- {# endcache %} -->
 
     <div class="container-fluid footer">
         <div class='col-sm-12'>
@@ -134,8 +128,6 @@
 
         </div>
     </div>
-
-    {% endcache %}
 
 
 
