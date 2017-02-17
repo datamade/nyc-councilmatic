@@ -9,11 +9,14 @@ from nyc.views import *
 from nyc.feeds import *
 from django.views.decorators.cache import never_cache
 
+# import debug_toolbar
+
 patterns = ([
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
-    url(r'^committee/(?P<slug>[^/]+)/$',
-        never_cache(NYCCommitteeDetailView.as_view()), name='committee_detail'),
-    url(r'^person/(?P<slug>[^/]+)/$', never_cache(NYCPersonDetailView.as_view()), name='person'),
+    # url(r'^committee/(?P<slug>[^/]+)/$', never_cache(NYCCommitteeDetailView.as_view()), name='committee_detail'),
+    url(r'^committee/(?P<slug>[^/]+)/$', NYCCommitteeDetailView.as_view(), name='committee_detail'),
+    # url(r'^person/(?P<slug>[^/]+)/$', never_cache(NYCPersonDetailView.as_view()), name='person'),
+    url(r'^person/(?P<slug>[^/]+)/$', NYCPersonDetailView.as_view(), name='person'),
     url(r'^search/rss/',
         NYCCouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),
     url(r'^search/', NYCCouncilmaticFacetedSearchView(searchqueryset=EmptySearchQuerySet,
@@ -26,6 +29,7 @@ patterns = ([
 ], settings.APP_NAME)
 
 urlpatterns = [
+    # url(r'^__debug__/', include(debug_toolbar.urls)),
     url(r'', include(patterns)),
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('councilmatic_core.urls')),

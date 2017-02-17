@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load cache %}
+{% load adv_cache %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +46,15 @@
                 <li>
                     <a href="{% url 'nyc:search' %}">Legislation</a>
                 </li>
+
+<!--                 {{ request.user.username }} -->
+
+
+                <!-- {# cache 300 navbar request.user.username %} -->
+                {% cache 0 everything %}
+                {% nocache %}
+                                {{request.user.username}}
+
                 {% if USING_NOTIFICATIONS and request.user.is_authenticated %}
                 <li>
                     <div class="dropdown">
@@ -70,6 +81,7 @@
                     </div>
                 </li>
                 {% endif %}
+
                 {% if USING_NOTIFICATIONS and not request.user.is_authenticated %}
                 <li>
                     <a href="/login/" title="Sign in">
@@ -77,6 +89,9 @@
                     </a>
                 </li>
                 {% endif %}
+                <!-- {# endcache %} -->
+                {% endnocache %}
+
             </ul>
 
         </div>
@@ -96,8 +111,10 @@
         </div>
     {% endif %}
 
+    <!-- {# cache 300 block %} -->
     {% block full_content %}
     {% endblock %}
+    <!-- {# endcache %} -->
 
     <div class="container-fluid footer">
         <div class='col-sm-12'>
@@ -117,6 +134,10 @@
 
         </div>
     </div>
+
+    {% endcache %}
+
+
 
     <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
