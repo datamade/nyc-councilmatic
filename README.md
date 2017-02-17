@@ -190,9 +190,9 @@ configuring things properly.
 
 Councilmatic uses template fragment caching, made easy with the [django-adv-cache-tag](http://documentup.com/twidi/django-adv-cache-tag) library. Instances of Councilmatic with [notifications](https://github.com/datamade/django-councilmatic-notifications) contain dynamically generated elements that change with each user. We do not cache such elements, but we do cache the content around them. The cached material (cache keys) expires in 600 seconds (ten minutes).
 
-Be sure to include `django-adv-cache-tag` in your requirements and INSTALLED APPS, and also to turn off global caching (mainly, do not include FetchFromCacheMiddleware and UpdateCacheMiddleware in MIDDLEWARE_CLASSES).
+Be sure to include `django-adv-cache-tag` in your requirements and INSTALLED APPS, and also to turn off global caching (mainly, do not include FetchFromCacheMiddleware and UpdateCacheMiddleware in MIDDLEWARE_CLASSES). Finally, in settings.py, add `ADV_CACHE_INCLUDE_PK = True`, which allows you to give each cache key a primary ID.
 
-N.B. Do not wrap the Events page in cache tags, since that too has dynamically generated content.
+N.B. Do not wrap the Events and Search page in cache tags, since these too have dynamically generated content.
 
 ## Team
 
