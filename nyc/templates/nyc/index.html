@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load adv_cache %}
 {% block title %}Home{% endblock %}
 
 {% block full_content %}
+
+{% cache 600 index_wrapper 'index' %}
+
     <div class="container-fluid" id="section-photo">
         <div class="row-fluid">
             <div class='col-sm-10 col-sm-offset-1'>
@@ -54,5 +58,7 @@
         </div>
     </div>
     {% endif %}
+
+{% endcache %}
 
 {% endblock %}

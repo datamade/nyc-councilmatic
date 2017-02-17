@@ -20,7 +20,7 @@ Part of the [Councilmatic family](https://www.councilmatic.org/).
 
 ## Setup
 
-**Install OS level dependencies:** 
+**Install OS level dependencies:**
 
 * Python 3.4
 * PostgreSQL 9.4 +
@@ -106,7 +106,7 @@ On OS X:
 [http://java.com/en/download/mac_download.jsp?locale=en](http://java.com/en/download/mac_download.jsp?locale=en)
 2. Follow normal install procedure
 3. Change system Java to use the version you just installed:
-    
+
     ``` bash
     sudo mv /usr/bin/java /usr/bin/java16
     sudo ln -s /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/java /usr/bin/java
@@ -114,7 +114,7 @@ On OS X:
 
 **Download & setup Solr**
 
-``` bash 
+``` bash
 wget http://mirror.sdunix.com/apache/lucene/solr/4.10.4/solr-4.10.4.tgz
 tar -xvf solr-4.10.4.tgz
 sudo cp -R solr-4.10.4/example /opt/solr
@@ -144,7 +144,7 @@ Just running Solr as described above is probably OK in a development setting.
 To deploy Solr in production, you'll want to use something like Jetty. Here's
 how you'd do that on Ubuntu:
 
-``` bash 
+``` bash
 sudo apt-get install jetty
 
 # Backup stock init.d script
@@ -186,9 +186,17 @@ If you intend to run more than one instance of Councilmatic on the same server,
 you'll need to take a look at [this README](solr_scripts/README.md) to make sure you're
 configuring things properly.
 
+## A note on caching
+
+Councilmatic uses template fragment caching, made easy with the [django-adv-cache-tag](http://documentup.com/twidi/django-adv-cache-tag) library. Instances of Councilmatic with [notifications](https://github.com/datamade/django-councilmatic-notifications) contain dynamically generated elements that change with each user. We do not cache such elements, but we do cache the content around them. The cached material (cache keys) expires in 600 seconds (ten minutes).
+
+Be sure to include `django-adv-cache-tag` in your requirements and INSTALLED APPS, and also to turn off global caching (mainly, do not include FetchFromCacheMiddleware and UpdateCacheMiddleware in MIDDLEWARE_CLASSES). Finally, in settings.py, add `ADV_CACHE_INCLUDE_PK = True`, which allows you to give each cache key a primary ID.
+
+N.B. Do not wrap the Events and Search page in cache tags, since these too have dynamically generated content.
+
 ## Team
 
-* David Moore, Participatory Politics Foundation - project manager 
+* David Moore, Participatory Politics Foundation - project manager
 * Forest Gregg, DataMade - Open Civic Data (OCD) and Legistar scraping
 * Cathy Deng, DataMade - data models, front end
 * Derek Eder, DataMade - front end
@@ -201,7 +209,7 @@ If something is not behaving intuitively, it is a bug, and should be reported.
 Report it here: https://github.com/datamade/nyc-councilmatic/issues
 
 ## Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Commit, do not mess with rakefile, version, or history.

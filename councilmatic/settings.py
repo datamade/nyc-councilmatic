@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-
+# DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 ALLOWED_HOSTS = [
     'localhost', '127.0.0.1',
@@ -46,7 +46,8 @@ INSTALLED_APPS = (
     'councilmatic_core',
     'notifications',
     'django_rq',
-    'password_reset'
+    'password_reset',
+    'adv_cache_tag',
 )
 
 try:
@@ -56,7 +57,6 @@ except NameError:
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -64,7 +64,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'councilmatic.urls'
@@ -120,3 +119,4 @@ BASE_HOSTNAME = '127.0.0.1:8000'
 
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
+ADV_CACHE_INCLUDE_PK = True

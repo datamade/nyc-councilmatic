@@ -11,9 +11,8 @@ from django.views.decorators.cache import never_cache
 
 patterns = ([
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
-    url(r'^committee/(?P<slug>[^/]+)/$',
-        never_cache(NYCCommitteeDetailView.as_view()), name='committee_detail'),
-    url(r'^person/(?P<slug>[^/]+)/$', never_cache(NYCPersonDetailView.as_view()), name='person'),
+    url(r'^committee/(?P<slug>[^/]+)/$', NYCCommitteeDetailView.as_view(), name='committee_detail'),
+    url(r'^person/(?P<slug>[^/]+)/$', NYCPersonDetailView.as_view(), name='person'),
     url(r'^search/rss/',
         NYCCouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),
     url(r'^search/', NYCCouncilmaticFacetedSearchView(searchqueryset=EmptySearchQuerySet,
