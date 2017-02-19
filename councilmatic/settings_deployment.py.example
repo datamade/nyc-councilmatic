@@ -19,6 +19,7 @@ DATABASES = {
         'NAME': 'nyc_councilmatic',
         'USER': '',
         'PASSWORD': '',
+        'PORT': '5432',
     }
 }
 
@@ -52,6 +53,15 @@ ANALYTICS_TRACKING_CODE = ''
 
 HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
                              '/nyc/static/images/')
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 1,
+        'PASSWORD': '',
+        'DEFAULT_TIMEOUT': 360,
+    }
+}
 
 # Email settings for notifications
 EMAIL_HOST='smtp.gmail.com'
