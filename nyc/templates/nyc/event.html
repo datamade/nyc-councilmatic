@@ -10,7 +10,6 @@
             <p><a href='/events/'><i class="fa fa-angle-double-left" aria-hidden="true"></i> back to {{ CITY_VOCAB.EVENTS }}</a></p>
             <h1>{{event.name}}</h1>
             <p>{{event.description}}</p>
-            {{event.ocd_id}}
             <p class="small text-muted">
                 <i class="fa fa-fw fa-calendar-o"></i> {{event.start_time | date:"D n/d/Y"}}<br/>
                 <i class="fa fa-fw fa-clock-o"></i> {{event.start_time | date:"g:i a"}}<br/>
@@ -67,14 +66,13 @@
 
             {% if related_bills %}
             <h4>Related bills</h4>
-            {{related_bills}}
             <p>
                 <table class="table">
                 {% for bill in related_bills %}
                     <tr>
-                        <td>{{bill.identifier}} {{bill.description | short_blurb}} {{ bill.inferred_status | inferred_status_label | safe }}</td>
+                        <td class="nowrap"><a href='/legislation/{{ bill.slug }}/' target="_blank">{{bill.identifier}}</a></td>
                         <td>
-                          <a href='/bill/{{ bill.slug }}/' target="_blank">View</a>
+                          {{bill.description | short_blurb}} {{ bill.inferred_status | inferred_status_label | safe }}
                         </td>
                     </tr>
                 {% endfor %}
