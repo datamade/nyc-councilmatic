@@ -12,6 +12,7 @@ from django.views.decorators.cache import never_cache
 patterns = ([
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),
     url(r'^committee/(?P<slug>[^/]+)/$', NYCCommitteeDetailView.as_view(), name='committee_detail'),
+    url(r'^event/(?P<slug>[^/]+)/$', NYCEventDetailView.as_view(), name='event_detail'),
     url(r'^person/(?P<slug>[^/]+)/$', NYCPersonDetailView.as_view(), name='person'),
     url(r'^search/rss/',
         NYCCouncilmaticFacetedSearchFeed(), name='councilmatic_search_feed'),

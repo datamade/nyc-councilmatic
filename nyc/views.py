@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponsePermanentRedirect, HttpResponseNotFound
 from django.core.urlresolvers import reverse
+from django.db import transaction, connection, connections
 
 from datetime import date, timedelta
 import re
+from collections import namedtuple
 
 from nyc.models import NYCBill
 
@@ -112,6 +114,68 @@ class NYCCommitteesView(CommitteesView):
 
         taskforces = Organization.committees().filter(name__startswith='Task Force')
         context['taskforces'] = [c for c in taskforces if c.memberships.all()]
+
+        return context
+
+class NYCEventDetailView(EventDetailView):
+    template_name = 'nyc/event.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDetailView, self).get_context_data(**kwargs)
+        event = context['event']
+
+        # Logic for getting relevant board report information.
+        with connection.cursor() as cursor:
+            # query = '''
+            #     SELECT distinct
+            #         b.identifier,
+            #         b.slug,
+            #         b.description,
+            #         i.order
+            #     FROM councilmatic_core_billdocument AS d_bill
+            #     INNER JOIN councilmatic_core_eventagendaitem as i
+            #     ON i.bill_id=d_bill.bill_id
+            #     INNER JOIN councilmatic_core_eventdocument as d_event
+            #     ON i.event_id=d_event.event_id
+            #     INNER JOIN councilmatic_core_bill AS b
+            #     ON d_bill.bill_id=b.ocd_id
+            #     WHERE d_event.event_id='{}'
+            #     GROUP BY
+            #         b.identifier,
+            #         b.slug,
+            #         b.description,
+            #         i.order 
+            #     ORDER BY i.order
+            #     '''.format(event.ocd_id)
+            query = '''
+                SELECT distinct
+                    b.identifier,
+                    b.slug,
+                    b.description,
+                    i.order
+                FROM councilmatic_core_bill AS b
+                INNER JOIN councilmatic_core_eventagendaitem as i
+                ON i.bill_id=b.ocd_id
+                WHERE i.event_id='{}'
+                GROUP BY
+                    b.identifier,
+                    b.slug,
+                    b.description,
+                    i.order 
+                ORDER BY i.order
+                '''.format(event.ocd_id)
+
+            cursor.execute(query)
+
+            # Get field names
+            columns = [c[0] for c in cursor.description]
+        
+            # Create a named tuple
+            bill_tuple = namedtuple('BillProperties', columns, rename=True)
+            # Put results inside a list with assigned fields (from namedtuple)
+            related_bills = [bill_tuple(*r) for r in cursor]
+
+            context['related_bills'] = related_bills
 
         return context
 
