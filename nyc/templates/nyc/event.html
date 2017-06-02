@@ -1,0 +1,110 @@
+{% extends "base_with_margins.html" %}
+{% load extras %}
+{% load staticfiles %}
+{% block title %}{{event.name}}{% endblock %}
+{% block content %}
+
+    <div class="row-fluid">
+        <div class="col-sm-8">
+            <br/>
+            <p><a href='/events/'><i class="fa fa-angle-double-left" aria-hidden="true"></i> back to {{ CITY_VOCAB.EVENTS }}</a></p>
+            <h1>{{event.name}}</h1>
+            <p>{{event.description}}</p>
+            <p class="small text-muted">
+                <i class="fa fa-fw fa-calendar-o"></i> {{event.start_time | date:"D n/d/Y"}}<br/>
+                <i class="fa fa-fw fa-clock-o"></i> {{event.start_time | date:"g:i a"}}<br/>
+                <i class="fa fa-fw fa-map-marker"></i> {{event.location_name}}
+            </p>
+
+            <p class="small">
+                <a href='{{event.source_url}}' title='View on the {{CITY_VOCAB.SOURCE}} website' target="_blank">
+                    <i class='fa fa-fw fa-external-link'></i>
+                    View on the {{CITY_VOCAB.SOURCE}} website
+                </a>
+            </p>
+
+            <hr />
+
+            {% if participants %}
+            <h4>Participants</h4>
+            <p>
+                {% for participant in participants %}
+                   <i class="fa fa-fw fa-users"></i> {{participant.link_html | safe}}<br />
+                {% endfor %}
+            </p>
+            {% endif %}
+
+            {% if event.clean_agenda_items %}
+            <h4>Agenda</h4>
+            <p>
+                <ol>
+                    {% for agenda_item in event.clean_agenda_items %}
+                        {% if agenda_item.description|lower != 'page break' %}
+                        <li>
+                            {% if agenda_item.related_bills.all %}
+                                <a href="/legislation/{{agenda_item.related_bills.first.bill.slug}}/">
+                                    {{agenda_item.related_bills.first.bill.friendly_name}}
+                                </a>
+                                <br/>
+                            {% endif %}
+                            {{agenda_item.description}}
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ol>
+            </p>
+            {% endif %}
+
+            {% if event.documents.all %}
+            <h4>Attachments</h4>
+            <p>
+                {% for document in event.documents.all %}
+                    <i class='fa fa-fw fa-file-text-o'></i> <a href="{{document.url}}">{{document.note}}</a><br />
+                {% endfor %}
+            </p>
+            {% endif %}
+
+            {% if related_bills %}
+            <h4>Related bills</h4>
+            <p>
+                <table class="table">
+                {% for bill in related_bills %}
+                    <tr>
+                        <td class="nowrap"><a href='/legislation/{{ bill.slug }}/' target="_blank">{{bill.identifier}}</a></td>
+                        <td>
+                          {{bill.description | short_blurb}} {{ bill.inferred_status | inferred_status_label | safe }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Event",
+      "location": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "{{ CITY_NAME }}"
+        },
+        "name": "{{event.location_name}}"
+      },
+      "name": "{{event.name}}",
+      "startDate": "{{ event.start_time.isoformat }}",
+      "url" : "{{ event.source_url }}"
+    }
+    </script>
+
+    <script type="text/javascript">
+        // for reference purposes
+        console.log( "OCD ID: {{event.ocd_id}}" )
+    </script>
+
+{% endblock %}
