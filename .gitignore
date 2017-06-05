@@ -65,3 +65,6 @@ settings_deployment.py
 static/**
 core/**
 nyc/static/images/ocd-person/*.jpg
+/keyrings/live/pubring.gpg~
+/keyrings/live/pubring.kbx~
+/keyrings/live/secring.gpg
