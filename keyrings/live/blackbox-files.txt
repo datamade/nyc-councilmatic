@@ -4,3 +4,4 @@ scripts/after_install.sh
 scripts/app_start.sh
 scripts/app_stop.sh
 scripts/before_install.sh
+scripts/validate_service.sh
