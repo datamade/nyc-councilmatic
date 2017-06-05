@@ -71,3 +71,5 @@ nyc/static/images/ocd-person/*.jpg
 /scripts/app_stop.sh
 /scripts/after_install.sh
 /scripts/app_start.sh
+/configs/settings_deployment_staging.py
+/configs/settings_deployment_production.py
