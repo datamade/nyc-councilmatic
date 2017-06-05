@@ -68,3 +68,7 @@ nyc/static/images/ocd-person/*.jpg
 /keyrings/live/pubring.gpg~
 /keyrings/live/pubring.kbx~
 /keyrings/live/secring.gpg
+/scripts/app_stop.sh
+/scripts/after_install.sh
+/scripts/before_install.sh
+/scripts/app_start.sh
