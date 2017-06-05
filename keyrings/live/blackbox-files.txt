@@ -1,2 +1,3 @@
 scripts/after_install.sh
 scripts/app_stop.sh
+scripts/before_install.sh
