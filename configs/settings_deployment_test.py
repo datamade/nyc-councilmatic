@@ -52,3 +52,23 @@ ANALYTICS_TRACKING_CODE = ''
 
 HEADSHOT_PATH = os.path.join(os.path.dirname(__file__), '..'
                              '/nyc/static/images/')
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 1,
+        'PASSWORD': '',
+        'DEFAULT_TIMEOUT': 360,
+    }
+}
+
+#RQ_EXCEPTION_HANDLERS = ['path.to.my.handler'] # If you need custom exception handlers
+RQ_SHOW_ADMIN_LINK = True
+
+EMAIL_HOST='smtp.example.com'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER='user'
+EMAIL_HOST_PASSWORD='password'
+DEFAULT_FROM_EMAIL='NYC Councilmatic <info@councilmatic.org>'
