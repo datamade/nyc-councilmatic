@@ -107,6 +107,7 @@ class NYCCommitteesView(CommitteesView):
         context = super(CommitteesView, self).get_context_data(**kwargs)
 
         committees = Organization.committees().filter(name__startswith='Committee')
+
         context['committees'] = [c for c in committees if c.memberships.all()]
 
         subcommittees = Organization.committees().filter(name__startswith='Subcommittee')
@@ -126,27 +127,6 @@ class NYCEventDetailView(EventDetailView):
 
         # Logic for getting relevant board report information.
         with connection.cursor() as cursor:
-            # query = '''
-            #     SELECT distinct
-            #         b.identifier,
-            #         b.slug,
-            #         b.description,
-            #         i.order
-            #     FROM councilmatic_core_billdocument AS d_bill
-            #     INNER JOIN councilmatic_core_eventagendaitem as i
-            #     ON i.bill_id=d_bill.bill_id
-            #     INNER JOIN councilmatic_core_eventdocument as d_event
-            #     ON i.event_id=d_event.event_id
-            #     INNER JOIN councilmatic_core_bill AS b
-            #     ON d_bill.bill_id=b.ocd_id
-            #     WHERE d_event.event_id='{}'
-            #     GROUP BY
-            #         b.identifier,
-            #         b.slug,
-            #         b.description,
-            #         i.order 
-            #     ORDER BY i.order
-            #     '''.format(event.ocd_id)
             query = '''
                 SELECT distinct
                     b.identifier,
