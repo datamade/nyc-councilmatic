@@ -102,16 +102,3 @@ class NYCBill(Bill):
             return self.abstract
         else:
             return self.description
-
-# class NYCOrganization(Organization):
-
-#     class Meta:
-#         proxy = True
-
-#     @classmethod
-#     def committees(cls):
-#         """
-#         grabs all organizations (1) classified as a committee & (2) with at least one member
-#         """
-#         print("!!!!!")
-#         return cls.objects.filter(classification='committee').order_by('name').filter(memberships__end_date__gt=datetime.now(app_timezone)).distinct()
