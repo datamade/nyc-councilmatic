@@ -1,0 +1,22 @@
+{% if event.status != 'cancelled' %}
+
+<div class="row">
+    <div class="col-xs-3 no-pad-right">
+        <p class="small">
+            <span class="non-mobile-only">
+                <i class="fa fa-fw fa-clock-o"></i> {{event.start_time| date:"g:i a"}}<br/>
+            </span>
+            <span class="mobile-only">
+                {{event.start_time| date:"g:i a"}}<br/>
+            </span>
+        </p>
+    </div>
+    <div class="col-xs-9">
+        <p>
+            <a href="{{event.event_page_url}}">{{event.name}}</a><br/>
+            <span class="small text-muted">{{event.description}}</span>
+        </p>
+    </div>
+</div>
+
+{% endif %}
