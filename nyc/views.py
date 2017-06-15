@@ -38,7 +38,13 @@ class NYCBillDetailView(BillDetailView):
                 bill = self.model.objects.get(slug__startswith=slug)
                 response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
             except NYCBill.DoesNotExist:
-                response = HttpResponseNotFound()
+                try: 
+                    one, two, three, four = slug.split('-')
+                    short_slug = slug.replace('-' + four, '')
+                    bill = self.model.objects.get(slug__startswith=short_slug)
+                    response = HttpResponsePermanentRedirect(reverse('bill_detail', args=[bill.slug]))
+                except:
+                    response = HttpResponseNotFound()
 
         return response
 
