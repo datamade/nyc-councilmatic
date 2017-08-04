@@ -16,5 +16,5 @@ then
     mkdir -p /home/datamade/nyc-councilmatic
 fi
 
-# Decrypt blackbox-encrypted files
+# Decrypt blackbox-encrypted files 
 cd /opt/codedeploy-agent/deployment-root/$DEPLOYMENT_GROUP_ID/$DEPLOYMENT_ID/deployment-archive/ && chown -R datamade.datamade . && sudo -H -u datamade blackbox_postdeploy
