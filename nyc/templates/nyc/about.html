@@ -119,12 +119,28 @@
             <br/></br>
 
             <h3>Data</h3>
-            <p>The data from this website comes from <a href='http://legistar.council.nyc.gov/'>New York City Council's Legislative Research Center</a>, a system built by <a href='http://www.granicus.com/'>Granicus</a> using their <a href='http://www.granicus.com/solutions/legislative-management/'>Legistar Legislative Management Suite</a>.</p>
 
-            <p>This data is then collected daily using the <a href="http://opencivicdata.org/about/" target="_blank">Open Civic Data</a> standard and platform. Open Civic Data standardizes information about people, organizations, events and bills at any level of government and was built in collaboration with <a href="http://sunlightfoundation.com/">The Sunlight Foundation</a>, <a href="https://developers.google.com/civic-information/?hl=en">Google</a>, <a href="http://www.granicus.com/">Granicus</a> and <a href="http://www.opennorth.ca/">Open North</a>.
-            </p>
+            <p>The data on this website comes from <a href='http://legistar.council.nyc.gov/'>New York City Council's Legislative Research Center</a>, a system built by <a href='http://www.granicus.com/'>Granicus</a> using their <a href='http://www.granicus.com/solutions/legislative-management/'>Legistar Legislative Management Suite</a>.</p>
+
+            <p>Daily, DataMade collects data from Legistar and the <a href='http://webapi.legistar.com/' target="_blank">Legistar Web API</a>, which we store using the <a href="http://opencivicdata.org/about/" target="_blank">Open Civic Data</a> standard and platform. Built in collaboration with <a href="http://sunlightfoundation.com/" target="_blank">The Sunlight Foundation</a>, <a href="https://developers.google.com/civic-information/?hl=en" target="_blank">Google</a>, <a href="http://www.granicus.com/" target="_blank">Granicus</a>, and <a href="http://www.opennorth.ca/" target="_blank">Open North</a>, Open Civic Data standardizes information about people, organizations, events, and bills at any level of government.</p>
 
             <p><a href='http://opencivicdata.org'><img style='height:100px;' src='/static/images/ocd.jpg' /></a></p>
+
+            <p>Anyone can use the OCD API! This searchable government-transparency tool contains several useful endpoints:</p>
+            <ul>
+                <li><a href="https://ocd.datamade.us/bills/" target="_blank">bills:</a> legislation introduced to City Council and their status and sponsors</li>
+                <li><a href="https://ocd.datamade.us/events/" target="_blank">events:</a> past and upcoming Council and Committee meetings</li>
+                <li><a href="https://ocd.datamade.us/people/" target="_blank">people:</a> Council members and the NYC districts they represent</li>
+                <li><a href="https://ocd.datamade.us/organizations/" target="_blank">organizations:</a> groups of Council members who consider and debate legislation</li>
+                <li><a href="https://ocd.datamade.us/votes/" target="_blank">votes:</a> decisions made by specific Council members on bills</li>
+            </ul>
+
+            <br>
+            <a class='btn btn-primary' href='http://ocd-api-documentation.readthedocs.io/en/latest/index.html' target='_blank'>Read OCD API documentation<i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <br><br>
+
+            <p>Want to see all bills from New York City Council? Add the "name" filter, and <a href='https://ocd.datamade.us/bills/?from_organization__name=New%20York%20City%20Council' target='_blank'>explore the results</a>. To learn more, read our documentation of the API and its system of queryable endpoints.</p>
+
         </div>
     </div>
     <div class="row-fluid">
