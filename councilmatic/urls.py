@@ -1,13 +1,10 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
-from haystack.query import SearchQuerySet, EmptySearchQuerySet
-from councilmatic_core.views import CouncilmaticSearchForm, CouncilmaticFacetedSearchView
-from councilmatic_core.feeds import CouncilmaticFacetedSearchFeed
-from councilmatic.settings import *
-from nyc.views import *
-from nyc.feeds import *
-from django.views.decorators.cache import never_cache
+from haystack.query import EmptySearchQuerySet
+from councilmatic_core.views import CouncilmaticSearchForm
+from nyc.views import *  # noqa
+from nyc.feeds import *  # noqa
 
 patterns = ([
     url(r'^committees/$', NYCCommitteesView.as_view(), name='committees'),

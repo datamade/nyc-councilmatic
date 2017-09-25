@@ -2,6 +2,8 @@
 
 ![New York City Councilmatic](https://www.councilmatic.org/images/nyc.jpg)
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/datamade/nyc-councilmatic)
+
 NYC Councilmatic is a tool for understanding and tracking what’s happening in New York City Council.
 
 This site connects NYC residents to local city council offices, for greater online public dialogue about issues in their communities.

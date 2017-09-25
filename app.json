@@ -1,0 +1,51 @@
+{
+  "name": "NYC Councilmatic",
+  "repository": "https://github.com/datamade/nyc-councilmatic",
+  "env": {
+    "SECRET_KEY": {
+      "description": "Secret key",
+      "generator": "secret"
+    },
+    "FLUSH_KEY": {
+      "description": "Flush key",
+      "generator": "secret"
+    },
+    "EMAIL_USER": {
+      "description": "Email user",
+      "required": false
+    },
+    "EMAIL_PASSWORD": {
+      "description": "Email password",
+      "required": false
+    },
+    "EMAIL_SENDER": {
+      "description": "Email sender",
+      "required": false
+    },
+    "ANALYTICS_CODE": {
+      "description": "Google analytics code",
+      "required": false
+    },
+    "DJANGO_SETTINGS_MODULE": {
+      "description": "Django settings module",
+      "value": "councilmatic.settings_heroku"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.5"
+      }
+    },
+    {
+      "plan": "heroku-redis"
+    },
+    {
+      "plan": "websolr"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "bin/post-deploy.sh"
+  }
+}
