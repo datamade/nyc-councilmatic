@@ -10,7 +10,7 @@ CITY_COUNCIL_NAME = 'New York City Council'
 OCD_JURISDICTION_ID = 'ocd-jurisdiction/country:us/state:ny/place:new_york/government'
 OCD_CITY_COUNCIL_ID = 'ocd-organization/0f63aae8-16fd-4d3c-b525-00747a482cf9'
 
-LEGISLATIVE_SESSIONS = ['2014'] # the last one in this list should be the current legislative session
+LEGISLATIVE_SESSIONS = ['1994', '1998', '2002', '2004', '2006', '2010', '2014'] # the last one in this list should be the current legislative session
 
 APP_NAME = 'nyc'
 
