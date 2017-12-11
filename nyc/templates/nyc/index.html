@@ -1,64 +1,104 @@
-{% extends "base.html" %}
 {% load staticfiles %}
 {% load adv_cache %}
-{% block title %}Home{% endblock %}
 
-{% block full_content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %} - {{SITE_META.site_name}}</title>
 
-{% cache 600 index_wrapper 'index' %}
+    {% include 'partials/seo.html' %}
+    {% include 'partials/icons.html' %}
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.journal.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/city_custom.css' %}" />
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid container-fluid-nav">
+            <div id="nav-title">
+                <a class="navbar-brand" href="/">
+                    <img id="logo" src="{% static IMAGES.logo %}"></img>
+                    <span id="logo-text">{{ CITY_NAME_SHORT }} Councilmatic</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container-fluid" id="section-photo">
-        <div class="row-fluid">
-            <div class='col-sm-10 col-sm-offset-1'>
-                <br/>
-                <h2>
-                    <h1>{{ CITY_COUNCIL_NAME }}, demystified</h1>
-                </h2>
-                <br/>
-                <p class="h3">
-                    <span class="text-bg">Search {{CITY_NAME}} legislation</span>
-                </p>
-                <form class="search form-search=" action="/search/" method="GET">
-                    <div class="input-group site-intro-search">
-                        <input name="q" type="text" class="input-lg form-control" placeholder="{{SEARCH_PLACEHOLDER_TEXT}}">
-                        <div class='input-group-btn'>
-                            <button type="submit" class="btn btn-lg btn-primary">
-                                <i class='fa fa-fw fa-search'></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                <div class="well well-announcement">
+                    <h2>New York City Councilmatic has moved!</h2>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</p>
+                </div>
             </div>
         </div>
     </div>
 
-    {% include 'partials/featured_bills.html' %}
+    <div class="container-fluid footer">
+        <div class='col-sm-12'>
+            <div class='clearfix'></div>
 
-    {% if next_council_meeting or upcoming_committee_meetings %}
-    <div class="container-fluid" id="section-events">
-        <div class="row-fluid">
-            <div class='col-sm-10 col-sm-offset-1'>
+                {% for credit in FOOTER_CREDITS %}
 
-                {% include "partials/component_upcoming_events.html" %}
+                    <a href='{{credit.url}}' title='{{credit.name}}' target="_blank"><img src='/static/images/{{credit.image}}' /></a>
 
-            </div>
+                {% endfor %}
+           
+
         </div>
     </div>
-    {% endif %}
 
+    <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    </script>
 
-    {% if recently_passed %}
-    <div class="container-fluid" id="section-recently-passed">
-        <div class="row-fluid">
-            <div class='col-sm-8 col-sm-offset-1'>
+    {% block extra_js %}{% endblock %}
+    <script>
+        var analyticsTrackingCode = '{{ANALYTICS_TRACKING_CODE}}';
+    </script>
+    <script src="{% static 'js/analytics_lib.js' %}"></script>
 
-                {% include "partials/component_recently_passed.html" %}
+    <script>
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
 
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-{% endcache %}
-
-{% endblock %}
+</body>
+</html>
