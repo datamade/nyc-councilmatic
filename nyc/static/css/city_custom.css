@@ -1,15 +1,19 @@
 /* styling the home page */
+body {
+    padding-top: 0;
+}
+
 #section-photo{
     background-image:
         linear-gradient(
           rgba(0, 0, 0, 0.3),
           rgba(0, 0, 0, 0.3)
         ),
-        url('../images/nyc-hall-cropped.png');
+        url('../images/nyc-hall-cropped.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    height: 300px;
+    height: 500px;
 }
 
 .photo-credit{
@@ -39,4 +43,20 @@
 
 .alert-signup {
     margin-top: 20px;
+}
+
+.well-announcement {
+    margin-top: 10%;
+    opacity: 0.87;
+    border-radius: 2px;
+    text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .navbar-brand {
+        width: 100%;
+        padding: 19.5px 15px;
+        height: 35px;
+        margin-left: -15px;
+    }
 }

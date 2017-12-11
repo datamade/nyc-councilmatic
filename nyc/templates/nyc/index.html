@@ -45,14 +45,9 @@
     <div class="container-fluid footer">
         <div class='col-sm-12'>
             <div class='clearfix'></div>
-
-                {% for credit in FOOTER_CREDITS %}
-
-                    <a href='{{credit.url}}' title='{{credit.name}}' target="_blank"><img src='/static/images/{{credit.image}}' /></a>
-
-                {% endfor %}
-           
-
+            {% for credit in FOOTER_CREDITS %}
+                <a href='{{credit.url}}' title='{{credit.name}}' target="_blank"><img src='/static/images/{{credit.image}}' /></a>
+            {% endfor %}
         </div>
     </div>
 
