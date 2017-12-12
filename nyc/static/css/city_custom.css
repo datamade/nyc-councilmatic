@@ -1,6 +1,7 @@
 /* styling the home page */
 body {
-    padding-top: 0;
+    padding-top: 0;    
+    color: #000000;
 }
 
 #section-photo{
@@ -47,7 +48,7 @@ body {
 
 .well-announcement {
     margin-top: 10%;
-    opacity: 0.87;
+    background: rgba(227, 227, 227, 0.875);
     border-radius: 2px;
     text-align: center;
 }
