@@ -14,7 +14,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    height: 500px;
+    height: 550px;
 }
 
 .photo-credit{
@@ -53,11 +53,18 @@ body {
     text-align: center;
 }
 
+.mg-top-sm {
+    margin-top: 3.5%;
+}
+
 @media only screen and (max-width: 767px) {
     .navbar-brand {
         width: 100%;
         padding: 19.5px 15px;
         height: 35px;
         margin-left: -15px;
+    }
+    p {
+        font-size: 16px;
     }
 }
