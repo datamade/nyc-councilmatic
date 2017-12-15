@@ -1,4 +1,5 @@
 configs/nyc-staging.conf.nginx
+configs/nyc.conf.nginx
 configs/settings_deployment_production.py
 configs/settings_deployment_staging.py
 scripts/after_install.sh
