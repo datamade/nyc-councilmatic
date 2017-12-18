@@ -74,3 +74,5 @@ nyc/static/images/ocd-person/*.jpg
 /configs/settings_deployment_staging.py
 /configs/settings_deployment_production.py
 /scripts/validate_service.sh
+/configs/nyc-staging.conf.nginx
+/configs/nyc.conf.nginx

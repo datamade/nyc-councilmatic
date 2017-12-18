@@ -1,64 +1,104 @@
-{% extends "base.html" %}
 {% load staticfiles %}
 {% load adv_cache %}
-{% block title %}Home{% endblock %}
 
-{% block full_content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %} - {{SITE_META.site_name}}</title>
 
-{% cache 600 index_wrapper 'index' %}
+    {% include 'partials/seo.html' %}
+    {% include 'partials/icons.html' %}
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.journal.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/city_custom.css' %}" />
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid container-fluid-nav">
+            <div id="nav-title">
+                <a class="navbar-brand" href="/">
+                    <img id="logo" src="{% static IMAGES.logo %}"></img>
+                    <span id="logo-text">{{ CITY_NAME_SHORT }} Councilmatic</span>
+                </a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container-fluid" id="section-photo">
-        <div class="row-fluid">
-            <div class='col-sm-10 col-sm-offset-1'>
-                <br/>
-                <h2>
-                    <h1>{{ CITY_COUNCIL_NAME }}, demystified</h1>
-                </h2>
-                <br/>
-                <p class="h3">
-                    <span class="text-bg">Search {{CITY_NAME}} legislation</span>
-                </p>
-                <form class="search form-search=" action="/search/" method="GET">
-                    <div class="input-group site-intro-search">
-                        <input name="q" type="text" class="input-lg form-control" placeholder="{{SEARCH_PLACEHOLDER_TEXT}}">
-                        <div class='input-group-btn'>
-                            <button type="submit" class="btn btn-lg btn-primary">
-                                <i class='fa fa-fw fa-search'></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+        <div class="row">
+            <div class="col-md-7 col-md-offset-2">
+                <div class="well well-announcement">
+                    <h2>New York City Councilmatic has moved</h2>
+                    <p>NYC​ ​Councilmatic​ ​is​ ​now​ ​available​ ​as​ ​an​ ​official​ ​resource​ ​from​ ​the NYC​ ​Council!</p>
+
+                    <p class="mg-top-sm"><a href="" class="btn btn-primary"><i class="fa fa-external-link-square" aria-hidden="true"></i> New York City Councilmatic</a></p>
+
+                    <p class="mg-top-sm">The​ ​project​ ​was​ ​originally​ ​developed​ ​by​ ​the​ ​non-profit <a href="http://www.participatorypolitics.org/" target="_blank">Participatory​ ​Politics​ ​Foundation​</a> ​in​ ​2015,​ ​with​ ​support​ ​from​ ​the​ ​<a href="http://ritaallen.org/" target="_blank">Rita​ ​Allen Foundation​</a> and​ ​technical​ ​leads​ ​<a href="https://datamade.us/" target="_blank">DataMade</a>.​</p>
+                    <p class="mg-top-sm">For​ ​more​ ​info​ ​on​ ​NYC​ ​Councilmatic’s public​ ​dialogue​ ​program​ ​with​ ​NYC​ ​community​ ​groups​ ​and​ ​local​ ​media,​ ​contact David Moore at​ ​​<a href="mailto:david@ppolitics.org" target="_blank">david@ppolitics.org​</a>.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    {% include 'partials/featured_bills.html' %}
-
-    {% if next_council_meeting or upcoming_committee_meetings %}
-    <div class="container-fluid" id="section-events">
-        <div class="row-fluid">
-            <div class='col-sm-10 col-sm-offset-1'>
-
-                {% include "partials/component_upcoming_events.html" %}
-
-            </div>
+    <div class="container-fluid footer">
+        <div class='col-sm-12'>
+            <div class='clearfix'></div>
+            {% for credit in FOOTER_CREDITS %}
+                <a href='{{credit.url}}' title='{{credit.name}}' target="_blank"><img src='/static/images/{{credit.image}}' /></a>
+            {% endfor %}
         </div>
     </div>
-    {% endif %}
 
+    <script src="{% static 'js/jquery-1.10.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript">
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    </script>
 
-    {% if recently_passed %}
-    <div class="container-fluid" id="section-recently-passed">
-        <div class="row-fluid">
-            <div class='col-sm-8 col-sm-offset-1'>
+    {% block extra_js %}{% endblock %}
+    <script>
+        var analyticsTrackingCode = '{{ANALYTICS_TRACKING_CODE}}';
+    </script>
+    <script src="{% static 'js/analytics_lib.js' %}"></script>
 
-                {% include "partials/component_recently_passed.html" %}
+    <script>
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
 
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
-{% endcache %}
-
-{% endblock %}
+</body>
+</html>
