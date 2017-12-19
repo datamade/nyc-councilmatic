@@ -1,12 +1,8 @@
 # New York City Councilmatic
 
-### NYC Councilmatic has moved! Visit [our new Github repo](https://github.com/datamade/nyc-council-councilmatic)..
+### NYC Councilmatic has moved! Visit [our new Github repo](https://github.com/datamade/nyc-council-councilmatic).
 
-![New York City Councilmatic](https://www.councilmatic.org/images/nyc.jpg)
-
-NYC Councilmatic is a tool for understanding and tracking what’s happening in New York City Council.This site connects NYC residents to local city council offices, for greater online public dialogue about issues in their communities.
-
-NYC Councilmatic is free, non-profit, and non-partisan and the easiest way to access official New York City Council information.
+NYC Councilmatic is a tool for understanding and tracking what’s happening in New York City Council. This site connects NYC residents to local city council offices, for greater online public dialogue about issues in their communities. NYC Councilmatic is free, non-profit, and non-partisan and the easiest way to access official New York City Council information.
 
 Part of the [Councilmatic family](https://www.councilmatic.org/).
 
